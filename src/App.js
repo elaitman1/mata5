@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Navbar from "./components/navbar";
+import Overview from "./components/overview";
+import Floormap from "./components/floormap";
+import Footer from "./components/footer";
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends Component {
+  state = {
+    viewSelected: "overview",
+    machineSelected: false
+  }
 
-export default App;
+  selectView = (view) => {
+    this.setState({ viewSelected: view })
+  }
+
+  toggleMachineSelection = () => {
+    this.setState({ machineSelected: !this.state.machineSelected })
+  }
+
+  render = () => {
+    return (
+      <div>
+        <Navbar />
+        {
+          this.state.viewSelected === "overview" ?
+            <Overview
+              toggleMachineSelection={this.toggleMachineSelection}
+            /> :
+            <Floormap />
+        }
+        {
+          !this.state.machineSelected ?
+            <Footer
+              viewSelected={this.state.viewSelected}
+              selectView={this.selectView}
+            /> :
+            ""
+        }
+      </div>
+    );
+  }
+}

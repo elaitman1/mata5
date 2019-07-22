@@ -1,33 +1,211 @@
-.App {
+:root {
+  --active-blue: #2E5BFF;
+  --active-green: #7ED321;
+  --inactive-grey1: #9B9B9B;
+  --inactive-grey2: #B0BAC9;
+  --text-grey: #8798AD;
+  --title-grey: #505D68;
+  --navbar-grey: #F2F5F7;
+  --white: #FFFFFF;
+}
+
+::-webkit-scrollbar {
+  height: 0px;
+  width: 0px;
+}
+
+h1 {
+  margin: 0;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  height: 34px;
+  width: calc(100vw - 20px);
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--navbar-grey);
+}
+
+.navbar-icons {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-icons img {
+  margin: 0 10px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  height: 75px;
+  width: 100%;
+  z-index: 5;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--white);
+  filter: blur(10);
+}
+
+.footer section {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.footer-text {
+  margin-left: 10px;
+  color: var(--inactive-grey2);
+}
+
+.footer-text.selected {
+  color: var(--active-blue);
+}
+
+.feed-container {
+  margin-top: 54px;
+  padding: 10px;
+  position: relative;
+}
+
+.feed-item-container {
+  margin-top: 64px;
+  margin-bottom: 75px;
+  cursor: pointer;
+}
+
+.feed-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 25px 0;
+  padding: 15px 0;
+  border: 2px solid var(--active-green);
+  border-radius: 5px;
+}
+
+.feed-item > img {
+  margin-right: 15px;
+}
+
+.feed-indicator-dot {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background-color: var(--active-green);
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+.feed-item-text-wrapper > p {
+  color: var(--text-grey);
+}
+
+.feed-item-text-wrapper > p:first-child {
+  font-weight: 500;
+  color: black;
+}
+
+.cells-container {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 10px);
+  height: 40px;
+  overflow-x: hidden;
+  overflow: scroll;
+  position: fixed;
+  top: 54px;
+  z-index: 5;
+  background-color: var(--white);
+  padding: 10px 0;
+}
+
+.cell {
+  width: 40px;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.3;
+  border: 2px solid var(--inactive-grey1);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50), 0 2px 4px 0 rgba(0,0,0,0.50);
+  padding: 3px 27.5px;
+  margin: 0 5px;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cell.selected {
+  opacity: 1;
+  border: 2px solid var(--active-blue);
+}
+
+.machine-container {
+  position: relative;
+  margin-top: 54px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 22px 15px;
+}
+
+.machine-container > img {
+  margin: 15px 0;
+}
+
+.machine-back {
+  position: absolute;
+  top: 18px;
+  left: 15px;
+  font-size: 50px;
+  font-weight: 200;
+  line-height: 38px;
+  cursor: pointer
+}
+
+.machine-name {
+  color: var(--title-grey);
+  font-size: 28px;
+  line-height: 38px;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.machine-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.machine-button-container {
+  margin: 10px;
+  width: calc(50vw - 35px);
+  height: calc(50vw - 35px);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.machine-button-container:active p {
+  background-image: linear-gradient(90deg, rgba(0, 122, 255, 0.2), rgba(46,91,255,0.2));
+}
+
+.machine-button-container > p {
+  font-weight: 500;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  text-align: center;
+  width: 100%;
+  height: 65px;
+  background-image: linear-gradient(90deg, rgba(51, 51, 51, 0.2), rgba(255,255,255,0.2));
 }

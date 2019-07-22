@@ -1,0 +1,95 @@
+[
+  {
+    "cellName": "Cell 1",
+    "machineStuff": [
+      {
+        "id": 8,
+        "type": "Eurotech",
+        "timer": "18 Mins",
+        "status": "Finished",
+        "imgUrl": ""
+      }
+    ]
+  },
+  {
+    "cellName": "Cell 2",
+    "machineStuff": [
+      {
+        "id": 1,
+        "type": "Eurotech",
+        "timer": "5 Mins",
+        "status": "Finished",
+        "imgUrl": ""
+      },
+      {
+        "id": 2,
+        "type": "Eurotech",
+        "timer": "30 Mins",
+        "status": "Finished",
+        "imgUrl": ""
+      },
+      {
+        "id": 1,
+        "type": "Machine",
+        "timer": "1 Hour",
+        "status": "Finished",
+        "imgUrl": ""
+      },
+      {
+        "id": 2,
+        "type": "Machine",
+        "timer": "5 Mins",
+        "status": "Finished",
+        "imgUrl": ""
+      }
+    ]
+  },
+  {
+    "cellName": "Cell 3",
+    "machineStuff": [
+      {
+        "id": 18,
+        "type": "Machine",
+        "timer": "8 Mins",
+        "status": "Finished",
+        "imgUrl": ""
+      }
+    ]
+  },
+  {
+    "cellName": "Cell 4",
+    "machineStuff": [
+      {
+        "id": 18,
+        "type": "Machine",
+        "timer": "8 Mins",
+        "status": "Finished",
+        "imgUrl": ""
+      }
+    ]
+  },
+  {
+    "cellName": "Cell 5",
+    "machineStuff": [
+      {
+        "id": 18,
+        "type": "Machine",
+        "timer": "8 Mins",
+        "status": "Finished",
+        "imgUrl": ""
+      }
+    ]
+  },
+  {
+    "cellName": "Cell 6",
+    "machineStuff": [
+      {
+        "id": 18,
+        "type": "Machine",
+        "timer": "8 Mins",
+        "status": "Finished",
+        "imgUrl": ""
+      }
+    ]
+  }
+]
