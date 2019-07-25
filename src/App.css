@@ -6,7 +6,10 @@
   --text-grey: #8798AD;
   --title-grey: #505D68;
   --navbar-grey: #F2F5F7;
+  --gradient-grey: linear-gradient(90deg, rgba(51, 51, 51, 0.2), rgba(255,255,255,0.2));
+  --gradient-blue: linear-gradient(90deg, rgba(0, 122, 255, 0.2), rgba(46,91,255,0.2));
   --white: #FFFFFF;
+  --black: #000000;
 }
 
 ::-webkit-scrollbar {
@@ -14,8 +17,23 @@
   width: 0px;
 }
 
-h1 {
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+h1, h4 {
   margin: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 8;
+  background-color: rgba(0,0,0,.1);
 }
 
 .navbar {
@@ -196,7 +214,7 @@ h1 {
 }
 
 .machine-button-container:active p {
-  background-image: linear-gradient(90deg, rgba(0, 122, 255, 0.2), rgba(46,91,255,0.2));
+  background-image: var(--gradient-blue);
 }
 
 .machine-button-container > p {
@@ -207,5 +225,89 @@ h1 {
   text-align: center;
   width: 100%;
   height: 65px;
-  background-image: linear-gradient(90deg, rgba(51, 51, 51, 0.2), rgba(255,255,255,0.2));
+  background-image: var(--gradient-grey);
+}
+
+.inspection-container {
+  z-index: 10;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  background-color: var(--white);
+  width: calc(100vw - 30px);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inspection-container h4 {
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.inspection-input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inspection-input-container > p {
+  font-weight: 600;
+  text-align: center;
+  width: calc(50vw - 15px);
+}
+
+.inspection-parts-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--inactive-grey2);
+  border-radius: 3px;
+  padding: 3px 10px;
+  font-size: 18px;
+  width: calc(50vw - 25px);
+}
+
+.inspection-parts-input > input {
+  font-size: 16px;
+  text-align: center;
+  border: none;
+  max-width: 75%;
+}
+
+.inspection-parts-input > div {
+  cursor: pointer;
+  font-size: 26px;
+  color: var(--inactive-grey2);
+}
+
+.inspection-finish {
+  display: flex;
+  align-items: center;
+}
+
+.inspection-finish > span {
+  text-align: center;
+  width: 45vw;
+  color: var(--active-blue);
+  cursor: pointer;
+}
+
+.inspection-finish > span:hover {
+  text-decoration: underline;
+}
+
+.inspection-button {
+  padding: 5px 0;
+  width: 35vw;
+  font-size: 16px;
+  font-weight: 500;
+  border: 1px solid var(--black);
+  border-radius: 8px;
+}
+
+.inspection-button:active {
+  background-image: var(--gradient-blue);
 }

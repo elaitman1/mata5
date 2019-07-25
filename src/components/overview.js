@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Feed from "./feed.js";
-import Machine from "./machine.js";
+import Feed from "./feed";
+import Machine from "./machine";
 
 export default class Overview extends Component {
   state = {

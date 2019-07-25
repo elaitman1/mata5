@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import StartJob from "startJob";
 // import PreparationChecklist from "preparationChecklist";
-// import Inspection from "inspection";
+import Inspection from "./inspection";
 // import Timer from "timer";
 
 export default class Machine extends Component {
@@ -25,22 +25,14 @@ export default class Machine extends Component {
     this.setState({ selectedTask: null })
   }
 
-  handleTaskDisplay = () => {
-    if (this.selectedTask) {
-      return this.renderTask()
-    } else {
-      return "";
-    }
-  }
-
   renderTask = () => {
-    switch (this.selectedTask) {
+    switch (this.state.selectedTask) {
       // case "Start Job":
       //   return <StartJob />
       // case "Preparation Checklist":
       //   return <PreparationChecklist />
-      // case "Inspection":
-      //   return <Inspection />
+      case "Inspection":
+        return <Inspection hideTask={this.hideTask} />
       // case "Timer":
       //   return <Timer />
       default:
@@ -65,7 +57,13 @@ export default class Machine extends Component {
             />
           ))}
         </div>
-        <div>{this.handleTaskDisplay()}</div>
+        <div>
+          {
+            !this.state.selectedTask ?
+              "" :
+              this.renderTask()
+          }
+        </div>
       </div>
     )
   }
