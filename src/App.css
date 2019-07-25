@@ -234,8 +234,8 @@ h1, h4 {
   bottom: 40px;
   left: 0;
   background-color: var(--white);
-  width: calc(100vw - 30px);
-  padding: 15px;
+  width: calc(100vw - 40px);
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -251,12 +251,13 @@ h1, h4 {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5px;
 }
 
 .inspection-input-container > p {
   font-weight: 600;
   text-align: center;
-  width: calc(50vw - 15px);
+  width: calc(50vw - 20px);
 }
 
 .inspection-parts-input {
@@ -267,7 +268,7 @@ h1, h4 {
   border-radius: 3px;
   padding: 3px 10px;
   font-size: 18px;
-  width: calc(50vw - 25px);
+  width: calc(50vw - 30px);
 }
 
 .inspection-parts-input > input {
