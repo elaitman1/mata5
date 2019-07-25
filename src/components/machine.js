@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-// import StartJob from "startJob";
-// import PreparationChecklist from "preparationChecklist";
+import StartJob from "./startJob";
+// import PreparationChecklist from "./preparationChecklist";
 import Inspection from "./inspection";
-// import Timer from "timer";
+// import Timer from "./timer";
 
 export default class Machine extends Component {
   state = {
@@ -27,8 +27,8 @@ export default class Machine extends Component {
 
   renderTask = () => {
     switch (this.state.selectedTask) {
-      // case "Start Job":
-      //   return <StartJob />
+      case "Start Job":
+        return <StartJob hideTask={this.hideTask} />
       // case "Preparation Checklist":
       //   return <PreparationChecklist />
       case "Inspection":
