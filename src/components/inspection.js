@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import Confirmation from "./confirmation";
 import _ from "lodash";
 
 export default class Inspection extends Component {
   state = {
     goodParts: 1,
     badParts: 1,
+    showConfirmation: false
   }
 
   updatePartsNum = (type, oper) => {
@@ -27,21 +29,33 @@ export default class Inspection extends Component {
     }
   }
 
+  toggleConfirmation = () => {
+    this.setState({ showConfirmation: !this.state.showConfirmation });
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
-    this.props.hideTask();
+    this.toggleConfirmation();
   }
 
-  render = () => {
-    const partsTypes = Object.keys(this.state);
+  renderTask = () => {
+    let partsTypes = Object.keys(this.state);
+    partsTypes.pop();
     let good = this.state.goodParts !== "" ? parseInt(this.state.goodParts) : 0;
     let bad = this.state.badParts !== "" ? parseInt(this.state.badParts) : 0;
     let totalParts = _.sum([good, bad]);
 
-    return (
-      <div>
-        <div className="overlay"></div>
+    if (this.state.showConfirmation) {
+      return (
+        <Confirmation
+          task="Inspection"
+          hideTask={this.props.hideTask}
+          toggleConfirmation={this.toggleConfirmation}
+        />
+      )
+    } else {
+      return (
         <form className="inspection-container" onSubmit={this.handleSubmit}>
           <h4>Inspection</h4>
           {
@@ -65,9 +79,18 @@ export default class Inspection extends Component {
           </div>
           <div className="inspection-finish">
             <span>Skip</span>
-            <input className="inspection-button" type="submit" value="Save" />
+            <input className="form-submit-button" type="submit" value="Save" />
           </div>
         </form>
+      )
+    }
+  }
+
+  render = () => {
+    return (
+      <div>
+        <div className="overlay"></div>
+        {this.renderTask()}
       </div>
     )
   }

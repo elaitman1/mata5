@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import Confirmation from "./confirmation";
 import _ from "lodash";
 
 export default class StartJob extends Component {
   state = {
     jobNumber: "",
     partNumber: "",
-    partCount: undefined
+    partCount: undefined,
+    showConfirmation: false
   }
 
   update = (type) => {
@@ -14,21 +16,34 @@ export default class StartJob extends Component {
     }
   }
 
+  toggleConfirmation = () => {
+    this.setState({ showConfirmation: !this.state.showConfirmation });
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
-    this.props.hideTask();
+    this.toggleConfirmation();
   }
 
-  render = () => {
-    const inputTypes = Object.keys(this.state);
+  renderTask = () => {
+    let inputTypes = Object.keys(this.state);
+    inputTypes.pop();
 
-    return (
-      <div>
-        <div className="overlay"></div>
-        <form className="inspection-container" onSubmit={this.handleSubmit}>
+    if (this.state.showConfirmation) {
+      return (
+        <Confirmation
+          task="Start Job"
+          hideTask={this.props.hideTask}
+          toggleConfirmation={this.toggleConfirmation}
+        />
+      )
+    } else {
+      return (
+        <form className="start-job-container" onSubmit={this.handleSubmit}>
           <h4>Start Job</h4>
-          <div className="start-job-input-container">
+          <div className="start-job-inputs-container">
+            <img src="./assets/add.png" alt="Add"/>
             {
               inputTypes.map((inputType, idx) => {
                 let type = _.capitalize(inputType.slice(0, inputType.length - 6));
@@ -43,9 +58,18 @@ export default class StartJob extends Component {
                 )
               })
             }
+            <input className="form-submit-button" type="submit" value="Save" />
           </div>
-          <input className="inspection-button" type="submit" value="Save" />
         </form>
+      )
+    }
+  }
+
+  render = () => {
+    return (
+      <div>
+        <div className="overlay"></div>
+        {this.renderTask()}
       </div>
     )
   }
@@ -53,7 +77,7 @@ export default class StartJob extends Component {
 
 const Input = (props) => {
   const cameraIcon = props.inputType !== "partCount" ?
-    <img src="" alt="camera" /> : "";
+    <img src="./assets/camera.png" alt="camera" /> : "";
 
   const inputName = props.inputType !== "partCount" ?
     <p>{props.type} Number</p> :
