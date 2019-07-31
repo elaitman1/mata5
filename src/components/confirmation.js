@@ -13,7 +13,7 @@ const Confirmation = (props) => {
 
   return (
     <div className="confirmation-container">
-      <img src="" alt="Shield" />
+      <img src="./assets/confirmation.png" alt="Shield" />
       <h4>{confirmationHash[props.task]}</h4>
       <button className="form-submit-button" onClick={closeConfirmation}>Ok</button>
     </div>
