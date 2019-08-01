@@ -1,44 +1,59 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import Navbar from "./components/navbar";
 import Overview from "./components/overview";
 import Floormap from "./components/floormap";
 import Footer from "./components/footer";
-import './App.css';
+import "./App.css";
 
 export default class App extends Component {
   state = {
     viewSelected: "overview",
-    machineSelected: false
-  }
+    machineSelected: false,
+    displaySplash: true
+  };
 
-  selectView = (view) => {
-    this.setState({ viewSelected: view })
-  }
+  componentDidMount = () => {
+    setTimeout(this.unmountSplash, 3000);
+  };
+
+  unmountSplash = () => {
+    this.setState({ displaySplash: false });
+  };
+
+  selectView = view => {
+    this.setState({ viewSelected: view });
+  };
 
   toggleMachineSelection = () => {
-    this.setState({ machineSelected: !this.state.machineSelected })
-  }
+    this.setState({ machineSelected: !this.state.machineSelected });
+  };
 
   render = () => {
-    return (
-      <div>
-        <Navbar />
-        {
-          this.state.viewSelected === "overview" ?
-            <Overview
-              toggleMachineSelection={this.toggleMachineSelection}
-            /> :
+    if (this.state.displaySplash) {
+      return (
+        <div className="splash">
+          <img src="./assets/splash.png" alt="Splash Logo" />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Navbar />
+          {this.state.viewSelected === "overview" ? (
+            <Overview toggleMachineSelection={this.toggleMachineSelection} />
+          ) : (
             <Floormap />
-        }
-        {
-          !this.state.machineSelected ?
+          )}
+          {!this.state.machineSelected ? (
             <Footer
               viewSelected={this.state.viewSelected}
               selectView={this.selectView}
-            /> :
+            />
+          ) : (
             ""
-        }
-      </div>
-    );
-  }
+          )}
+        </div>
+      );
+    }
+  };
 }

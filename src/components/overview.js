@@ -5,7 +5,7 @@ import Machine from "./machine";
 export default class Overview extends Component {
   state = {
     cells: [],
-    machineSelected: null
+    machineSelected: null,
   };
 
   componentDidMount = () => {
