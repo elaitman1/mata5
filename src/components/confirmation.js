@@ -11,6 +11,13 @@ const Confirmation = props => {
     if (props.task === "Inspection") {
       props.hideTask();
     }
+
+    if (props.task === "Start Job") {
+      props.startJobObj.removeJob(props.startJobObj.jobNum);
+      if (props.startJobObj.totalJobs === 0) {
+        props.hideTask();
+      }
+    }
   };
 
   return (

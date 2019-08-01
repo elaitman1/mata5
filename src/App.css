@@ -322,7 +322,7 @@ h1, h4 {
   bottom: 40px;
   left: 0;
   background-color: var(--white);
-  box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.56);
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.56);
 }
 
 .start-job-add {
@@ -332,30 +332,32 @@ h1, h4 {
   width: 25px;
   height: 25px;
   object-fit: contain;
+  cursor: pointer;
 }
 
 .start-job-arrow {
   position: absolute;
-  top: 50%;
+  top: 45%;
+  font-size: 30px;
+  color: var(--inactive-grey2);
+  cursor: pointer;
+}
+
+.start-job-arrow:active {
+  color: var(--active-blue);
 }
 
 .start-job-arrow.left {
-  left: 0;
+  left: 10px;
 }
 
 .start-job-arrow.right {
-  right: 0;
+  right: 10px;
 }
 
 .start-job-item-container {
-  /* z-index: 10;
-  position: absolute;
-  bottom: 40px;
-  left: 0;
-  background-color: var(--white);
-  box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.56); */
-  width: calc(100vw - 42px);
-  padding: 21px;
+  width: calc(100vw - 70px);
+  padding: 21px 35px;
   display: flex;
   flex-direction: column;
   justify-content: center;

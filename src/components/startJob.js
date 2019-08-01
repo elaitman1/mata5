@@ -4,46 +4,44 @@ import StartJobItem from "./startJobItem";
 export default class StartJob extends Component {
   state = {
     jobs: [[]],
+    totalJobs: 0,
     currentJob: 1
   };
 
   componentDidMount = () => {
     const initialJob = [
-      [1, <StartJobItem jobNum={1} removeJob={this.removeSavedJob} />]
+      [
+        1,
+        <StartJobItem
+          jobNum={1}
+          totalJobs={this.state.totalJobs}
+          removeJob={this.removeSavedJob}
+          hideTask={this.props.hideTask}
+        />
+      ]
     ];
-    this.setState({ jobs: initialJob });
-  };
-
-  savedAllJobs = () => {
-    if (this.jobs.length === 0) {
-      this.props.hideTask();
-    }
+    this.setState({ jobs: initialJob, totalJobs: this.state.totalJobs + 1 });
   };
 
   removeSavedJob = jobNum => {
-    return () => {
-      let newJobs = this.state.jobs.slice();
-      console.log(newJobs);
-      newJobs.forEach((job, idx) => {
-        if (job[0] === jobNum) {
-          newJobs.splice(idx, 1);
-          return;
-        }
-      });
-      console.log(newJobs);
-      this.setState({ jobs: newJobs });
-      this.savedAllJobs();
-    };
+    let newJobs = this.state.jobs.slice();
+    newJobs = newJobs.filter(job => job[0] !== jobNum)
+    this.setState({ jobs: newJobs, totalJobs: this.state.totalJobs - 1, currentJob: 1 });
   };
 
   addJob = () => {
     let newJobs = this.state.jobs.slice();
     let jobNum = newJobs.length + 1;
     const newJob = (
-      <StartJobItem jobNum={jobNum} removeJob={this.removeSavedJob} />
+      <StartJobItem
+        jobNum={jobNum}
+        totalJobs={this.state.totalJobs}
+        removeJob={this.removeSavedJob}
+        hideTask={this.props.hideTask}
+      />
     );
     newJobs.push([jobNum, newJob]);
-    this.setState({ jobs: newJobs });
+    this.setState({ jobs: newJobs, totalJobs: this.state.totalJobs + 1});
   };
 
   swipeJob = dir => {
@@ -64,16 +62,13 @@ export default class StartJob extends Component {
         }
       }
       this.setState({ currentJob: currJob });
-    }
+    };
   };
 
   render = () => {
     let leftArrow =
       this.state.jobs.length > 1 ? (
-        <span
-          className="start-job-arrow left"
-          onClick={this.swipeJob("left")}
-        >
+        <span className="start-job-arrow left" onClick={this.swipeJob("left")}>
           &lsaquo;
         </span>
       ) : (
@@ -82,7 +77,7 @@ export default class StartJob extends Component {
     let rightArrow =
       this.state.jobs.length > 1 ? (
         <span
-          className="star-job-arrow right"
+          className="start-job-arrow right"
           onClick={this.swipeJob("right")}
         >
           &rsaquo;

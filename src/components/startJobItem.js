@@ -22,8 +22,7 @@ export default class StartJobItem extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.props);
-    this.props.removeJob(this.props.jobNum);
+
     this.toggleConfirmation();
   };
 
@@ -31,11 +30,18 @@ export default class StartJobItem extends Component {
     let inputTypes = Object.keys(this.state);
     inputTypes.pop();
 
+    let startJobObj = {
+      totalJobs: this.props.totalJobs,
+      removeJob: this.props.removeJob,
+      jobNum: this.props.jobNum
+    }
+
     if (this.state.showConfirmation) {
       return (
         <Confirmation
           task="Start Job"
           hideTask={this.props.hideTask}
+          startJobObj={startJobObj}
           toggleConfirmation={this.toggleConfirmation}
         />
       );
