@@ -4,16 +4,7 @@ import _ from "lodash";
 
 export default class StartJobItem extends Component {
   state = {
-    jobNumber: "",
-    partNumber: "",
-    partCount: undefined,
     showConfirmation: false
-  };
-
-  update = type => {
-    return e => {
-      this.setState({ [type]: e.currentTarget.value });
-    };
   };
 
   toggleConfirmation = () => {
@@ -34,7 +25,7 @@ export default class StartJobItem extends Component {
       totalJobs: this.props.totalJobs,
       removeJob: this.props.removeJob,
       jobNum: this.props.jobNum
-    }
+    };
 
     if (this.state.showConfirmation) {
       return (
@@ -50,15 +41,16 @@ export default class StartJobItem extends Component {
         <form className="start-job-item-container" onSubmit={this.handleSubmit}>
           <h4>Start Job {this.props.jobNum}</h4>
           <div className="start-job-item-inputs-container">
-            {inputTypes.map((inputType, idx) => {
+            {Object.keys(this.props.inputValues).map((inputType, idx) => {
               let type = _.capitalize(inputType.slice(0, inputType.length - 6));
               return (
                 <Input
                   key={idx}
                   type={type}
                   inputType={inputType}
-                  inputValue={this.state[inputType]}
-                  update={this.update}
+                  inputValue={this.props.inputValues[inputType]}
+                  jobNum={this.props.jobNum}
+                  update={this.props.update}
                 />
               );
             })}
@@ -91,15 +83,17 @@ const Input = props => {
 
   const type = props.inputType !== "partCount" ? "text" : "number";
 
+  const update = () => {
+    return e => {
+      props.update(props.inputType, props.jobNum, e.currentTarget.value);
+    };
+  };
+
   return (
     <div className="start-job-item-input-container">
       {inputName}
       <span className="start-job-item-input">
-        <input
-          type={type}
-          value={props.inputValue}
-          onChange={props.update(props.inputType)}
-        />
+        <input type={type} value={props.inputValue} onChange={update()} />
         {cameraIcon}
       </span>
     </div>

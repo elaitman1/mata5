@@ -322,7 +322,6 @@ h1, h4 {
   bottom: 40px;
   left: 0;
   background-color: var(--white);
-  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.56);
 }
 
 .start-job-add {
@@ -356,6 +355,11 @@ h1, h4 {
 }
 
 .start-job-item-container {
+  /* z-index: 10;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  background-color: var(--white); */
   width: calc(100vw - 70px);
   padding: 21px 35px;
   display: flex;

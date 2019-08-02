@@ -2,7 +2,7 @@ import React from "react";
 
 const Confirmation = props => {
   const confirmationHash = {
-    "Inspection": "Saved",
+    Inspection: "Saved",
     "Start Job": "Job Started"
   };
 
@@ -14,7 +14,7 @@ const Confirmation = props => {
 
     if (props.task === "Start Job") {
       props.startJobObj.removeJob(props.startJobObj.jobNum);
-      if (props.startJobObj.totalJobs === 0) {
+      if (props.startJobObj.totalJobs === 1) {
         props.hideTask();
       }
     }
