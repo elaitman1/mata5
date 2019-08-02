@@ -469,6 +469,33 @@ h1, h4 {
   height: 65px;
 }
 
+.preparation-checklist-note-container {
+  z-index: 15;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.preparation-checklist-note-container > input {
+  height: 100px;
+}
+
+.preparation-checklist-note-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 12;
+  background-color: rgba(0,0,0,.3);
+}
+
 .confirmation-container {
   z-index: 10;
   position: absolute;
