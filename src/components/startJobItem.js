@@ -83,17 +83,15 @@ const Input = props => {
 
   const type = props.inputType !== "partCount" ? "text" : "number";
 
-  const update = () => {
-    return e => {
-      props.update(props.inputType, props.jobNum, e.currentTarget.value);
-    };
+  const update = (e) => {
+    props.update(props.inputType, props.jobNum, e.currentTarget.value);
   };
 
   return (
     <div className="start-job-item-input-container">
       {inputName}
       <span className="start-job-item-input">
-        <input type={type} value={props.inputValue} onChange={update()} />
+        <input type={type} value={props.inputValue} onChange={update} />
         {cameraIcon}
       </span>
     </div>

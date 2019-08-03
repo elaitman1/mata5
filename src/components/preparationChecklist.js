@@ -33,7 +33,6 @@ export default class PreparationChecklist extends Component {
   };
 
   update = (value) => {
-    console.log("here")
     let newCells = this.state.cells;
     newCells[this.state.cellSelected][this.state.editNote] = value;
     this.setState({ cells: newCells });
@@ -138,10 +137,8 @@ const Button = props => {
 };
 
 const Note = props => {
-  const update = () => {
-    return e => {
-      props.update(e.currentTarget.value);
-    };
+  const update = e => {
+    props.update(e.currentTarget.value);
   };
 
   return (
@@ -149,7 +146,7 @@ const Note = props => {
       <div className="preparation-checklist-note-overlay"></div>
       <div className="preparation-checklist-note-container">
         <h4>{props.note} Note</h4>
-        <input type="textarea" value={props.noteInput} onChange={update()}/>
+        <input type="textarea" value={props.noteInput} onChange={update}/>
         <button className="form-submit-button" onClick={props.closeNote}>Save</button>
       </div>
     </div>
