@@ -454,6 +454,7 @@ h1, h4, h5 {
   box-shadow: 0 2px 4px 0 var(--boxshadow-green);
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
