@@ -13,6 +13,12 @@ export default class Splash extends Component {
     }
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    this.props.logIn();
+  }
+
   render = () => {
     const inputs = ["Username", "Password"];
 

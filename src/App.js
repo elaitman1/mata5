@@ -10,15 +10,11 @@ export default class App extends Component {
   state = {
     viewSelected: "overview",
     machineSelected: false,
-    displaySplash: true
+    loggedIn: false
   };
 
-  componentDidMount = () => {
-    // setTimeout(this.unmountSplash, 3000);
-  };
-
-  unmountSplash = () => {
-    this.setState({ displaySplash: false });
+  logIn = () => {
+    this.setState({ loggedIn: true });
   };
 
   selectView = view => {
@@ -30,8 +26,8 @@ export default class App extends Component {
   };
 
   render = () => {
-    if (this.state.displaySplash) {
-      return <Splash />
+    if (!this.state.loggedIn) {
+      return <Splash logIn={this.logIn} />
     } else {
       return (
         <div>
