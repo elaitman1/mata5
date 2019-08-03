@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Confirmation from "./confirmation";
+import Confirmation from "../confirmation";
 import _ from "lodash";
 
 export default class StartJobItem extends Component {

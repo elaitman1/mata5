@@ -52,6 +52,10 @@ export default class PreparationChecklist extends Component {
     this.setState({ editNote: null });
   }
 
+  handleSaveNotes = () => {
+    this.toggleConfirmation();
+  }
+
   renderCells = () => {
     return Object.keys(this.state.cells).map((cell, idx) => {
       if (this.state.firstCellSelection && idx === 0) {
@@ -80,7 +84,7 @@ export default class PreparationChecklist extends Component {
     });
   };
 
-  render = () => {
+  renderTask = () => {
     if (this.state.showConfirmation) {
       return (
         <Confirmation
@@ -105,7 +109,7 @@ export default class PreparationChecklist extends Component {
                   ))}
                 </div> : ""
               }
-              <button className="form-submit-button" onClick={this.toggleConfirmation}>Save</button>
+              <button className="form-submit-button" onClick={this.handleSaveNotes}>Save</button>
             </section>
           </div>
           {
@@ -122,6 +126,15 @@ export default class PreparationChecklist extends Component {
         </div>
       )
     }
+  }
+
+  render = () => {
+    return (
+      <div>
+        <div className="overlay" />
+        {this.renderTask()}
+      </div>
+    )
   };
 }
 

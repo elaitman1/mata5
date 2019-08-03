@@ -11,21 +11,27 @@ export default class Inspection extends Component {
 
   updatePartsNum = (type, oper) => {
     return () => {
-      if (oper === "add") {
-        this.setState(prevState => {
-          return { [type]: prevState[type] + 1 };
-        });
-      } else if (oper === "minus" && this.state[type] > 0) {
-        this.setState(prevState => {
-          return { [type]: prevState[type] - 1 };
-        });
-      }
+      this.setState(prevState => {
+        let input = prevState[type];
+        if (!input && input !== 0) {
+          input = 0;
+        }
+        if (oper === "add") {
+          return { [type]: input + 1 };
+        } else if (oper === "minus" && this.state[type] > 0) {
+          return { [type]: input - 1 };
+        }
+      });
     }
   }
 
   update = (type) => {
     return (e) => {
-      this.setState({ [type]: e.currentTarget.value })
+      let input = e.currentTarget.value;
+      if (input !== "") {
+        input = parseInt(input);
+      }
+      this.setState({ [type]: input })
     }
   }
 

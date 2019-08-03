@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import StartJob from "./startJob";
+import StartJob from "./startJob/startJob";
 import PreparationChecklist from "./preparationChecklist";
 import Inspection from "./inspection";
-// import Timer from "./timer";
+import Timer from "./timer";
 
 export default class Machine extends Component {
   state = {
@@ -33,8 +33,8 @@ export default class Machine extends Component {
         return <PreparationChecklist hideTask={this.hideTask} />;
       case "Inspection":
         return <Inspection hideTask={this.hideTask} />;
-      // case "Timer":
-      //   return <Timer />
+      case "Timer":
+        return <Timer hideTask={this.hideTask} />
       default:
         return "";
     }
