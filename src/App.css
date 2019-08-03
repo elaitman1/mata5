@@ -24,7 +24,7 @@ input::-webkit-inner-spin-button {
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-h1, h4 {
+h1, h4, h5 {
   margin: 0;
 }
 
@@ -469,23 +469,6 @@ h1, h4 {
   height: 65px;
 }
 
-.preparation-checklist-note-container {
-  z-index: 15;
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  background-color: var(--white);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.preparation-checklist-note-container > input {
-  height: 100px;
-}
-
 .preparation-checklist-note-overlay {
   position: fixed;
   top: 0;
@@ -494,6 +477,35 @@ h1, h4 {
   width: 100%;
   z-index: 12;
   background-color: rgba(0,0,0,.3);
+}
+
+.preparation-checklist-note-container {
+  z-index: 15;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  background-color: var(--white);
+  padding: 20px;
+  width: calc(100vw - 40px);
+}
+
+.preparation-checklist-note-container > h5 {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.preparation-checklist-note-container > textarea {
+  min-height: 125px;
+  width: calc(100% - 20px);
+  resize: none;
+  vertical-align: top;
+  margin: 15px 0;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.preparation-checklist-note-container > button {
+  float: right;
 }
 
 .confirmation-container {

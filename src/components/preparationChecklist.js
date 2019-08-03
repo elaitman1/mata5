@@ -145,8 +145,8 @@ const Note = props => {
     <div>
       <div className="preparation-checklist-note-overlay"></div>
       <div className="preparation-checklist-note-container">
-        <h4>{props.note} Note</h4>
-        <input type="textarea" value={props.noteInput} onChange={update}/>
+        <h5>{props.note} Note</h5>
+        <textarea value={props.noteInput} onChange={update}></textarea>
         <button className="form-submit-button" onClick={props.closeNote}>Save</button>
       </div>
     </div>
