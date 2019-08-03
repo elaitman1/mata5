@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Splash from "./components/splash"
 import Navbar from "./components/navbar";
 import Overview from "./components/overview";
 import Floormap from "./components/floormap";
@@ -13,7 +14,7 @@ export default class App extends Component {
   };
 
   componentDidMount = () => {
-    setTimeout(this.unmountSplash, 3000);
+    // setTimeout(this.unmountSplash, 3000);
   };
 
   unmountSplash = () => {
@@ -30,11 +31,7 @@ export default class App extends Component {
 
   render = () => {
     if (this.state.displaySplash) {
-      return (
-        <div className="splash">
-          <img src="./assets/splash.png" alt="Splash Logo" />
-        </div>
-      );
+      return <Splash />
     } else {
       return (
         <div>
