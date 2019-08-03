@@ -263,6 +263,17 @@ h1, h4, h5 {
   margin-bottom: 25px;
 }
 
+.inspection-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.inspection-body > input {
+  margin-right: 25px;
+  margin-top: 10px;
+}
+
 .inspection-input-container {
   display: flex;
   justify-content: center;
@@ -299,22 +310,6 @@ h1, h4, h5 {
   cursor: pointer;
   font-size: 26px;
   color: var(--inactive-grey2);
-}
-
-.inspection-finish {
-  display: flex;
-  align-items: center;
-}
-
-.inspection-finish > span {
-  text-align: center;
-  width: 45vw;
-  color: var(--active-blue);
-  cursor: pointer;
-}
-
-.inspection-finish > span:hover {
-  text-decoration: underline;
 }
 
 .start-job-container {

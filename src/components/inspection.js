@@ -58,29 +58,28 @@ export default class Inspection extends Component {
       return (
         <form className="inspection-container" onSubmit={this.handleSubmit}>
           <h4>Inspection</h4>
-          {
-            partsTypes.map((partsType, idx) => {
-              let type = _.capitalize(partsType.slice(0, partsType.length - 5));
-              return (
-                <PartsInput
-                  key={idx}
-                  type={type}
-                  partsType={partsType}
-                  numParts={this.state[partsType]}
-                  update={this.update}
-                  updatePartsNum={this.updatePartsNum}
-                />
-              )
-            })
-          }
-          <div className="inspection-input-container">
-            <p>Total Parts</p>
-            <span className="inspection-parts-input">{totalParts}</span>
-          </div>
-          <div className="inspection-finish">
-            <span>Skip</span>
+          <section className="inspection-body">
+            {
+              partsTypes.map((partsType, idx) => {
+                let type = _.capitalize(partsType.slice(0, partsType.length - 5));
+                return (
+                  <PartsInput
+                    key={idx}
+                    type={type}
+                    partsType={partsType}
+                    numParts={this.state[partsType]}
+                    update={this.update}
+                    updatePartsNum={this.updatePartsNum}
+                  />
+                )
+              })
+            }
+            <div className="inspection-input-container">
+              <p>Total Parts</p>
+              <span className="inspection-parts-input">{totalParts}</span>
+            </div>
             <input className="form-submit-button" type="submit" value="Save" />
-          </div>
+          </section>
         </form>
       )
     }
