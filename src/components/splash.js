@@ -4,7 +4,12 @@ import _ from "lodash";
 export default class Splash extends Component {
   state = {
     Username: "",
-    Password: ""
+    Password: "",
+    loginErrors: ""
+  }
+
+  componentWillUnmount = () => {
+    this.setState({ loginErrors: "" });
   }
 
   update = (field) => {
@@ -16,7 +21,13 @@ export default class Splash extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    this.props.logIn();
+    if (this.state.Username.trim() === "") {
+      this.setState({ loginErrors: "Username can't be blank." })
+    } else if (this.state.Password === "") {
+      this.setState({ loginErrors: "Password can't be blank." })
+    } else {
+      this.props.logIn();
+    }
   }
 
   render = () => {
@@ -39,6 +50,7 @@ export default class Splash extends Component {
             }
           </div>
           <p>Forgot Password?</p>
+          <p>{this.state.loginErrors}</p>
           <input className="login-form-button" type="submit" value="Log In" />
         </form>
       </div>
