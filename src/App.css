@@ -644,13 +644,7 @@ h1, h4, h5 {
   color: var(--inactive-grey2);
 }
 
-.timer-hour-value {
-  font-size: 20px;
-  margin: 5px 0;
-  color: var(--inactive-grey2);
-}
-
-.timer-hour-value.selected {
+.timer-value.selected {
   color: var(--black);
 }
 
