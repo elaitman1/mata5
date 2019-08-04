@@ -544,7 +544,7 @@ h1, h4, h5 {
   cursor: pointer;
 }
 
-.preparation-checklist-button-container:active {
+.preparation-checklist-button-container.selected {
   background-image: radial-gradient(circle at 50% 50%, var(--white), var(--active-blue));
 }
 

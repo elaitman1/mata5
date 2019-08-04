@@ -5,20 +5,20 @@ export default class PreparationChecklist extends Component {
   state = {
     cells: {
       Machining: {
-        "Clean Chamber": "",
-        "Tool Offset Value": ""
+        "Clean Chamber": false,
+        "Tool Offset": false
       },
       Preparation: {
-        "Job Spec Confirmation": "",
-        "Revise CAD Modeling": "",
-        "Edit Toolpath": ""
+        "Job Spec Confirmation": false,
+        "Revise CAD Modeling": false,
+        "Edit Toolpath": false
       },
-      Offset: []
+      Note: ""
     },
     cellSelected: "Machining",
+    displayNote: false,
     firstCellSelection: true,
-    showConfirmation: false,
-    editNote: null
+    showConfirmation: false
   };
 
   selectCell = cell => {
@@ -32,29 +32,32 @@ export default class PreparationChecklist extends Component {
     };
   };
 
-  update = (value) => {
+  update = e => {
     let newCells = this.state.cells;
-    newCells[this.state.cellSelected][this.state.editNote] = value;
+    newCells.Note = e.currentTarget.value;
     this.setState({ cells: newCells });
   };
 
   toggleConfirmation = () => {
     this.setState({ showConfirmation: !this.state.showConfirmation });
-  }
+  };
 
-  openNote = type => {
-    return () => {
-      this.setState({ editNote: type });
-    }
-  }
-
-  closeNote = () => {
-    this.setState({ editNote: null });
-  }
-
-  handleSaveNotes = () => {
+  handleSaveChecklist = () => {
     this.toggleConfirmation();
-  }
+  };
+
+  toggleChecklist = checkList => {
+    return () => {
+      let newCells = this.state.cells;
+      let bool = newCells[this.state.cellSelected][checkList];
+      newCells[this.state.cellSelected][checkList] = bool ? false : true;
+      this.setState({ cells: newCells });
+    };
+  };
+
+  toggleNote = () => {
+    this.setState({ displayNote: !this.state.displayNote });
+  };
 
   renderCells = () => {
     return Object.keys(this.state.cells).map((cell, idx) => {
@@ -66,6 +69,12 @@ export default class PreparationChecklist extends Component {
             className="cell selected"
             onClick={this.selectCell(cell)}
           >
+            {cell}
+          </span>
+        );
+      } else if (cell === "Note") {
+        return (
+          <span key={idx} id={cell} className="cell" onClick={this.toggleNote}>
             {cell}
           </span>
         );
@@ -92,41 +101,63 @@ export default class PreparationChecklist extends Component {
           hideTask={this.props.hideTask}
           toggleConfirmation={this.toggleConfirmation}
         />
-      )
+      );
     } else {
       return (
         <div>
-          <div className="overlay"></div>
+          <div className="overlay" />
           <div className="preparation-checklist-container">
             <h4>Start Job</h4>
-            <header className="preparation-checklist-cells-container">{this.renderCells()}</header>
+            <header className="preparation-checklist-cells-container">
+              {this.renderCells()}
+            </header>
             <section className="preparation-checklist-body">
-              {
-                this.state.cellSelected ?
-                <div className="preparation-checklist-buttons-container">
-                  {Object.keys(this.state.cells[this.state.cellSelected]).map((butTyp, idx) => (
-                    <Button key={idx} type={butTyp} openNote={this.openNote} />
-                  ))}
-                </div> : ""
-              }
-              <button className="form-submit-button" onClick={this.handleSaveNotes}>Save</button>
+              <div className="preparation-checklist-buttons-container">
+                {Object.keys(this.state.cells[this.state.cellSelected]).map(
+                  (checkList, idx) => (
+                    <Button
+                      key={idx}
+                      type={checkList}
+                      toggleChecklist={this.toggleChecklist}
+                      bool={
+                        this.state.cells[this.state.cellSelected][checkList]
+                      }
+                    />
+                  )
+                )}
+              </div>
+              <button
+                className="form-submit-button"
+                onClick={this.handleSaveChecklist}
+              >
+                Save
+              </button>
+              {this.state.displayNote ? (
+                <div>
+                  <div className="preparation-checklist-note-overlay" />
+                  <div className="preparation-checklist-note-container">
+                    <h5>Add Note</h5>
+                    <textarea
+                      value={this.state.cells.Note}
+                      onChange={this.update}
+                    />
+                    <button
+                      className="form-submit-button"
+                      onClick={this.toggleNote}
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
             </section>
           </div>
-          {
-            this.state.editNote
-              ?
-            <Note
-              note={this.state.editNote}
-              noteInput={this.state.cells[this.state.cellSelected][this.state.editNote]}
-              closeNote={this.closeNote}
-              update={this.update} />
-              :
-            ""
-          }
         </div>
-      )
+      );
     }
-  }
+  };
 
   render = () => {
     return (
@@ -134,34 +165,23 @@ export default class PreparationChecklist extends Component {
         <div className="overlay" />
         {this.renderTask()}
       </div>
-    )
+    );
   };
 }
 
 const Button = props => {
   return (
     <div
+      id={props.type}
       className="preparation-checklist-button-container"
-      onClick={props.openNote(props.type)}
+      style={{
+        backgroundImage: props.bool
+          ? "radial-gradient(circle at 50% 50%, #FFFFFF, #2E5BFF)"
+          : ""
+      }}
+      onClick={props.toggleChecklist(props.type)}
     >
       <p>{props.type}</p>
     </div>
   );
 };
-
-const Note = props => {
-  const update = e => {
-    props.update(e.currentTarget.value);
-  };
-
-  return (
-    <div>
-      <div className="preparation-checklist-note-overlay"></div>
-      <div className="preparation-checklist-note-container">
-        <h5>{props.note} Note</h5>
-        <textarea value={props.noteInput} onChange={update}></textarea>
-        <button className="form-submit-button" onClick={props.closeNote}>Save</button>
-      </div>
-    </div>
-  )
-}
