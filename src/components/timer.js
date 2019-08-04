@@ -14,8 +14,6 @@ export default class Timer extends Component {
   };
 
   handleStartTimer = () => {
-    console.log(this.state);
-
     this.toggleConfirmation();
   };
 
@@ -25,16 +23,21 @@ export default class Timer extends Component {
       let fieldElements = document.querySelectorAll(`.timer-value.${field}`);
       fieldElements.forEach(elem => {
         let scrollPos = (elem.getBoundingClientRect().top + elem.getBoundingClientRect().bottom)/2;
+        let input = elem.innerHTML;
+        let timerValue = "";
         if (scrollPos >= selector.top && scrollPos <= selector.bottom) {
           elem.className = `timer-value ${field} selected`;
-          let input = elem.innerHTML;
-          let timerValue = "";
-          for (let i=0; i<input.length; i++) {
-            let str = input[i];
-            if (parseInt(str) < 60) {
-              timerValue = timerValue.concat(str);
+          if (field !== "hour") {
+            timerValue = input;
+          } else {
+            for (let i=0; i<input.length; i++) {
+              let str = input[i];
+              if (parseInt(str) < 60) {
+                timerValue = timerValue.concat(str);
+              }
             }
           }
+
           this.setState({ [field]: parseInt(timerValue) })
         } else {
           if (elem.className !== `timer-value ${field}`) {
@@ -58,7 +61,10 @@ export default class Timer extends Component {
       return (
         <div className="timer-container">
           <div className="timer-specs-container">
-            <span className="timer-selector-bar" id="selector"></span>
+            <span className="timer-selector-bar" id="selector">
+              <p>{this.state.minute > 1 ? "mins" : "min"}</p>
+              <p>sec</p>
+            </span>
             <div className="timer-scrollable-container" onScroll={this.updateTimerValue("hour")}>
               {[" ", " ", " ", " ", " ", " ", " ", " "]
                 .concat([...Array(13).keys()])
@@ -78,11 +84,10 @@ export default class Timer extends Component {
                 .concat([...Array(60).keys()])
                 .concat([" ", " ", " ", " ", " ", " ", " ", " ", " "])
                 .map((min, idx) => {
-                  const mins = min === " " ? " " : min > 1 ? "mins" : "min";
                   const className = min === 0 ? "timer-value minute selected" : "timer-value minute";
                   return (
                     <p key={idx} id={idx} className={className}>
-                      {min} {mins}
+                      {min}
                     </p>
                   );
                 })}
@@ -92,11 +97,10 @@ export default class Timer extends Component {
                 .concat([...Array(60).keys()])
                 .concat([" ", " ", " ", " ", " ", " ", " ", " ", " "])
                 .map((sec, idx) => {
-                  const secs = sec === " " ? " " : "sec";
                   const className = sec === 0 ? "timer-value second selected" : "timer-value second";
                   return (
                     <p key={idx} id={idx} className={className}>
-                      {sec} {secs}
+                      {sec}
                     </p>
                   )
                 })}

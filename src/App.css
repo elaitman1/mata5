@@ -54,7 +54,7 @@ h1, h4, h5 {
 }
 
 .splash > img {
-  width: 100%;
+  width: 100vw;
   margin-bottom: 75px;
 }
 
@@ -629,10 +629,26 @@ h1, h4, h5 {
   height: 25px;
 }
 
+.timer-selector-bar > p {
+  font-size: 18px;
+}
+
+.timer-selector-bar > p:nth-of-type(1) {
+  position: absolute;
+  top: -18px;
+  left: 125px;
+}
+
+.timer-selector-bar > p:nth-of-type(2) {
+  position: absolute;
+  top: -18px;
+  right: 25px;
+}
+
 .timer-scrollable-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   height: 100%;
   overflow-y: scroll;
   margin: 0 8px;
@@ -646,6 +662,14 @@ h1, h4, h5 {
 
 .timer-value.selected {
   color: var(--black);
+}
+
+.timer-value.minute {
+  margin-right: 50px;
+}
+
+.timer-value.second {
+  margin-right: 30px;
 }
 
 .confirmation-container {
