@@ -648,7 +648,7 @@ h1, h4, h5 {
   align-items: flex-start;
   height: 100%;
   overflow-y: scroll;
-  margin: 0 8px;
+  padding: 0 8px;
 }
 
 .timer-value {
