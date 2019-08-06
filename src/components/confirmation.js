@@ -3,22 +3,14 @@ import React from "react";
 const Confirmation = props => {
   const confirmationHash = {
     Inspection: "Saved",
-    "Start Job": "Job Started",
+    "Start Job": "Job(s) Started",
     "Preparation Checklist": "Note Saved",
-    "Timer": "Timer Started"
+    Timer: "Timer Started"
   };
 
   const closeConfirmation = () => {
     props.toggleConfirmation();
-
-    if (props.task === "Start Job") {
-      props.startJobObj.removeJob(props.startJobObj.jobNum);
-      if (props.startJobObj.totalJobs === 1) {
-        props.hideTask();
-      }
-    } else {
-      props.hideTask();
-    }
+    props.hideTask();
   };
 
   return (

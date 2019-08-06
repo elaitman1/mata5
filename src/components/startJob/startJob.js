@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Confirmation from "../confirmation";
 import StartJobItem from "./startJobItem";
 
 export default class StartJob extends Component {
@@ -14,7 +15,13 @@ export default class StartJob extends Component {
       }
     ],
     totalJobs: 1,
-    currentJob: 1
+    currentJob: 1,
+    showErrorModal: false,
+    showConfirmation: false
+  };
+
+  toggleConfirmation = () => {
+    this.setState({ showConfirmation: !this.state.showConfirmation });
   };
 
   update = (type, jobNum, value) => {
@@ -25,16 +32,6 @@ export default class StartJob extends Component {
       }
     });
     this.setState({ jobs: newJobs });
-  };
-
-  removeSavedJob = jobNum => {
-    let newJobs = this.state.jobs.slice();
-    newJobs = newJobs.filter(job => job.jobNum !== jobNum);
-    this.setState({
-      jobs: newJobs,
-      totalJobs: this.state.totalJobs - 1,
-      currentJob: 1
-    });
   };
 
   addJob = () => {
@@ -77,8 +74,28 @@ export default class StartJob extends Component {
     };
   };
 
+  handleSubmit = () => {
+    if (this.hasNoEmptyCards()) {
+      this.toggleConfirmation();
+    } else {
+      this.toggleEmptyCardModal();
+    }
+  };
+
+  toggleEmptyCardModal = () => {
+    this.setState({ showErrorModal: !this.state.showErrorModal });
+  };
+
+  hasNoEmptyCards = () => {
+    return this.state.jobs.every(job => {
+      return Object.keys(job.inputValues).every(inputVal => {
+        return job.inputValues[inputVal] ? true : false;
+      });
+    });
+  };
+
   render = () => {
-    let leftArrow =
+    const leftArrow =
       this.state.totalJobs > 1 ? (
         <span className="start-job-arrow left" onClick={this.swipeJob("left")}>
           &lsaquo;
@@ -86,7 +103,7 @@ export default class StartJob extends Component {
       ) : (
         ""
       );
-    let rightArrow =
+    const rightArrow =
       this.state.totalJobs > 1 ? (
         <span
           className="start-job-arrow right"
@@ -98,36 +115,89 @@ export default class StartJob extends Component {
         ""
       );
 
-    return (
-      <div>
-        <div className="overlay" onClick={this.props.hideTask} />
-        <div className="start-job-container">
-          {leftArrow}
-          <img
-            className="start-job-add"
-            src="./assets/add.png"
-            alt="Add"
-            onClick={this.addJob}
-          />
-          {this.state.jobs.length > 0 ? (
-            <StartJobItem
-              key={this.state.jobs[this.state.currentJob - 1].jobNum}
-              jobNum={this.state.jobs[this.state.currentJob - 1].jobNum}
-              inputValues={
-                this.state.jobs[this.state.currentJob - 1].inputValues
-              }
-              currentJob={this.state.currentJob}
-              totalJobs={this.state.totalJobs}
-              update={this.update}
-              removeJob={this.removeSavedJob}
-              hideTask={this.props.hideTask}
-            />
-          ) : (
-            ""
-          )}
-          {rightArrow}
+    const errorModal = this.state.showErrorModal ? (
+      <span className="start-job-modal-overlay">
+        <div className="start-job-modal-container">
+          <p>Please complete all job cards' input fields.</p>
+          <button
+            className="form-submit-button"
+            onClick={this.toggleEmptyCardModal}
+          >
+            Ok
+          </button>
         </div>
-      </div>
+      </span>
+    ) : (
+      ""
     );
+
+    const startJobItems =
+      this.state.jobs.length > 0 ? (
+        <StartJobItem
+          key={this.state.jobs[this.state.currentJob - 1].jobNum}
+          jobNum={this.state.jobs[this.state.currentJob - 1].jobNum}
+          inputValues={this.state.jobs[this.state.currentJob - 1].inputValues}
+          currentJob={this.state.currentJob}
+          totalJobs={this.state.totalJobs}
+          update={this.update}
+        />
+      ) : (
+        ""
+      );
+
+    const tracker =
+      this.state.totalJobs > 1
+        ? [...Array(this.state.totalJobs).keys()].map((dot, idx) => {
+            let className =
+              idx === this.state.currentJob - 1
+                ? "start-job-tracker-dot selected"
+                : "start-job-tracker-dot";
+            return (
+              <span key={idx} className={className}>
+                &#9679;
+              </span>
+            );
+          })
+        : "";
+
+    if (this.state.showConfirmation) {
+      return (
+        <Confirmation
+          task="Start Job"
+          hideTask={this.props.hideTask}
+          toggleConfirmation={this.toggleConfirmation}
+        />
+      );
+    } else {
+      return (
+        <div>
+          <div className="overlay" onClick={this.props.hideTask} />
+          <div className="start-job-container">
+            {errorModal}
+            {leftArrow}
+            <img
+              className="start-job-add"
+              src="./assets/add.png"
+              alt="Add"
+              onClick={this.addJob}
+            />
+            <h4>
+              Start Job {this.state.currentJob} of {this.state.totalJobs}
+            </h4>
+            {startJobItems}
+            <div className="button-flex-end-wrapper">
+              <button
+                className="form-submit-button"
+                onClick={this.handleSubmit}
+              >
+                Save
+              </button>
+            </div>
+            <div className="start-job-tracker-container">{tracker}</div>
+            {rightArrow}
+          </div>
+        </div>
+      );
+    }
   };
 }

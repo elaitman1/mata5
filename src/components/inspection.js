@@ -7,7 +7,7 @@ export default class Inspection extends Component {
     goodParts: 1,
     badParts: 1,
     showConfirmation: false
-  }
+  };
 
   updatePartsNum = (type, oper) => {
     return () => {
@@ -22,35 +22,49 @@ export default class Inspection extends Component {
           return { [type]: input - 1 };
         }
       });
-    }
-  }
+    };
+  };
 
-  update = (type) => {
-    return (e) => {
+  update = type => {
+    return e => {
       let input = e.currentTarget.value;
       if (input !== "") {
         input = parseInt(input);
       }
-      this.setState({ [type]: input })
-    }
-  }
+      this.setState({ [type]: input });
+    };
+  };
 
   toggleConfirmation = () => {
     this.setState({ showConfirmation: !this.state.showConfirmation });
-  }
+  };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
 
     this.toggleConfirmation();
-  }
+  };
 
   renderTask = () => {
+    const good =
+      this.state.goodParts !== "" ? parseInt(this.state.goodParts) : 0;
+    const bad = this.state.badParts !== "" ? parseInt(this.state.badParts) : 0;
+    const totalParts = _.sum([good, bad]);
     let partsTypes = Object.keys(this.state);
     partsTypes.pop();
-    let good = this.state.goodParts !== "" ? parseInt(this.state.goodParts) : 0;
-    let bad = this.state.badParts !== "" ? parseInt(this.state.badParts) : 0;
-    let totalParts = _.sum([good, bad]);
+    const partsInputs = partsTypes.map((partsType, idx) => {
+      let type = _.capitalize(partsType.slice(0, partsType.length - 5));
+      return (
+        <PartsInput
+          key={idx}
+          type={type}
+          partsType={partsType}
+          numParts={this.state[partsType]}
+          update={this.update}
+          updatePartsNum={this.updatePartsNum}
+        />
+      );
+    });
 
     if (this.state.showConfirmation) {
       return (
@@ -59,27 +73,13 @@ export default class Inspection extends Component {
           hideTask={this.props.hideTask}
           toggleConfirmation={this.toggleConfirmation}
         />
-      )
+      );
     } else {
       return (
         <form className="inspection-container" onSubmit={this.handleSubmit}>
           <h4>Inspection</h4>
           <section className="inspection-body">
-            {
-              partsTypes.map((partsType, idx) => {
-                let type = _.capitalize(partsType.slice(0, partsType.length - 5));
-                return (
-                  <PartsInput
-                    key={idx}
-                    type={type}
-                    partsType={partsType}
-                    numParts={this.state[partsType]}
-                    update={this.update}
-                    updatePartsNum={this.updatePartsNum}
-                  />
-                )
-              })
-            }
+            {partsInputs}
             <div className="inspection-input-container">
               <p>Total Parts</p>
               <span className="inspection-parts-input">{totalParts}</span>
@@ -87,21 +87,21 @@ export default class Inspection extends Component {
             <input className="form-submit-button" type="submit" value="Save" />
           </section>
         </form>
-      )
+      );
     }
-  }
+  };
 
   render = () => {
     return (
       <div>
-        <div className="overlay" onClick={this.props.hideTask}></div>
+        <div className="overlay" onClick={this.props.hideTask} />
         {this.renderTask()}
       </div>
-    )
-  }
+    );
+  };
 }
 
-const PartsInput = (props) => {
+const PartsInput = props => {
   return (
     <div className="inspection-input-container">
       <p>{props.type} Parts</p>
@@ -115,5 +115,5 @@ const PartsInput = (props) => {
         <div onClick={props.updatePartsNum(props.partsType, "add")}>+</div>
       </span>
     </div>
-  )
-}
+  );
+};

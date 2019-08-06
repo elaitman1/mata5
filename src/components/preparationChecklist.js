@@ -17,6 +17,7 @@ export default class PreparationChecklist extends Component {
       Note: ""
     },
     cellSelected: "Machining",
+    prevCell: null,
     displayNote: false,
     firstCellSelection: true,
     showConfirmation: false
@@ -26,6 +27,10 @@ export default class PreparationChecklist extends Component {
     return () => {
       if (this.state.firstCellSelection) {
         this.setState({ firstCellSelection: false });
+      }
+      if (cell === "Note") {
+        this.setState({ prevCell: this.state.cellSelected });
+        this.toggleNote();
       }
       document.getElementById(this.state.cellSelected).className = "cell";
       document.getElementById(cell).className = "cell selected";
@@ -56,6 +61,13 @@ export default class PreparationChecklist extends Component {
     };
   };
 
+  saveNote = () => {
+    this.setState({ cellSelected: this.state.prevCell, prevCell: null });
+    document.getElementById(this.state.cellSelected).className = "cell";
+    document.getElementById(this.state.prevCell).className = "cell selected";
+    this.toggleNote();
+  };
+
   toggleNote = () => {
     this.setState({ displayNote: !this.state.displayNote });
   };
@@ -70,12 +82,6 @@ export default class PreparationChecklist extends Component {
             className="cell selected"
             onClick={this.selectCell(cell)}
           >
-            {cell}
-          </span>
-        );
-      } else if (cell === "Note") {
-        return (
-          <span key={idx} id={cell} className="cell" onClick={this.toggleNote}>
             {cell}
           </span>
         );
@@ -104,6 +110,33 @@ export default class PreparationChecklist extends Component {
         />
       );
     } else {
+      const note = this.state.displayNote ? (
+        <div>
+          <div className="preparation-checklist-note-overlay" />
+          <div className="preparation-checklist-note-container">
+            <h5>Add Note</h5>
+            <textarea value={this.state.cells.Note} onChange={this.update} />
+            <button className="form-submit-button" onClick={this.saveNote}>
+              Save
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      );
+
+      const checklistButtons = Object.keys(
+        this.state.cells[this.state.cellSelected]
+      ).map((checkList, idx) => (
+        <Button
+          key={idx}
+          type={checkList}
+          cell={this.state.cellSelected}
+          toggleChecklist={this.toggleChecklist}
+          bool={this.state.cells[this.state.cellSelected][checkList]}
+        />
+      ));
+
       return (
         <div>
           <div className="preparation-checklist-container">
@@ -113,18 +146,7 @@ export default class PreparationChecklist extends Component {
             </header>
             <section className="preparation-checklist-body">
               <div className="preparation-checklist-buttons-container">
-                {Object.keys(this.state.cells[this.state.cellSelected]).map(
-                  (checkList, idx) => (
-                    <Button
-                      key={idx}
-                      type={checkList}
-                      toggleChecklist={this.toggleChecklist}
-                      bool={
-                        this.state.cells[this.state.cellSelected][checkList]
-                      }
-                    />
-                  )
-                )}
+                {checklistButtons}
               </div>
               <button
                 className="form-submit-button"
@@ -132,26 +154,7 @@ export default class PreparationChecklist extends Component {
               >
                 Save
               </button>
-              {this.state.displayNote ? (
-                <div>
-                  <div className="preparation-checklist-note-overlay" onClick={this.toggleNote} />
-                  <div className="preparation-checklist-note-container">
-                    <h5>Add Note</h5>
-                    <textarea
-                      value={this.state.cells.Note}
-                      onChange={this.update}
-                    />
-                    <button
-                      className="form-submit-button"
-                      onClick={this.toggleNote}
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
+              {note}
             </section>
           </div>
         </div>
@@ -171,17 +174,23 @@ export default class PreparationChecklist extends Component {
 
 const Button = props => {
   return (
-    <div
-      id={props.type}
-      className="preparation-checklist-button-container"
-      style={{
-        backgroundImage: props.bool
-          ? "radial-gradient(circle at 50% 50%, #FFFFFF, #2E5BFF)"
-          : ""
-      }}
-      onClick={props.toggleChecklist(props.type)}
-    >
-      <p>{props.type}</p>
+    <div>
+      {props.cell !== "Note" ? (
+        <div
+          id={props.type}
+          className="preparation-checklist-button-container"
+          style={{
+            backgroundImage: props.bool
+              ? "radial-gradient(circle at 50% 50%, #FFFFFF, #2E5BFF)"
+              : ""
+          }}
+          onClick={props.toggleChecklist(props.type)}
+        >
+          <p>{props.type}</p>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

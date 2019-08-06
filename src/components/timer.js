@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Confirmation from "./confirmation";
+import _ from "lodash";
 
 export default class Timer extends Component {
   state = {
@@ -32,12 +33,12 @@ export default class Timer extends Component {
         let timerValue = "";
         if (scrollPos >= selector.top && scrollPos <= selector.bottom) {
           elem.className = `timer-value ${field} selected`;
-            for (let i = 0; i < input.length; i++) {
-              let str = input[i];
-              if (parseInt(str) < 60) {
-                timerValue = timerValue.concat(str);
-              }
+          for (let i = 0; i < input.length; i++) {
+            let str = input[i];
+            if (parseInt(str) < 60) {
+              timerValue = timerValue.concat(str);
             }
+          }
           this.setState({ [field]: parseInt(timerValue) });
         } else {
           if (elem.className !== `timer-value ${field}`) {
@@ -49,6 +50,18 @@ export default class Timer extends Component {
   };
 
   renderTask = () => {
+    const scrollables = Object.keys(this.state).map((timerSpec, idx) => {
+      if (timerSpec !== "showConfirmation") {
+        return (
+          <Scrollable
+            key={idx}
+            spec={timerSpec}
+            updateTimerValue={this.updateTimerValue}
+          />
+        );
+      }
+    });
+
     if (this.state.showConfirmation) {
       return (
         <Confirmation
@@ -62,72 +75,7 @@ export default class Timer extends Component {
         <div className="timer-container">
           <div className="timer-specs-container">
             <span className="timer-selector-bar" id="selector" />
-            <div className="timer-input-container">
-              <h4>Hours</h4>
-              <div
-                className="timer-scrollable-container"
-                onScroll={this.updateTimerValue("hour")}
-              >
-                {[" ", " ", " ", " ", " ", " ", " ", " "]
-                  .concat([...Array(13).keys()])
-                  .concat([" ", " ", " ", " ", " ", " ", " ", " ", " "])
-                  .map((hr, idx) => {
-                    const className =
-                      hr === 0
-                        ? "timer-value hour selected"
-                        : "timer-value hour";
-                    return (
-                      <p key={idx} id={idx} className={className}>
-                        {hr}
-                      </p>
-                    );
-                  })}
-              </div>
-            </div>
-            <div className="timer-input-container">
-              <h4>Mins</h4>
-              <div
-                className="timer-scrollable-container"
-                onScroll={this.updateTimerValue("minute")}
-              >
-                {[" ", " ", " ", " ", " ", " ", " ", " "]
-                  .concat([...Array(60).keys()])
-                  .concat([" ", " ", " ", " ", " ", " ", " ", " ", " "])
-                  .map((min, idx) => {
-                    const className =
-                      min === 0
-                        ? "timer-value minute selected"
-                        : "timer-value minute";
-                    return (
-                      <p key={idx} id={idx} className={className}>
-                        {min}
-                      </p>
-                    );
-                  })}
-              </div>
-            </div>
-            <div className="timer-input-container">
-              <h4>Sec</h4>
-              <div
-                className="timer-scrollable-container"
-                onScroll={this.updateTimerValue("second")}
-              >
-                {[" ", " ", " ", " ", " ", " ", " ", " "]
-                  .concat([...Array(60).keys()])
-                  .concat([" ", " ", " ", " ", " ", " ", " ", " ", " "])
-                  .map((sec, idx) => {
-                    const className =
-                      sec === 0
-                        ? "timer-value second selected"
-                        : "timer-value second";
-                    return (
-                      <p key={idx} id={idx} className={className}>
-                        {sec}
-                      </p>
-                    );
-                  })}
-              </div>
-            </div>
+            {scrollables}
           </div>
           <button
             className="form-submit-button"
@@ -149,3 +97,33 @@ export default class Timer extends Component {
     );
   };
 }
+
+const Scrollable = props => {
+  const header = _.capitalize(props.spec);
+  const arrayLength = props.spec === "hour" ? 13 : 60;
+
+  return (
+    <div className="timer-input-container">
+      <h4>{header}</h4>
+      <div
+        className="timer-scrollable-container"
+        onScroll={props.updateTimerValue(props.spec)}
+      >
+        {[" ", " ", " ", " ", " ", " ", " ", " "]
+          .concat([...Array(arrayLength).keys()])
+          .concat([" ", " ", " ", " ", " ", " ", " ", " ", " "])
+          .map((val, idx) => {
+            const className =
+              val === 0
+                ? "timer-value hour selected"
+                : `timer-value ${props.spec}`;
+            return (
+              <p key={idx} className={className}>
+                {val}
+              </p>
+            );
+          })}
+      </div>
+    </div>
+  );
+};
