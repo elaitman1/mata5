@@ -143,7 +143,7 @@ export default class Timer extends Component {
   render = () => {
     return (
       <div>
-        <div className="overlay" />
+        <div className="overlay" onClick={this.props.hideTask} />
         {this.renderTask()}
       </div>
     );

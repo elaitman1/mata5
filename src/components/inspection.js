@@ -94,7 +94,7 @@ export default class Inspection extends Component {
   render = () => {
     return (
       <div>
-        <div className="overlay"></div>
+        <div className="overlay" onClick={this.props.hideTask}></div>
         {this.renderTask()}
       </div>
     )

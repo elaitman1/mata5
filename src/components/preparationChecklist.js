@@ -6,7 +6,8 @@ export default class PreparationChecklist extends Component {
     cells: {
       Machining: {
         "Clean Chamber": false,
-        "Tool Offset": false
+        "Tool Offset": false,
+        "Inspection Room": false
       },
       Preparation: {
         "Job Spec Confirmation": false,
@@ -105,7 +106,6 @@ export default class PreparationChecklist extends Component {
     } else {
       return (
         <div>
-          <div className="overlay" />
           <div className="preparation-checklist-container">
             <h4>Start Job</h4>
             <header className="preparation-checklist-cells-container">
@@ -134,7 +134,7 @@ export default class PreparationChecklist extends Component {
               </button>
               {this.state.displayNote ? (
                 <div>
-                  <div className="preparation-checklist-note-overlay" />
+                  <div className="preparation-checklist-note-overlay" onClick={this.toggleNote} />
                   <div className="preparation-checklist-note-container">
                     <h5>Add Note</h5>
                     <textarea
@@ -162,7 +162,7 @@ export default class PreparationChecklist extends Component {
   render = () => {
     return (
       <div>
-        <div className="overlay" />
+        <div className="overlay" onClick={this.props.hideTask} />
         {this.renderTask()}
       </div>
     );

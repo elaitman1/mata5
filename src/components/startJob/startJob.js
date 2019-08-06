@@ -100,7 +100,7 @@ export default class StartJob extends Component {
 
     return (
       <div>
-        <div className="overlay" />
+        <div className="overlay" onClick={this.props.hideTask} />
         <div className="start-job-container">
           {leftArrow}
           <img
