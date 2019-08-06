@@ -507,6 +507,7 @@ h1, h4, h5 {
 }
 
 .start-job-item-input input {
+  width: 90%;
   border: none;
   margin-right: 10px;
   font-size: 16px;
@@ -692,6 +693,7 @@ h1, h4, h5 {
   height: 100%;
   width: 100%;
   overflow-y: scroll;
+  z-index: 2;
 }
 
 .timer-value {
