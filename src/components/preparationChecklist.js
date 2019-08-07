@@ -19,6 +19,7 @@ export default class PreparationChecklist extends Component {
     cellSelected: "Machining",
     prevCell: null,
     displayNote: false,
+    prevNote: "",
     firstCellSelection: true,
     showConfirmation: false
   };
@@ -62,7 +63,20 @@ export default class PreparationChecklist extends Component {
   };
 
   saveNote = () => {
-    this.setState({ cellSelected: this.state.prevCell, prevCell: null });
+    this.setState({
+      cellSelected: this.state.prevCell,
+      prevCell: null,
+      prevNote: this.state.cells.Note
+    });
+    document.getElementById(this.state.cellSelected).className = "cell";
+    document.getElementById(this.state.prevCell).className = "cell selected";
+    this.toggleNote();
+  };
+
+  closeNote = () => {
+    let newCells = this.state.cells;
+    newCells.Note = this.state.prevNote;
+    this.setState({ cells: newCells, cellSelected: this.state.prevCell });
     document.getElementById(this.state.cellSelected).className = "cell";
     document.getElementById(this.state.prevCell).className = "cell selected";
     this.toggleNote();
@@ -112,7 +126,10 @@ export default class PreparationChecklist extends Component {
     } else {
       const note = this.state.displayNote ? (
         <div>
-          <div className="preparation-checklist-note-overlay" />
+          <div
+            className="preparation-checklist-note-overlay"
+            onClick={this.closeNote}
+          />
           <div className="preparation-checklist-note-container">
             <h5>Add Note</h5>
             <textarea value={this.state.cells.Note} onChange={this.update} />

@@ -7,6 +7,7 @@
         "type": "Eurotech",
         "timer": "18 Mins",
         "status": "Finished",
+        "online": true,
         "imgUrl": ""
       }
     ]
@@ -19,6 +20,7 @@
         "type": "Eurotech",
         "timer": "5 Mins",
         "status": "Finished",
+        "online": true,
         "imgUrl": ""
       },
       {
@@ -26,6 +28,7 @@
         "type": "Eurotech",
         "timer": "30 Mins",
         "status": "Finished",
+        "online": true,
         "imgUrl": ""
       },
       {
@@ -33,6 +36,7 @@
         "type": "Machine",
         "timer": "1 Hour",
         "status": "Finished",
+        "online": false,
         "imgUrl": ""
       },
       {
@@ -40,6 +44,7 @@
         "type": "Machine",
         "timer": "5 Mins",
         "status": "Finished",
+        "online": true,
         "imgUrl": ""
       }
     ]
@@ -52,6 +57,7 @@
         "type": "Machine",
         "timer": "8 Mins",
         "status": "Finished",
+        "online": true,
         "imgUrl": ""
       }
     ]
@@ -64,6 +70,7 @@
         "type": "Machine",
         "timer": "8 Mins",
         "status": "Finished",
+        "online": true,
         "imgUrl": ""
       }
     ]
@@ -76,6 +83,7 @@
         "type": "Machine",
         "timer": "8 Mins",
         "status": "Finished",
+        "online": true,
         "imgUrl": ""
       }
     ]
@@ -88,6 +96,7 @@
         "type": "Machine",
         "timer": "8 Mins",
         "status": "Finished",
+        "online": true,
         "imgUrl": ""
       }
     ]
