@@ -86,7 +86,7 @@ export default class StartJob extends Component {
 
   toggleCamera = () => {
     this.setState({ showCamera: !this.state.showCamera });
-  }
+  };
 
   toggleEmptyCardModal = () => {
     this.setState({ showErrorModal: !this.state.showErrorModal });
@@ -175,36 +175,38 @@ export default class StartJob extends Component {
           toggleConfirmation={this.toggleConfirmation}
         />
       );
-    } else if (this.state.showCamera) {
-      return <Camera toggleCamera={this.toggleCamera} />
     } else {
       return (
         <div>
           <div className="overlay" onClick={this.props.hideTask} />
-          <div className="start-job-container">
-            {errorModal}
-            {leftArrow}
-            <img
-              className="start-job-add"
-              src="./assets/add.png"
-              alt="Add"
-              onClick={this.addJob}
-            />
-            <h4>
-              Start Job {this.state.currentJob} of {this.state.totalJobs}
-            </h4>
-            {startJobItems}
-            <div className="button-flex-end-wrapper">
-              <button
-                className="form-submit-button"
-                onClick={this.handleSubmit}
-              >
-                Save
-              </button>
+          {this.state.showCamera ? (
+            <Camera toggleCamera={this.toggleCamera} />
+          ) : (
+            <div className="start-job-container">
+              {errorModal}
+              {leftArrow}
+              <img
+                className="start-job-add"
+                src="./assets/add.png"
+                alt="Add"
+                onClick={this.addJob}
+              />
+              <h4>
+                Start Job {this.state.currentJob} of {this.state.totalJobs}
+              </h4>
+              {startJobItems}
+              <div className="button-flex-end-wrapper">
+                <button
+                  className="form-submit-button"
+                  onClick={this.handleSubmit}
+                >
+                  Save
+                </button>
+              </div>
+              <div className="start-job-tracker-container">{tracker}</div>
+              {rightArrow}
             </div>
-            <div className="start-job-tracker-container">{tracker}</div>
-            {rightArrow}
-          </div>
+          )}
         </div>
       );
     }
