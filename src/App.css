@@ -540,7 +540,7 @@ h1, h4, h5 {
   left: 0;
   padding: 0 15px;
   width: calc(100vw - 30px);
-  height: calc(100vh - 32px);
+  height: 100vh;
   background-color: var(--white);
   display: flex;
   flex-direction: column;
@@ -575,10 +575,11 @@ h1, h4, h5 {
 
 .camera-bottom {
   width: 100vw;
-  height: 200px;
+  padding: 63px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(31, 31, 31, .2);
   background-image: linear-gradient(180deg, rgba(31, 31, 31, .2), rgba(255, 255, 255, 0.2));
 }
 
@@ -586,12 +587,12 @@ h1, h4, h5 {
   /* top: 38px; */
   height: 44px;
   width: 44px;
-  background: #fff;
+  background: var(--white);
   /* margin: -22px 0 0 -22px; */
   z-index: 2;
   /* position: absolute; */
   border-radius: 50%;
-  /* border: none; */
+  border: none;
 }
 .camera-button-outer-circle {
   /* position: absolute;
@@ -601,8 +602,8 @@ h1, h4, h5 {
   width: 75px;
   background-color: hsla(0,0%,100%,.4);
   z-index: 1;
-  /* border: none; */
-  margin-top: 20px;
+  border: none;
+  /* margin-top: 20px; */
 }
 
 .preparation-checklist-container {
