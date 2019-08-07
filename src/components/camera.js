@@ -57,7 +57,9 @@ class Camera extends React.Component {
           <span onClick={this.props.toggleCamera}>&lsaquo;</span>
           <h4>Scanner</h4>
         </div>
-        <video className="camera-preview" ref={this.videoRef} autoPlay="true" />
+        <div className="camera-preview-wrapper">
+          <video className="camera-preview" ref={this.videoRef} autoPlay="true" />
+        </div>
         ​<div className="camera-bottom">
           {this.state.dataUri === "" ? (
             <button
