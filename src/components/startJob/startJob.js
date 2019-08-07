@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Confirmation from "../confirmation";
 import StartJobItem from "./startJobItem";
+import Camera from "../camera";
 
 export default class StartJob extends Component {
   state = {
@@ -17,6 +18,7 @@ export default class StartJob extends Component {
     totalJobs: 1,
     currentJob: 1,
     showErrorModal: false,
+    showCamera: false,
     showConfirmation: false
   };
 
@@ -82,6 +84,10 @@ export default class StartJob extends Component {
     }
   };
 
+  toggleCamera = () => {
+    this.setState({ showCamera: !this.state.showCamera });
+  }
+
   toggleEmptyCardModal = () => {
     this.setState({ showErrorModal: !this.state.showErrorModal });
   };
@@ -140,6 +146,7 @@ export default class StartJob extends Component {
           currentJob={this.state.currentJob}
           totalJobs={this.state.totalJobs}
           update={this.update}
+          toggleCamera={this.toggleCamera}
         />
       ) : (
         ""
@@ -168,6 +175,8 @@ export default class StartJob extends Component {
           toggleConfirmation={this.toggleConfirmation}
         />
       );
+    } else if (this.state.showCamera) {
+      return <Camera toggleCamera={this.toggleCamera} />
     } else {
       return (
         <div>

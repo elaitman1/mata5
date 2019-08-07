@@ -15,6 +15,7 @@ export default class StartJobItem extends Component {
               inputValue={this.props.inputValues[inputType]}
               jobNum={this.props.jobNum}
               update={this.props.update}
+              toggleCamera={this.props.toggleCamera}
             />
           );
         })}
@@ -26,7 +27,7 @@ export default class StartJobItem extends Component {
 const Input = props => {
   const cameraIcon =
     props.inputType !== "partCount" ? (
-      <img src="./assets/camera.png" alt="camera" />
+      <img onClick={props.toggleCamera} src="./assets/camera.png" alt="camera" />
     ) : (
       ""
     );
