@@ -26,20 +26,14 @@ export default class Chat extends Component {
 }
 
 const ChatGroup = props => {
-  const icon = {
-    Machines: "chatMachine",
-    Parts: "chatPart",
-    Jobs: "chatJob"
-  };
-
   return (
     <div className="chat-group-container">
       <h5>{props.type}</h5>
       {props.chats.map(chat => {
-        const src = `./assets/${icon[props.type]}.png`;
+        const className = `chat-group-item-icon ${props.type}`;
         return (
           <div className="chat-group-item">
-            <img src={src} alt="Icon" />
+            <span className={className} />
             <p>{chat}</p>
           </div>
         );

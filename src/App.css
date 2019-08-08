@@ -84,11 +84,38 @@ h1, h4, h5 {
 .chat-group-item:active {
   color: var(--active-blue);
   background-color: rgba(46, 91, 255, 0.1);
-  border-left: 2px solid var(--active-blue);
+  border-left: 3px solid var(--active-blue);
 }
 
-.chat-group-item > img {
+.chat-group-item:active .chat-group-item-icon.Machines {
+  background-image: url("images/analyticsActive.png")
+}
+
+.chat-group-item:active .chat-group-item-icon.Parts {
+  background-image: url("images/starActive.png")
+}
+
+.chat-group-item:active .chat-group-item-icon.Jobs {
+  background-image: url("images/checkActive.png")
+}
+
+.chat-group-item-icon {
   margin-right: 10px;
+  width: 25px;
+  height: 25px;
+  background-size: contain;
+}
+
+.chat-group-item-icon.Machines {
+  background-image: url("images/analyticsInactive.png");
+}
+
+.chat-group-item-icon.Parts {
+  background-image: url("images/starInactive.png")
+}
+
+.chat-group-item-icon.Jobs {
+  background-image: url("images/checkInactive.png")
 }
 
 .chat-group-item > p {
