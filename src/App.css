@@ -46,11 +46,55 @@ h1, h4, h5 {
   position: absolute;
   top: 0;
   left: 0;
-  transition: width 0.5s;
-  width: 0;
+  transition: transform 0.5s;
+  transform: translateX(-70vw);
+  width: 70vw;
   height: 100vh;
   z-index: 10;
-  background-color: var(--active-blue);
+  background-color: var(--white);
+}
+
+.chat-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 15px;
+}
+
+.chat-header > img:nth-of-type(1) {
+  margin-right: 25px;
+}
+
+.chat-group-container {
+  margin: 18px 0;
+}
+
+.chat-group-container > h5 {
+  font-size: 15px;
+  font-weight: 400;
+  padding: 10px 25px;
+}
+
+.chat-group-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 19px 25px;
+}
+
+.chat-group-item:active {
+  color: var(--active-blue);
+  background-color: rgba(46, 91, 255, 0.1);
+  border-left: 2px solid var(--active-blue);
+}
+
+.chat-group-item > img {
+  margin-right: 10px;
+}
+
+.chat-group-item > p {
+  font-size: 15px;
+  margin: 0;
 }
 
 .splash {
@@ -166,6 +210,10 @@ h1, h4, h5 {
   padding: 10px;
   background-color: var(--navbar-grey);
   transition: transform 0.5s;
+}
+
+.navbar img {
+  cursor: pointer;
 }
 
 .navbar-icons {

@@ -40,13 +40,13 @@ export default class App extends Component {
 
   toggleChat = () => {
     if (this.state.displayChat) {
-      document.getElementById("chat").style.width = "0";
+      document.getElementById("chat").style.transform = "translateX(-70vw)";
       document.getElementById("nav").style.transform = "none";
       document.getElementById("main").style.transform = "none";
     } else {
-      document.getElementById("chat").style.width = "80vw";
-      document.getElementById("nav").style.transform = "translateX(80vw)";
-      document.getElementById("main").style.transform = "translateX(80vw)";
+      document.getElementById("chat").style.transform = "none";
+      document.getElementById("nav").style.transform = "translateX(85vw)";
+      document.getElementById("main").style.transform = "translateX(85vw)";
     }
 
     this.setState({ displayChat: !this.state.displayChat });
@@ -60,7 +60,7 @@ export default class App extends Component {
         <div className="app-container">
           <div className="overlay" onClick={this.toggleChat} style={{ display: this.state.displayChat ? "block" : "none" }} />
           <span id="chat" className="chat-wrapper">
-            <Chat cells={this.state.cells} toggleChat={this.toggleChat} />
+            <Chat toggleChat={this.toggleChat} />
           </span>
           <div>
             <Navbar toggleChat={this.toggleChat} />
