@@ -21,7 +21,7 @@ export default class Overview extends Component {
 
   render = () => {
     return (
-      <div id="main" style={{transition: "transform 0.5s"}}>
+      <div id="main" className="main-container">
         {
           !this.state.machineSelected ?
             <Feed

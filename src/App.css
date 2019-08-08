@@ -252,6 +252,10 @@ h1, h4, h5 {
   color: var(--active-blue);
 }
 
+.main-container {
+  transition: transform 0.5s
+}
+
 .feed-container {
   margin-top: 54px;
   padding: 10px 0;

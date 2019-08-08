@@ -43,10 +43,12 @@ export default class App extends Component {
       document.getElementById("chat").style.transform = "translateX(-70vw)";
       document.getElementById("nav").style.transform = "none";
       document.getElementById("main").style.transform = "none";
+      document.getElementById("main").style.position = "static";
     } else {
       document.getElementById("chat").style.transform = "none";
       document.getElementById("nav").style.transform = "translateX(85vw)";
       document.getElementById("main").style.transform = "translateX(85vw)";
+      document.getElementById("main").style.position = "fixed";
     }
 
     this.setState({ displayChat: !this.state.displayChat });
