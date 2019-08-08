@@ -66,7 +66,7 @@ export default class Feed extends Component {
   render = () => {
     return (
       <div className="feed-container">
-        <header className="cells-container">{this.renderCells()}</header>
+        <header className="feed-cells-container">{this.renderCells()}</header>
         <section className="feed-items-container">{this.renderFeedItem()}</section>
       </div>
     );

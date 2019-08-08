@@ -50,12 +50,14 @@ export default class Machine extends Component {
 
     return (
       <div className="machine-container">
-        <span className="machine-back" onClick={this.returnToMain}>
-          &lsaquo;
-        </span>
-        <h1 className="machine-name">
-          {this.state.machine.type} {this.state.machine.id}
-        </h1>
+        <div className="machine-header">
+          <span className="machine-back" onClick={this.returnToMain}>
+            &lsaquo;
+          </span>
+          <h1 className="machine-name">
+            {this.state.machine.type} {this.state.machine.id}
+          </h1>
+        </div>
         <img src="./assets/machine.png" alt="MachinePNG" />
         <div className="machine-buttons-container">
           {buttonTypes.map((butTyp, idx) => (

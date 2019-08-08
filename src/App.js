@@ -1,13 +1,29 @@
 import React, { Component } from "react";
-import Splash from "./components/splash"
+import Splash from "./components/splash";
 import Navbar from "./components/navbar";
 import Overview from "./components/overview";
+import Chat from "./components/chat";
 import "./App.css";
 
 export default class App extends Component {
   state = {
+    cells: [],
     machineSelected: false,
-    loggedIn: false
+    loggedIn: false,
+    displayChat: false
+  };
+
+  componentDidMount = () => {
+    this.fetchData("./data.json").then(data => {
+      this.setState({
+        cells: data
+      });
+    });
+  };
+
+  fetchData = async url => {
+    const res = await fetch(url);
+    return res.json();
   };
 
   logIn = () => {
@@ -22,14 +38,37 @@ export default class App extends Component {
     this.setState({ machineSelected: !this.state.machineSelected });
   };
 
+  toggleChat = () => {
+    if (this.state.displayChat) {
+      document.getElementById("chat").style.width = "0";
+      document.getElementById("nav").style.transform = "none";
+      document.getElementById("main").style.transform = "none";
+    } else {
+      document.getElementById("chat").style.width = "80vw";
+      document.getElementById("nav").style.transform = "translateX(80vw)";
+      document.getElementById("main").style.transform = "translateX(80vw)";
+    }
+
+    this.setState({ displayChat: !this.state.displayChat });
+  };
+
   render = () => {
     if (!this.state.loggedIn) {
-      return <Splash logIn={this.logIn} />
+      return <Splash logIn={this.logIn} />;
     } else {
       return (
-        <div>
-          <Navbar />
-          <Overview toggleMachineSelection={this.toggleMachineSelection} />
+        <div className="app-container">
+          <div className="overlay" onClick={this.toggleChat} style={{ display: this.state.displayChat ? "block" : "none" }} />
+          <span id="chat" className="chat-wrapper">
+            <Chat cells={this.state.cells} toggleChat={this.toggleChat} />
+          </span>
+          <div>
+            <Navbar toggleChat={this.toggleChat} />
+            <Overview
+              cells={this.state.cells}
+              toggleMachineSelection={this.toggleMachineSelection}
+            />
+          </div>
         </div>
       );
     }

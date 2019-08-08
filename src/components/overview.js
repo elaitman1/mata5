@@ -4,21 +4,8 @@ import Machine from "./machine";
 
 export default class Overview extends Component {
   state = {
-    cells: [],
+    cells: this.props.cells,
     machineSelected: null,
-  };
-
-  componentDidMount = () => {
-    this.fetchData("./data.json").then(data => {
-      this.setState({
-        cells: data,
-      });
-    });
-  };
-
-  fetchData = async url => {
-    const res = await fetch(url);
-    return res.json();
   };
 
   selectMachine = (machInfo) => {
@@ -34,7 +21,7 @@ export default class Overview extends Component {
 
   render = () => {
     return (
-      <div>
+      <div id="main" style={{transition: "transform 0.5s"}}>
         {
           !this.state.machineSelected ?
             <Feed

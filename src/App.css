@@ -42,6 +42,17 @@ h1, h4, h5 {
   background-color: rgba(0,0,0,.3);
 }
 
+.chat-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: width 0.5s;
+  width: 0;
+  height: 100vh;
+  z-index: 10;
+  background-color: var(--active-blue);
+}
+
 .splash {
   width: calc(100vw - 40px);
   height: calc(100vh - 124px);
@@ -154,6 +165,7 @@ h1, h4, h5 {
   align-items: center;
   padding: 10px;
   background-color: var(--navbar-grey);
+  transition: transform 0.5s;
 }
 
 .navbar-icons {
@@ -199,9 +211,26 @@ h1, h4, h5 {
   position: relative;
 }
 
+.feed-cells-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 5px 0;
+  overflow-x: hidden;
+  overflow: scroll;
+  z-index: 5;
+  background-color: var(--white);
+}
+
 .feed-items-container {
-  margin-top: 64px;
-  margin-bottom: 20px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 80vh;
+  overflow-y: hidden;
+  overflow: scroll;
 }
 
 .feed-item {
@@ -209,8 +238,8 @@ h1, h4, h5 {
   justify-content: center;
   align-items: center;
   position: relative;
-  margin: 25px 0;
-  padding: 15px 0;
+  margin: 10px 0;
+  padding: 15px 25px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -243,40 +272,6 @@ h1, h4, h5 {
   color: black;
 }
 
-.cells-container {
-  display: flex;
-  align-items: center;
-  width: calc(100% - 10px);
-  height: 40px;
-  overflow-x: hidden;
-  overflow: scroll;
-  position: fixed;
-  top: 54px;
-  z-index: 5;
-  background-color: var(--white);
-  padding: 10px 0;
-}
-
-.cell {
-  width: 40px;
-  font-size: 16px;
-  font-weight: 500;
-  opacity: 0.3;
-  border: 2px solid var(--inactive-grey1);
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50), 0 2px 4px 0 rgba(0,0,0,0.50);
-  padding: 3px 27.5px;
-  margin: 0 5px;
-  white-space: nowrap;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.cell.selected {
-  opacity: 1;
-  border: 2px solid var(--active-blue);
-}
-
 .machine-container {
   position: relative;
   margin-top: 54px;
@@ -284,6 +279,7 @@ h1, h4, h5 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: calc(100vw - 30px);
   padding: 22px 15px;
 }
 
@@ -291,10 +287,15 @@ h1, h4, h5 {
   margin: 15px 0;
 }
 
+.machine-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .machine-back {
-  position: absolute;
-  top: 18px;
-  left: 15px;
+  margin-right: calc(50vw - 95px);
   font-size: 50px;
   font-weight: 200;
   line-height: 38px;
@@ -818,4 +819,24 @@ h1, h4, h5 {
 
 .form-submit-button:active {
   background-image: var(--gradient-blue);
+}
+
+.cell {
+  width: 40px;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.3;
+  border: 2px solid var(--inactive-grey1);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50), 0 2px 4px 0 rgba(0,0,0,0.50);
+  padding: 3px 27.5px;
+  margin: 0 5px;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cell.selected {
+  opacity: 1;
+  border: 2px solid var(--active-blue);
 }
