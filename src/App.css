@@ -254,7 +254,7 @@ h1, h4, h5 {
 
 .feed-container {
   margin-top: 54px;
-  padding: 10px;
+  padding: 10px 0;
   position: relative;
 }
 
@@ -262,6 +262,7 @@ h1, h4, h5 {
   display: flex;
   align-items: center;
   width: 100%;
+  margin-left: 10px;
   padding: 5px 0;
   overflow-x: hidden;
   overflow: scroll;
@@ -270,11 +271,9 @@ h1, h4, h5 {
 }
 
 .feed-items-container {
-  margin: 20px 0;
+  margin: 20px 10px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
   height: 80vh;
   overflow-y: hidden;
   overflow: scroll;
@@ -285,8 +284,8 @@ h1, h4, h5 {
   justify-content: center;
   align-items: center;
   position: relative;
-  margin: 10px 0;
-  padding: 15px 25px;
+  margin: 10px;
+  padding: 20px 0;
   border-radius: 5px;
   cursor: pointer;
 }
