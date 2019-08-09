@@ -8,6 +8,7 @@
   --text-grey: #8798AD;
   --title-grey: #505D68;
   --navbar-grey: #F2F5F7;
+  --background-grey: #E8E8E8;
   --boxshadow-green: #d6ead7;
   --login-text-grey: #b0bac9;
   --login-button-gradient: linear-gradient(281deg, #009ffd, #2a2a72);
@@ -47,21 +48,43 @@ h1, h4, h5 {
   top: 0;
   left: 0;
   transition: transform 0.5s;
-  transform: translateX(-70vw);
-  width: 70vw;
+  transform: translateX(-85vw);
+  width: 85vw;
   z-index: 10;
   background-color: var(--white);
 }
 
 .chat-header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding: 10px 20px;
+  background-color: var(--navbar-grey);
 }
 
-.chat-header > img:nth-of-type(1) {
-  margin-right: 25px;
+.chat-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 20px);
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: var(--background-grey);
+}
+
+.chat-search::placeholder {
+  color: var(--inactive-grey2);
+}
+
+.chat-search > img {
+  margin-right: 5px;
+}
+
+.chat-search > input {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  width: 100%;
 }
 
 .chat-group-container {

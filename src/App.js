@@ -8,7 +8,7 @@ import "./App.css";
 export default class App extends Component {
   state = {
     cells: [],
-    machineSelected: false,
+    machineSelected: null,
     loggedIn: false,
     displayChat: false
   };
@@ -34,13 +34,15 @@ export default class App extends Component {
     this.setState({ viewSelected: view });
   };
 
-  toggleMachineSelection = () => {
-    this.setState({ machineSelected: !this.state.machineSelected });
-  };
+  toggleMachineSelection = (machInfo) => {
+    return () => {
+      this.setState({ machineSelected: machInfo });
+    }
+  }
 
   toggleChat = () => {
     if (this.state.displayChat) {
-      document.getElementById("chat").style.transform = "translateX(-70vw)";
+      document.getElementById("chat").style.transform = "translateX(-85vw)";
       document.getElementById("nav").style.transform = "none";
       document.getElementById("main").style.transform = "none";
       document.getElementById("main").style.position = "static";
@@ -68,6 +70,7 @@ export default class App extends Component {
             <Navbar toggleChat={this.toggleChat} />
             <Overview
               cells={this.state.cells}
+              machineSelected={this.state.machineSelected}
               toggleMachineSelection={this.toggleMachineSelection}
             />
           </div>

@@ -6,13 +6,7 @@ import Timer from "./timer";
 
 export default class Machine extends Component {
   state = {
-    machine: this.props.machine,
     selectedTask: null
-  };
-
-  returnToMain = () => {
-    this.props.deselectMachine();
-    this.props.toggleMachineSelection();
   };
 
   displayTask = task => {
@@ -51,11 +45,11 @@ export default class Machine extends Component {
     return (
       <div className="machine-container">
         <div className="machine-header">
-          <span className="machine-back" onClick={this.returnToMain}>
+          <span className="machine-back" onClick={this.props.toggleMachineSelection(null)}>
             &lsaquo;
           </span>
           <h1 className="machine-name">
-            {this.state.machine.type} {this.state.machine.id}
+            {this.props.machine.type} {this.props.machine.id}
           </h1>
         </div>
         <img src="./assets/machine.png" alt="MachinePNG" />

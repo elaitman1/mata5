@@ -58,7 +58,7 @@ export default class Feed extends Component {
       <FeedItem
         key={idx}
         machSpecs={machSpecs}
-        selectMachine={this.props.selectMachine}
+        toggleMachineSelection={this.props.toggleMachineSelection}
       />
     ));
   };

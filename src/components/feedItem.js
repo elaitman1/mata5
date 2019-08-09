@@ -7,7 +7,7 @@ const FeedItem = props => {
     <div
       className="feed-item"
       style={{ border: online ? "2px solid #7ED321" : "2px solid #9B9B9B" }}
-      onClick={props.selectMachine(props.machSpecs)}
+      onClick={props.toggleMachineSelection(props.machSpecs)}
     >
       <span
         className="feed-indicator-dot"
