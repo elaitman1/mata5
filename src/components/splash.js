@@ -52,7 +52,13 @@ export default class Splash extends Component {
         {this.state.showLogin ? (
           <form className="login-form" onSubmit={this.handleSubmit}>
             <div className="login-form-inputs-container">{inputFields}</div>
-            <p>Forgot Password?</p>
+            <a
+              href="https://www.matainventive.com/password-recovery"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Forgot Password?
+            </a>
             <p>{this.state.loginErrors}</p>
             <input className="login-form-button" type="submit" value="Log In" />
           </form>

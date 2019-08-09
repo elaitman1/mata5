@@ -169,26 +169,23 @@ h1, h4, h5 {
   align-items: center;
   width: 100%;
   position: relative;
-}
-
-.login-form > p {
   font-size: 13px;
-  margin: 0;
 }
 
-.login-form > p:nth-of-type(1) {
+.login-form > a {
   position: absolute;
   right: 20px;
   top: 200px;
   color: var(--white);
   cursor: pointer;
+  text-decoration: none;
 }
 
-.login-form > p:nth-of-type(1):hover {
+.login-form > a:hover {
   text-decoration: underline;
 }
 
-.login-form > p:nth-of-type(2) {
+.login-form > p {
   margin-top: 20px;
   color: var(--error-red);
 }
