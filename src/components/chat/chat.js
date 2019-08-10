@@ -2,23 +2,18 @@ import React, { Component } from "react";
 
 export default class Chat extends Component {
   state = {
-    chats: {
-      Machines: ["Machine 1", "Eurotech 1", "Eurotech 2", "Franz Cell 2"],
-      Parts: ["57HXET89EEA", "99AYYOT6653", "12389HAAU89"],
-      Jobs: ["57HXET89EEA", "99AYYOT6653", "12389HAAU89"]
-    },
     search: ""
   };
 
   update = e => {
     this.setState({ search: e.currentTarget.value });
-  }
+  };
 
   handleSubmit = e => {
     e.preventDefault();
 
     this.setState({ search: "" });
-  }
+  };
 
   render = () => {
     return (
@@ -34,9 +29,16 @@ export default class Chat extends Component {
             />
           </form>
         </div>
-        {Object.keys(this.state.chats).map((type, idx) => {
-          const chats = this.state.chats[type];
-          return <ChatGroup key={idx} type={type} chats={chats} />;
+        {Object.keys(this.props.chats).map((type, idx) => {
+          const chats = this.props.chats[type];
+          return (
+            <ChatGroup
+              key={idx}
+              type={type}
+              chats={chats}
+              selectChat={this.props.selectChat}
+            />
+          );
         })}
       </div>
     );
@@ -47,10 +49,14 @@ const ChatGroup = props => {
   return (
     <div className="chat-group-container">
       <h5>{props.type}</h5>
-      {props.chats.map((chat, idx) => {
+      {Object.keys(props.chats).map((chat, idx) => {
         const className = `chat-group-item-icon ${props.type}`;
         return (
-          <div key={idx} className="chat-group-item">
+          <div
+            key={idx}
+            className="chat-group-item"
+            onClick={props.selectChat(props.type, chat)}
+          >
             <span className={className} />
             <p>{chat}</p>
           </div>

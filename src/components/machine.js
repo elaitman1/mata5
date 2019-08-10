@@ -46,7 +46,7 @@ export default class Machine extends Component {
       <div className="machine-container">
         <div className="machine-header">
           <span
-            className="machine-back"
+            className="back-icon machine"
             onClick={this.props.toggleMachineSelection(null)}
           >
             &lsaquo;

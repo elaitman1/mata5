@@ -146,6 +146,10 @@ h1, h4, h5 {
   margin: 0;
 }
 
+.chat-item-container {
+  margin-top: 58px;
+}
+
 .splash {
   width: calc(100vw - 40px);
   height: calc(100vh - 124px);
@@ -247,7 +251,7 @@ h1, h4, h5 {
 .navbar {
   position: fixed;
   top: 0;
-  height: 34px;
+  /* height: 34px; */
   width: calc(100vw - 20px);
   z-index: 5;
   display: flex;
@@ -895,6 +899,17 @@ h1, h4, h5 {
 
 .confirmation-container > * {
   margin: 15px 0;
+}
+
+.back-icon {
+  font-size: 50px;
+  font-weight: 200;
+  line-height: 38px;
+  cursor: pointer
+}
+
+.back-icon.machine {
+  margin-right: calc(50vw - 95px);
 }
 
 .button-flex-end-wrapper {

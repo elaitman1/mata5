@@ -15,7 +15,6 @@ export default class Timer extends Component {
   };
 
   handleStartTimer = () => {
-    console.log(this.state);
     this.toggleConfirmation();
   };
 

@@ -1,14 +1,36 @@
-import React from 'react';
+import React from "react";
 
 const Navbar = props => {
+  const navbarText =
+    props.displayChat || props.displayCamera
+      ? props.displayCamera ? "Scanner" : props.displayChat[1]
+      : "";
+  const navbarLeft =
+    props.displayChat || props.displayCamera ? (
+      <span className="back-icon" onClick={props.hideChat}>
+        &lsaquo;
+      </span>
+    ) : (
+      <img
+        className="logo"
+        src="./assets/logo.png"
+        alt="Logo"
+        onClick={props.toggleChatMenu}
+      />
+    );
+  const navbarRight = (
+    <div className="navbar-icons">
+      <img src="./assets/menu.png" alt="Menu" />
+    </div>
+  );
+
   return (
     <div id="nav" className="navbar">
-      <img className="logo" src="./assets/logo.png" alt="Logo" onClick={props.toggleChat}/>
-      <div className="navbar-icons">
-        <img src="./assets/menu.png" alt="Menu"/>
-      </div>
+      {navbarLeft}
+      <h4>{navbarText}</h4>
+      {navbarRight}
     </div>
-  )
-}
+  );
+};
 
 export default Navbar;
