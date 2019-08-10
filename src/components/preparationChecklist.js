@@ -29,6 +29,7 @@ export default class PreparationChecklist extends Component {
       if (this.state.firstCellSelection) {
         this.setState({ firstCellSelection: false });
       }
+      // if Note is selected, open Note textbox on top of the usual selecting of cell styling change
       if (cell === "Note") {
         this.setState({ prevCell: this.state.cellSelected });
         this.toggleNote();
@@ -62,6 +63,7 @@ export default class PreparationChecklist extends Component {
     };
   };
 
+  // after saving Note, switch back to the previous cell view that the user was at before displaying Note
   saveNote = () => {
     this.setState({
       cellSelected: this.state.prevCell,
@@ -73,6 +75,7 @@ export default class PreparationChecklist extends Component {
     this.toggleNote();
   };
 
+  // similar logic to save note, but uses a previously saved value to switch the value back to it so as not to save any updates the user may have
   closeNote = () => {
     let newCells = this.state.cells;
     newCells.Note = this.state.prevNote;
@@ -88,29 +91,19 @@ export default class PreparationChecklist extends Component {
 
   renderCells = () => {
     return Object.keys(this.state.cells).map((cell, idx) => {
-      if (this.state.firstCellSelection && idx === 0) {
-        return (
-          <span
-            key={idx}
-            id={cell}
-            className="cell selected"
-            onClick={this.selectCell(cell)}
-          >
-            {cell}
-          </span>
-        );
-      } else {
-        return (
-          <span
-            key={idx}
-            id={cell}
-            className="cell"
-            onClick={this.selectCell(cell)}
-          >
-            {cell}
-          </span>
-        );
-      }
+      // first cell when rendering component sets styling for blue border on the first cell
+      const className =
+        this.state.firstCellSelection && idx === 0 ? "cell selected" : "cell";
+      return (
+        <span
+          key={idx}
+          id={cell}
+          className={className}
+          onClick={this.selectCell(cell)}
+        >
+          {cell}
+        </span>
+      );
     });
   };
 

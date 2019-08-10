@@ -28,6 +28,7 @@ export default class Inspection extends Component {
   update = type => {
     return e => {
       let input = e.currentTarget.value;
+      // prevent NaN affecting adding/subtracting in updatePartsNum function when user manually inputs a parts number which will be of type string
       if (input !== "") {
         input = parseInt(input);
       }
@@ -50,20 +51,20 @@ export default class Inspection extends Component {
       this.state.goodParts !== "" ? parseInt(this.state.goodParts) : 0;
     const bad = this.state.badParts !== "" ? parseInt(this.state.badParts) : 0;
     const totalParts = _.sum([good, bad]);
-    let partsTypes = Object.keys(this.state);
-    partsTypes.pop();
-    const partsInputs = partsTypes.map((partsType, idx) => {
-      let type = _.capitalize(partsType.slice(0, partsType.length - 5));
-      return (
-        <PartsInput
-          key={idx}
-          type={type}
-          partsType={partsType}
-          numParts={this.state[partsType]}
-          update={this.update}
-          updatePartsNum={this.updatePartsNum}
-        />
-      );
+    const partsInputs = Object.keys(this.state).map((partsType, idx) => {
+      if (partsType !== "showConfirmation") {
+        let type = _.capitalize(partsType.slice(0, partsType.length - 5));
+        return (
+          <PartsInput
+            key={idx}
+            type={type}
+            partsType={partsType}
+            numParts={this.state[partsType]}
+            update={this.update}
+            updatePartsNum={this.updatePartsNum}
+          />
+        );
+      }
     });
 
     if (this.state.showConfirmation) {

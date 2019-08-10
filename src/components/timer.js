@@ -15,6 +15,7 @@ export default class Timer extends Component {
   };
 
   handleStartTimer = () => {
+    console.log(this.state);
     this.toggleConfirmation();
   };
 
@@ -24,25 +25,20 @@ export default class Timer extends Component {
         .getElementById("selector")
         .getBoundingClientRect();
       let fieldElements = document.querySelectorAll(`.timer-value.${field}`);
+      // for each timer element that isn't one of the empty spaces for placeholder/styling purposes, get the average of its top and bottom positions and check that against the selector bar's top and bottom bounding positions to determine if it should be selected and also update the state's value for that timer spec for handling submit
       fieldElements.forEach(elem => {
-        let scrollPos =
-          (elem.getBoundingClientRect().top +
-            elem.getBoundingClientRect().bottom) /
-          2;
-        let input = elem.innerHTML;
-        let timerValue = "";
-        if (scrollPos >= selector.top && scrollPos <= selector.bottom) {
-          elem.className = `timer-value ${field} selected`;
-          for (let i = 0; i < input.length; i++) {
-            let str = input[i];
-            if (parseInt(str) < 60) {
-              timerValue = timerValue.concat(str);
+        if (elem.innerHTML !== " ") {
+          let scrollPos =
+            (elem.getBoundingClientRect().top +
+              elem.getBoundingClientRect().bottom) /
+            2;
+          if (scrollPos >= selector.top && scrollPos <= selector.bottom) {
+            elem.className = `timer-value ${field} selected`;
+            this.setState({ [field]: parseInt(elem.innerHTML) });
+          } else {
+            if (elem.className !== `timer-value ${field}`) {
+              elem.className = `timer-value ${field}`;
             }
-          }
-          this.setState({ [field]: parseInt(timerValue) });
-        } else {
-          if (elem.className !== `timer-value ${field}`) {
-            elem.className = `timer-value ${field}`;
           }
         }
       });
@@ -115,7 +111,7 @@ const Scrollable = props => {
           .map((val, idx) => {
             const className =
               val === 0
-                ? "timer-value hour selected"
+                ? `timer-value ${props.spec} selected`
                 : `timer-value ${props.spec}`;
             return (
               <p key={idx} className={className}>

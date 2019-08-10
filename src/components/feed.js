@@ -3,10 +3,12 @@ import FeedItem from "./feedItem";
 
 export default class Feed extends Component {
   state = {
-    currentCell: this.props.currentCell,
-    firstCellSelection: true,
+    // current cell stores index and the actual cell object - index will be used for selecting element by id
+    currentCell: [0, this.props.cells[0]],
+    firstCellSelection: true
   };
 
+  // when selecting a new cell, swap class names to change blue border styling as well as setting state.
   selectCell = cellArr => {
     return () => {
       if (this.state.firstCellSelection) {
@@ -20,41 +22,24 @@ export default class Feed extends Component {
 
   renderCells = () => {
     return this.props.cells.map((cell, idx) => {
-      if (this.state.firstCellSelection && idx === 0) {
-        return (
-          <span
-            key={idx}
-            id={idx}
-            className="cell selected"
-            onClick={this.selectCell([idx, cell])}
-          >
-            {cell.cellName}
-          </span>
-        );
-      } else {
-        return (
-          <span
-            key={idx}
-            id={idx}
-            className="cell"
-            onClick={this.selectCell([idx, cell])}
-          >
-            {cell.cellName}
-          </span>
-        );
-      }
+      // first cell when rendering component sets styling for blue border on the first cell
+      const className =
+        this.state.firstCellSelection && idx === 0 ? "cell selected" : "cell";
+      return (
+        <span
+          key={idx}
+          id={idx}
+          className={className}
+          onClick={this.selectCell([idx, cell])}
+        >
+          {cell.cellName}
+        </span>
+      );
     });
   };
 
   renderFeedItem = () => {
-    let currentCell = [];
-    if (this.props.currentCell[1] && !this.state.currentCell[1]) {
-      currentCell = this.props.currentCell[1].machineStuff;
-    } else if (this.state.currentCell[1]) {
-      currentCell = this.state.currentCell[1].machineStuff;
-    }
-
-    return currentCell.map((machSpecs, idx) => (
+    return this.state.currentCell[1].machineStuff.map((machSpecs, idx) => (
       <FeedItem
         key={idx}
         machSpecs={machSpecs}
@@ -67,7 +52,9 @@ export default class Feed extends Component {
     return (
       <div className="feed-container">
         <header className="feed-cells-container">{this.renderCells()}</header>
-        <section className="feed-items-container">{this.renderFeedItem()}</section>
+        <section className="feed-items-container">
+          {this.renderFeedItem()}
+        </section>
       </div>
     );
   };

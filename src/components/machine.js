@@ -28,7 +28,7 @@ export default class Machine extends Component {
       case "Inspection":
         return <Inspection hideTask={this.hideTask} />;
       case "Timer":
-        return <Timer hideTask={this.hideTask} />
+        return <Timer hideTask={this.hideTask} />;
       default:
         return "";
     }
@@ -45,7 +45,10 @@ export default class Machine extends Component {
     return (
       <div className="machine-container">
         <div className="machine-header">
-          <span className="machine-back" onClick={this.props.toggleMachineSelection(null)}>
+          <span
+            className="machine-back"
+            onClick={this.props.toggleMachineSelection(null)}
+          >
             &lsaquo;
           </span>
           <h1 className="machine-name">

@@ -26,6 +26,7 @@ export default class StartJob extends Component {
     this.setState({ showConfirmation: !this.state.showConfirmation });
   };
 
+  // update the respective input value of specified job number's object
   update = (type, jobNum, value) => {
     let newJobs = this.state.jobs;
     newJobs.forEach(job => {
@@ -92,6 +93,7 @@ export default class StartJob extends Component {
     this.setState({ showErrorModal: !this.state.showErrorModal });
   };
 
+  // error handling for when user tries to save when there's a startjob with empty field(s)
   hasNoEmptyCards = () => {
     return this.state.jobs.every(job => {
       return Object.keys(job.inputValues).every(inputVal => {
@@ -137,21 +139,6 @@ export default class StartJob extends Component {
       ""
     );
 
-    const startJobItems =
-      this.state.jobs.length > 0 ? (
-        <StartJobItem
-          key={this.state.jobs[this.state.currentJob - 1].jobNum}
-          jobNum={this.state.jobs[this.state.currentJob - 1].jobNum}
-          inputValues={this.state.jobs[this.state.currentJob - 1].inputValues}
-          currentJob={this.state.currentJob}
-          totalJobs={this.state.totalJobs}
-          update={this.update}
-          toggleCamera={this.toggleCamera}
-        />
-      ) : (
-        ""
-      );
-
     const tracker =
       this.state.totalJobs > 1
         ? [...Array(this.state.totalJobs).keys()].map((dot, idx) => {
@@ -194,7 +181,15 @@ export default class StartJob extends Component {
               <h4>
                 Start Job {this.state.currentJob} of {this.state.totalJobs}
               </h4>
-              {startJobItems}
+              <StartJobItem
+                key={this.state.jobs[this.state.currentJob - 1].jobNum}
+                jobNum={this.state.jobs[this.state.currentJob - 1].jobNum}
+                inputValues={
+                  this.state.jobs[this.state.currentJob - 1].inputValues
+                }
+                update={this.update}
+                toggleCamera={this.toggleCamera}
+              />
               <div className="button-flex-end-wrapper">
                 <button
                   className="form-submit-button"
