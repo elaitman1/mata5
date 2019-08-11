@@ -10,26 +10,39 @@ export default class App extends Component {
     cells: [],
     chats: {
       Machines: {
-        "Machine 1": [
-          ["machine", "Job 37TEAXEDI87 is done"],
-          ["user", "Machine Utilization"],
-          ["machine", "90% of utilization"]
-        ],
-        "Eurotech 1": [
-          ["machine", "57HXET89EEA is done"],
-          ["user", "Machine Utilization"],
-          ["machine", "80% of utilization"]
-        ],
-        "Eurotech 2": [
-          ["machine", "Job 99AYYOT6653 is done"],
-          ["user", "Machine Utilization"],
-          ["machine", "70% of utilization"]
-        ],
-        "Franz Cell 2": [
-          ["machine", "Job 12389HAAU89 is done"],
-          ["user", "Machine Utilization"],
-          ["machine", "60% of utilization"]
-        ]
+        "Machine 1": {
+          chatFirstBegan: "12:30 pm",
+          chatHistory: [
+            ["machine", "Job 37TEAXEDI87 is done"],
+            ["user", "Machine Utilization", 1565484493897],
+            ["machine", "90% of utilization"]
+          ]
+        },
+        "Eurotech 1": {
+          chatFirstBegan: "12:30 pm",
+          chatHistory: [
+            ["machine", "57HXET89EEA is done"],
+            ["user", "Machine Utilization", 1565482493897],
+            ["machine", "80% of utilization"]
+          ]
+        },
+        "Eurotech 2": {
+          chatFirstBegan: "12:30 pm",
+          chatHistory: [
+            ["machine", "Job 99AYYOT6653 is done"],
+            ["user", "Machine Utilization", 1565484453897],
+            ["user", "Wake up machine!", 1565484483897],
+            ["machine", "70% of utilization"]
+          ]
+        },
+        "Franz Cell 2": {
+          chatFirstBegan: "12:30 pm",
+          chatHistory: [
+            ["machine", "Job 12389HAAU89 is done"],
+            ["user", "Machine Utilization", 1565484775208],
+            ["machine", "60% of utilization"]
+          ]
+        }
       },
       Parts: { "57HXET89EEA": [[]], "99AYYOT6653": [[]], "12389HAAU89": [[]] },
       Jobs: { "57HXET89EEA": [[]], "99AYYOT6653": [[]], "12389HAAU89": [[]] }
