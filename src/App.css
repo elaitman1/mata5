@@ -250,6 +250,7 @@ h1, h4, h5 {
   bottom: 0;
   width: calc(100% - 40px);
   padding: 30px 20px;
+  background-color: var(--white);
 }
 
 .chat-item-message-submit > input:nth-of-type(1) {
