@@ -2,9 +2,17 @@ import React, { Component } from "react";
 
 export default class ChatItem extends Component {
   state = {
-    message: ""
+    message: "",
+    recommendations: [
+      "Machine Utilization",
+      "Machine Health",
+      "Machine Status",
+      "Machine Maintenance"
+    ],
+    focusedMessageInput: false
   };
 
+  // converts Date.now() milliseconds into the time, in the appropriate measurement, since the message was sent
   timeConversion = millisec => {
     const seconds = (millisec / 1000).toFixed(0);
     const minutes = (millisec / (1000 * 60)).toFixed(0);
@@ -31,13 +39,40 @@ export default class ChatItem extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    this.props.sendNewMessage(
-      this.props.displayChat[0],
-      this.props.displayChat[1],
-      this.state.message
-    );
-    this.setState({ message: "" });
+    if (this.state.message.trim() !== "") {
+      this.props.sendNewMessage(
+        this.props.displayChat[0],
+        this.props.displayChat[1],
+        this.state.message
+      );
+      this.setState({ message: "" });
+    }
   };
+
+  sendRecommendationAsMessage = recom => {
+    return () => {
+      this.props.sendNewMessage(
+        this.props.displayChat[0],
+        this.props.displayChat[1],
+        recom
+      );
+    };
+  };
+
+  // using setTimeout with 0.15 of a second to allow enough time for
+  toggleRecommendations = type => {
+    return () => {
+      this.setState({ focusedMessageInput: !this.state.focusedMessageInput });
+      const timer = type === "focus" ? 0 : 150;
+      let displayStyle;
+      if (type === "focus") {
+        displayStyle = "flex";
+      } else if (type === "blur") {
+        displayStyle = "none";
+      }
+      setTimeout(() => document.getElementById("recommendations").style.display = displayStyle, timer);
+    }
+  }
 
   render = () => {
     const chatItem = this.props.chats[this.props.displayChat[0]][
@@ -90,18 +125,30 @@ export default class ChatItem extends Component {
             );
           })}
         </section>
+        <div className="chat-item-message-submit-overlay" style={{display: this.state.focusedMessageInput ? "block" : "none"}} />
         <form className="chat-item-message-submit" onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            placeholder="Your Message"
-            value={this.state.message}
-            onChange={this.update}
-          />
-          <input
-            className="chat-item-message-submit-button"
-            type="submit"
-            value="SEND"
-          />
+          <div id="recommendations" className="chat-item-message-submit-recommendations">
+            {this.state.recommendations.map((recom, idx) => (
+              <p key={idx} onClick={this.sendRecommendationAsMessage(recom)}>
+                {recom}
+              </p>
+            ))}
+          </div>
+          <div className="chat-item-message-submit-inputs">
+            <input
+              type="text"
+              placeholder="Your Message"
+              value={this.state.message}
+              onChange={this.update}
+              onFocus={this.toggleRecommendations("focus")}
+              onBlur={this.toggleRecommendations("blur")}
+            />
+            <input
+              className="chat-item-message-submit-button"
+              type="submit"
+              value="SEND"
+            />
+          </div>
         </form>
       </div>
     );

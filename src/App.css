@@ -11,6 +11,7 @@
   --title-grey: #505D68;
   --navbar-grey: #F2F5F7;
   --border-grey: #979797;
+  --border-blue: #007aff;
   --background-grey: #E8E8E8;
   --boxshadow-green: #d6ead7;
   --login-text-grey: #b0bac9;
@@ -166,8 +167,9 @@ h1, h4, h5 {
 
 .chat-item-messages-container {
   margin-top: 10px;
-  height: 77vh;
-  overflow-y: scroll;
+  height: 70vh;
+  overflow-y: hidden;
+  overflow: scroll;
 }
 
 .chat-item-message-container {
@@ -245,22 +247,60 @@ h1, h4, h5 {
 
 .chat-item-message-submit {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   position: fixed;
   bottom: 0;
   width: calc(100% - 40px);
-  padding: 30px 20px;
+  padding-bottom: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
   background-color: var(--white);
+  z-index: 10;
 }
 
-.chat-item-message-submit > input:nth-of-type(1) {
+.chat-item-message-submit-recommendations {
+  display: none;
+  align-items: center;
+  width: calc(100vw - 10px);
+  overflow-x: hidden;
+  overflow: scroll;
+  margin-bottom: 5px;
+}
+
+.chat-item-message-submit-recommendations p {
+  padding: 6px 7px;
+  color: var(--active-blue);
+  border: 1px solid var(--border-blue);
+  border-radius: 3px;
+  margin: 5px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.chat-item-message-submit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 8;
+}
+
+.chat-item-message-submit-inputs {
+  display: flex;
+  align-items: center;
+}
+
+.chat-item-message-submit-inputs > input:nth-of-type(1) {
   font-size: 16px;
   border: none;
   width: 80%;
   margin: 0 20px;
 }
 
-.chat-item-message-submit > input::placeholder {
+.chat-item-message-submit-inputs > input::placeholder {
   font-size: 13px;
   letter-spacing: 1px;
   color: var(--black);
