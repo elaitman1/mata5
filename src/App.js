@@ -110,6 +110,13 @@ export default class App extends Component {
     this.toggleChatMenu();
   };
 
+  sendNewMessage = (type, chat, message) => {
+    let newChats = this.state.chats;
+    let newMessage = ["user", message, Date.now()];
+    newChats[type][chat].chatHistory.push(newMessage);
+    this.setState({ chats: newChats });
+  };
+
   render = () => {
     if (!this.state.loggedIn) {
       return <Splash logIn={this.logIn} />;
@@ -136,6 +143,7 @@ export default class App extends Component {
               cells={this.state.cells}
               chats={this.state.chats}
               displayChat={this.state.displayChat}
+              sendNewMessage={this.sendNewMessage}
               machineSelected={this.state.machineSelected}
               toggleMachineSelection={this.toggleMachineSelection}
             />

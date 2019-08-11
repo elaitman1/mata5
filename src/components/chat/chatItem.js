@@ -30,6 +30,13 @@ export default class ChatItem extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+
+    this.props.sendNewMessage(
+      this.props.displayChat[0],
+      this.props.displayChat[1],
+      this.state.message
+    );
+    this.setState({ message: "" });
   };
 
   render = () => {
@@ -90,7 +97,11 @@ export default class ChatItem extends Component {
             value={this.state.message}
             onChange={this.update}
           />
-          <input className="chat-item-message-submit-button" type="submit" value="SEND" />
+          <input
+            className="chat-item-message-submit-button"
+            type="submit"
+            value="SEND"
+          />
         </form>
       </div>
     );

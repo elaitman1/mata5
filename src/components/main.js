@@ -7,7 +7,11 @@ const Main = props => {
   return (
     <div id="main" className="main-container">
       {props.displayChat ? (
-        <ChatItem chats={props.chats} displayChat={props.displayChat} />
+        <ChatItem
+          chats={props.chats}
+          displayChat={props.displayChat}
+          sendNewMessage={props.sendNewMessage}
+        />
       ) : !props.machineSelected ? (
         <Feed
           cells={props.cells}
