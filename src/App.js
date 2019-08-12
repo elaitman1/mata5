@@ -149,6 +149,7 @@ export default class App extends Component {
     ]
     let newChats = this.state.chats;
     let replyMessage = newChats[type][chat].responses[message];
+    // randomly samples a reply message from the replies array
     replyMessage = replyMessage ? replyMessage : replies[Math.floor(Math.random() * replies.length)];
     replyMessage = ["machine", replyMessage];
     newChats[type][chat].chatHistory.push(replyMessage);
