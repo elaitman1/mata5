@@ -3,12 +3,6 @@ import React, { Component } from "react";
 export default class ChatItem extends Component {
   state = {
     message: "",
-    recommendations: [
-      "Machine Utilization",
-      "Machine Health",
-      "Machine Status",
-      "Machine Maintenance"
-    ],
     focusedMessageInput: false
   };
 
@@ -128,7 +122,7 @@ export default class ChatItem extends Component {
         <div className="chat-item-message-submit-overlay" style={{display: this.state.focusedMessageInput ? "block" : "none"}} />
         <form className="chat-item-message-submit" onSubmit={this.handleSubmit}>
           <div id="recommendations" className="chat-item-message-submit-recommendations">
-            {this.state.recommendations.map((recom, idx) => (
+            {Object.keys(chatItem.responses).map((recom, idx) => (
               <p key={idx} onClick={this.sendRecommendationAsMessage(recom)}>
                 {recom}
               </p>

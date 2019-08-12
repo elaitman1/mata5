@@ -27,7 +27,7 @@ export default class App extends Component {
         "Eurotech 1": {
           chatFirstBegan: "12:30 pm",
           chatHistory: [
-            ["machine", "57HXET89EEA is done."],
+            ["machine", "Job 57HXET89EEA is done."],
             ["user", "Machine Utilization", 1565482493897],
             ["machine", "80% of utilization."]
           ],
@@ -67,8 +67,91 @@ export default class App extends Component {
           }
         }
       },
-      Parts: { "57HXET89EEA": [[]], "99AYYOT6653": [[]], "12389HAAU89": [[]] },
-      Jobs: { "57HXET89EEA": [[]], "99AYYOT6653": [[]], "12389HAAU89": [[]] }
+      Parts: {
+        "57HXET89EEA": {
+          chatFirstBegan: "12:30 pm",
+          chatHistory: [
+            ["machine", "Participation in Job 37TEAXEDI87 is done."],
+            ["user", "Part Utilization", 1565484493897],
+            ["machine", "90% of utilization."]
+          ],
+          responses: {
+            "Part Utilization": "90% of utilization.",
+            "Part Health": "As healthy as your grandparents.",
+            "Part Status": "Code Red.",
+            "Part Maintenance": "Maintenance mandatory."
+          }
+        },
+        "99AYYOT6653": {
+          chatFirstBegan: "12:30 pm",
+          chatHistory: [
+            ["machine", "Participation in Job 99AYYOT6653 is done."],
+            ["user", "Part Utilization", 1565484453897],
+            ["machine", "70% of utilization."]
+          ],
+          responses: {
+            "Part Utilization": "70% of utilization.",
+            "Part Health": "Not bad, but not great.",
+            "Part Status": "Don't worry about it, yet.",
+            "Part Maintenance": "Maintenance recommended."
+          }
+        },
+        "12389HAAU89": {
+          chatFirstBegan: "12:30 pm",
+          chatHistory: [
+            ["machine", "Participation in Job 12389HAAU89 is done."],
+            ["user", "Part Utilization", 1565484775208],
+            ["machine", "60% of utilization."]
+          ],
+          responses: {
+            "Part Utilization": "60% of utilization.",
+            "Part Health": "Straight A's like an Asian.",
+            "Part Status": "Strong as an ox.",
+            "Part Maintenance": "Maintenance would be a waste of money."
+          }
+        }
+      },
+      Jobs: {
+        "57HXET89EEA": {
+          chatFirstBegan: "12:30 pm",
+          chatHistory: [
+            ["machine", "Job 57HXET89EEA is done."],
+            ["user", "Job duration.", 1565484775208],
+            ["machine", "5 hours 18 minutes."]
+          ],
+          responses: {
+            "Job Duration": "5 hours 18 minutes.",
+            "Job Result": "Failure.",
+            "Job Notes": "Part 99AYYOT6653 failed 3 hours in."
+          }
+        },
+        "99AYYOT6653": {
+          chatFirstBegan: "12:30 pm",
+          chatHistory: [
+            ["machine", "Job 99AYYOT6653 is done."],
+            ["user", "Job duration.", 1565484775208],
+            ["machine", " 18 seconds."]
+          ],
+          responses: {
+            "Job Duration": "18 seconds.",
+            "Job Result": "Failure.",
+            "Job Notes": "Part 12389HAAU89 was dead on arrival."
+          }
+        },
+        "12389HAAU89": {
+          chatFirstBegan: "12:30 pm",
+          chatHistory: [
+            ["machine", "Job 12389HAAU89 is done."],
+            ["user", "Job duration.", 1565484775208],
+            ["machine", "8 hours."]
+          ],
+          responses: {
+            "Job Duration": "8 hours.",
+            "Job Result": "Success.",
+            "Job Notes": "Part 57HXET89EEA requires maintenance."
+          }
+        }
+      }
     },
     machineSelected: null,
     loggedIn: false,
@@ -145,16 +228,18 @@ export default class App extends Component {
     const replies = [
       "Error code 204, it's probably my fault.",
       "Error code 404, it's probably your fault.",
-      "Error code 500, it's no one's fault. But I still have nothing for you.",
-    ]
+      "Error code 500, it's no one's fault. But I still have nothing for you."
+    ];
     let newChats = this.state.chats;
     let replyMessage = newChats[type][chat].responses[message];
     // randomly samples a reply message from the replies array
-    replyMessage = replyMessage ? replyMessage : replies[Math.floor(Math.random() * replies.length)];
+    replyMessage = replyMessage
+      ? replyMessage
+      : replies[Math.floor(Math.random() * replies.length)];
     replyMessage = ["machine", replyMessage];
     newChats[type][chat].chatHistory.push(replyMessage);
     this.setState({ chats: newChats });
-  }
+  };
 
   render = () => {
     if (!this.state.loggedIn) {
