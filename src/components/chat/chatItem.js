@@ -59,7 +59,7 @@ export default class ChatItem extends Component {
     };
   };
 
-  // using setTimeout with 0.15 of a second to allow enough time for
+  // using setTimeout with 0.15 of a second to allow enough time for the on blur effect to kick in after user has a chance to actually click a recommendation
   toggleRecommendations = type => {
     return () => {
       this.setState({ focusedMessageInput: !this.state.focusedMessageInput });

@@ -13,35 +13,58 @@ export default class App extends Component {
         "Machine 1": {
           chatFirstBegan: "12:30 pm",
           chatHistory: [
-            ["machine", "Job 37TEAXEDI87 is done"],
+            ["machine", "Job 37TEAXEDI87 is done."],
             ["user", "Machine Utilization", 1565484493897],
-            ["machine", "90% of utilization"]
-          ]
+            ["machine", "90% of utilization."]
+          ],
+          responses: {
+            "Machine Utilization": "90% of utilization.",
+            "Machine Health": "As healthy as your grandparents.",
+            "Machine Status": "Code Red.",
+            "Machine Maintenance": "Maintenance mandatory."
+          }
         },
         "Eurotech 1": {
           chatFirstBegan: "12:30 pm",
           chatHistory: [
-            ["machine", "57HXET89EEA is done"],
+            ["machine", "57HXET89EEA is done."],
             ["user", "Machine Utilization", 1565482493897],
-            ["machine", "80% of utilization"]
-          ]
+            ["machine", "80% of utilization."]
+          ],
+          responses: {
+            "Machine Utilization": "80% of utilization.",
+            "Machine Health": "A solid B+.",
+            "Machine Status": "Pretty solid.",
+            "Machine Maintenance": "Maintenance optional."
+          }
         },
         "Eurotech 2": {
           chatFirstBegan: "12:30 pm",
           chatHistory: [
-            ["machine", "Job 99AYYOT6653 is done"],
+            ["machine", "Job 99AYYOT6653 is done."],
             ["user", "Machine Utilization", 1565484453897],
-            ["user", "Wake up machine!", 1565484483897],
-            ["machine", "70% of utilization"]
-          ]
+            ["machine", "70% of utilization."]
+          ],
+          responses: {
+            "Machine Utilization": "70% of utilization.",
+            "Machine Health": "Not bad, but not great.",
+            "Machine Status": "Don't worry about it, yet.",
+            "Machine Maintenance": "Maintenance recommended."
+          }
         },
         "Franz Cell 2": {
           chatFirstBegan: "12:30 pm",
           chatHistory: [
-            ["machine", "Job 12389HAAU89 is done"],
+            ["machine", "Job 12389HAAU89 is done."],
             ["user", "Machine Utilization", 1565484775208],
-            ["machine", "60% of utilization"]
-          ]
+            ["machine", "60% of utilization."]
+          ],
+          responses: {
+            "Machine Utilization": "60% of utilization.",
+            "Machine Health": "Straight A's like an Asian.",
+            "Machine Status": "Strong as an ox.",
+            "Machine Maintenance": "Maintenance would be a waste of money."
+          }
         }
       },
       Parts: { "57HXET89EEA": [[]], "99AYYOT6653": [[]], "12389HAAU89": [[]] },
@@ -115,7 +138,22 @@ export default class App extends Component {
     let newMessage = ["user", message, Date.now()];
     newChats[type][chat].chatHistory.push(newMessage);
     this.setState({ chats: newChats });
+    this.machineReplyMessage(type, chat, message);
   };
+
+  machineReplyMessage = (type, chat, message) => {
+    const replies = [
+      "Error code 204, it's probably my fault.",
+      "Error code 404, it's probably your fault.",
+      "Error code 500, it's no one's fault. But I still have nothing for you.",
+    ]
+    let newChats = this.state.chats;
+    let replyMessage = newChats[type][chat].responses[message];
+    replyMessage = replyMessage ? replyMessage : replies[Math.floor(Math.random() * replies.length)];
+    replyMessage = ["machine", replyMessage];
+    newChats[type][chat].chatHistory.push(replyMessage);
+    this.setState({ chats: newChats });
+  }
 
   render = () => {
     if (!this.state.loggedIn) {

@@ -1,7 +1,7 @@
 import React from "react";
 
 const FeedItem = props => {
-  const { id, type, timer, status, online, imgUrl } = props.machSpecs;
+  const { id, type, timer, status, online } = props.machSpecs;
 
   return (
     <div
@@ -15,7 +15,7 @@ const FeedItem = props => {
           backgroundColor: online ? "#7ED321" : "#9B9B9B"
         }}
       />
-      <img src={imgUrl} alt="PNG" />
+      <img src="./assets/machList.png" alt="PNG" />
       <div className="feed-item-text-wrapper">
         <p>
           {type} {id}

@@ -12,7 +12,8 @@
   --navbar-grey: #F2F5F7;
   --border-grey: #979797;
   --border-blue: #007aff;
-  --background-grey: #E8E8E8;
+  --background-grey1: #E8E8E8;
+  --background-grey2: rgb(128,151,177, 0.1);
   --boxshadow-green: #d6ead7;
   --login-text-grey: #b0bac9;
   --login-button-gradient: linear-gradient(281deg, #009ffd, #2a2a72);
@@ -74,7 +75,7 @@ h1, h4, h5 {
   width: calc(100% - 20px);
   padding: 5px 10px;
   border-radius: 10px;
-  background-color: var(--background-grey);
+  background-color: var(--background-grey1);
 }
 
 .chat-search::placeholder {
@@ -199,7 +200,7 @@ h1, h4, h5 {
 }
 
 .chat-item-bubble span {
-  color: var(--background-grey);
+  color: var(--background-grey1);
   position: absolute;
   bottom: 20px;
   left: -8px;
@@ -215,7 +216,7 @@ h1, h4, h5 {
   height: 7vh;
   padding: 10px 20px;
   border-radius: 15px;
-  background-color: var(--background-grey);
+  background-color: var(--background-grey1);
 }
 
 .chat-item-bubble.user {
@@ -510,6 +511,9 @@ h1, h4, h5 {
 
 .feed-item > img {
   margin-right: 15px;
+  padding: 25px;
+  border-radius: 50%;
+  background-color: var(--background-grey2);
 }
 
 .feed-item > p {
