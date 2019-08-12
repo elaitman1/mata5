@@ -15,12 +15,16 @@ const Navbar = props => {
         className="logo"
         src="./assets/logo.png"
         alt="Logo"
-        onClick={props.toggleChatMenu}
+        onClick={() => props.toggleNavbarMenu("chat")}
       />
     );
   const navbarRight = (
     <div className="navbar-icons">
-      <img src="./assets/menu.png" alt="Menu" />
+      <img
+        src="./assets/menu.png"
+        alt="Menu"
+        onClick={() => props.toggleNavbarMenu("profile")}
+      />
     </div>
   );
 

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Splash from "./components/splash";
 import Navbar from "./components/navbar";
 import Chat from "./components/chat/chat";
+import Profile from "./components/profile";
 import Main from "./components/main";
 import "./App.css";
 
@@ -155,7 +156,7 @@ export default class App extends Component {
     },
     machineSelected: null,
     loggedIn: false,
-    toggledLeftChatMenu: false,
+    toggledNavbarMenu: null,
     displayChat: null
   };
 
@@ -190,30 +191,37 @@ export default class App extends Component {
 
   // transition effects for chat submenu when clicking the navbar's left logo icon;
   // chat menu is positioned off of the viewport by an amount equal to its width until the logo icon is toggled, where it slides in as the app's Main component also slides off the viewport to the right by the same width.
-  toggleChatMenu = () => {
-    const toggledLeftChatMenu = this.state.toggledLeftChatMenu;
-    const chatTransform = toggledLeftChatMenu ? "translateX(-85vw)" : "none";
-    const navTransform = toggledLeftChatMenu ? "none" : "translateX(85vw)";
-    const mainTransform = toggledLeftChatMenu ? "none" : "translateX(85vw)";
-    const mainPos = toggledLeftChatMenu ? "static" : "fixed";
-    document.getElementById("chat").style.transform = chatTransform;
-    document.getElementById("nav").style.transform = navTransform;
+  toggleNavbarMenu = type => {
+    let menu, mainPos, mainTransform, sideMenuTransform;
+    if (type !== null) {
+      menu = type;
+      mainPos = "fixed";
+      mainTransform = type === "chat" ? "translateX(85vw)" : "translateX(-85vw)";
+      sideMenuTransform = "none";
+    } else {
+      menu = this.state.toggledNavbarMenu;
+      mainPos = "static";
+      mainTransform = "none";
+      sideMenuTransform = this.state.toggledNavbarMenu === "chat" ? "translateX(-85vw)" : "translateX(85vw)"
+    }
+    document.getElementById(menu).style.transform = sideMenuTransform;
+    document.getElementById("nav").style.transform = mainTransform;
     document.getElementById("main").style.transform = mainTransform;
     document.getElementById("main").style.position = mainPos;
 
-    this.setState({ toggledLeftChatMenu: !this.state.toggledLeftChatMenu });
+    this.setState({ toggledNavbarMenu: type });
   };
 
   selectChat = (type, chat) => {
     return () => {
       this.setState({ displayChat: [type, chat] });
-      this.toggleChatMenu();
+      this.toggleNavbarMenu(null);
     };
   };
 
   hideChat = () => {
     this.setState({ displayChat: null });
-    this.toggleChatMenu();
+    this.toggleNavbarMenu("chat");
   };
 
   sendNewMessage = (type, chat, message) => {
@@ -249,9 +257,9 @@ export default class App extends Component {
         <div className="app-container">
           <div
             className="overlay"
-            onClick={this.toggleChatMenu}
+            onClick={() => this.toggleNavbarMenu(null)}
             style={{
-              display: this.state.toggledLeftChatMenu ? "block" : "none"
+              display: this.state.toggledNavbarMenu ? "block" : "none"
             }}
           />
           <span id="chat" className="chat-wrapper">
@@ -259,7 +267,7 @@ export default class App extends Component {
           </span>
           <div>
             <Navbar
-              toggleChatMenu={this.toggleChatMenu}
+              toggleNavbarMenu={this.toggleNavbarMenu}
               displayChat={this.state.displayChat}
               hideChat={this.hideChat}
             />
@@ -272,6 +280,9 @@ export default class App extends Component {
               toggleMachineSelection={this.toggleMachineSelection}
             />
           </div>
+          <span id="profile" className="profile-wrapper">
+            <Profile />
+          </span>
         </div>
       );
     }
