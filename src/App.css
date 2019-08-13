@@ -14,6 +14,7 @@
   --border-blue: #007aff;
   --background-grey1: #E8E8E8;
   --background-grey2: rgb(128,151,177, 0.1);
+  --background-grey3: #58546b;
   --boxshadow-green: #d6ead7;
   --login-text-grey: #b0bac9;
   --login-button-gradient: linear-gradient(281deg, #009ffd, #2a2a72);
@@ -180,6 +181,7 @@ h1, h4, h5 {
   transition: transform 0.5s;
   transform: translateX(-85vw);
   width: 85vw;
+  min-height: 100vh;
   z-index: 10;
   background-color: var(--white);
 }
@@ -448,8 +450,92 @@ h1, h4, h5 {
   width: 85vw;
   min-height: 100vh;
   z-index: 10;
-  background-color: green;
-  /* background-color: var(--white); */
+  background-color: var(--white);
+}
+
+.profile-user {
+  display: flex;
+  align-items: center;
+  padding: 30px;
+}
+
+.profile-user > img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  border-radius: 6px;
+  background-color: var(--background-grey3);
+  margin-right: 15px;
+}
+
+.profile-user > p {
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+.profile-menus-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.profile-menu-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 19px 30px;
+}
+
+.profile-menu-container:active {
+  color: var(--active-blue);
+  background-color: rgba(46, 91, 255, 0.1);
+  border-left: 3px solid var(--active-blue);
+}
+
+.profile-menu-container:active .profile-menu-icon.Notifications {
+  background-image: url("images/starActive.png")
+}
+
+.profile-menu-container:active .profile-menu-icon.Settings {
+  background-image: url("images/settingsActive.png")
+}
+
+.profile-menu-container:active .profile-menu-icon.Support {
+  background-image: url("images/supportActive.png")
+}
+
+.profile-menu-container:active .profile-menu-icon.Logout {
+  background-image: url("images/logoutActive.png")
+}
+
+.profile-menu-icon {
+  margin-right: 10px;
+  width: 25px;
+  height: 25px;
+  background-size: contain;
+}
+
+.profile-menu-icon.Notifications {
+  background-image: url("images/starInactive.png");
+}
+
+.profile-menu-icon.Settings {
+  background-image: url("images/settingsInactive.png")
+}
+
+.profile-menu-icon.Support {
+  background-image: url("images/supportInactive.png")
+}
+
+.profile-menu-icon.Logout {
+  background-image: url("images/logoutInactive.png")
+}
+
+.profile-menu-container > p {
+  font-size: 15px;
+  margin: 0;
 }
 
 .footer {

@@ -2,6 +2,7 @@ import React from "react";
 import Feed from "./feed";
 import Machine from "./machine";
 import ChatItem from "./chat/chatItem";
+import ProfileItem from "./profile/profileItem";
 
 const Main = props => {
   return (
@@ -12,7 +13,10 @@ const Main = props => {
           displayChat={props.displayChat}
           sendNewMessage={props.sendNewMessage}
         />
-      ) : !props.machineSelected ? (
+      ) : props.displayProfile ? (
+        <ProfileItem />
+      ) :
+      !props.machineSelected ? (
         <Feed
           cells={props.cells}
           toggleMachineSelection={props.toggleMachineSelection}

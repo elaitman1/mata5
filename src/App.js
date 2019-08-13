@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Splash from "./components/splash";
 import Navbar from "./components/navbar";
 import Chat from "./components/chat/chat";
-import Profile from "./components/profile";
+import Profile from "./components/profile/profile";
 import Main from "./components/main";
 import "./App.css";
 
@@ -157,7 +157,8 @@ export default class App extends Component {
     machineSelected: null,
     loggedIn: false,
     toggledNavbarMenu: null,
-    displayChat: null
+    displayChat: null,
+    displayProfile: null
   };
 
   componentDidMount = () => {
@@ -212,6 +213,7 @@ export default class App extends Component {
     this.setState({ toggledNavbarMenu: type });
   };
 
+  // select chat stores both the type (Machine, Part, Job, etc..) and the specific chat within the type group
   selectChat = (type, chat) => {
     return () => {
       this.setState({ displayChat: [type, chat] });
