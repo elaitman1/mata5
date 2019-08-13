@@ -5,9 +5,9 @@ const Logout = props => {
     <div className="logout-container">
       <img src="./assets/logoutIllustration.png" alt="Logout Illustration" />
       <p>Are You Sure You Want To Log Out?</p>
-      <div>
-        <button>Leave</button>
-        <button>Cancel</button>
+      <div className="logout-buttons-container">
+        <button className="form-submit-button">Leave</button>
+        <button className="form-submit-button grey">Cancel</button>
       </div>
     </div>
   )
