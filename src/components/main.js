@@ -16,7 +16,7 @@ const Main = props => {
       )
     } else if (props.displayProfile) {
       return (
-        <ProfileItem displayProfile={props.displayProfile} />
+        <ProfileItem displayProfile={props.displayProfile} user={props.user} />
       )
     } else {
       if (!props.machineSelected) {

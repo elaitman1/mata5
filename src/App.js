@@ -8,6 +8,26 @@ import "./App.css";
 
 export default class App extends Component {
   state = {
+    user: {
+      name: "Awesome Machinist",
+      notifications: {
+        text: true,
+        email: false,
+        doNotDisturb: {
+          on: true,
+          from: {
+            hour: null,
+            min: null,
+            sec: null
+          },
+          to: {
+            hour: null,
+            min: null,
+            sec: null
+          }
+        }
+      }
+    },
     cells: [],
     chats: {
       Machines: {
@@ -288,6 +308,7 @@ export default class App extends Component {
               hideProfile={this.hideProfile}
             />
             <Main
+              user={this.state.user}
               cells={this.state.cells}
               chats={this.state.chats}
               displayChat={this.state.displayChat}
@@ -298,7 +319,7 @@ export default class App extends Component {
             />
           </div>
           <span id="profile" className="profile-wrapper">
-            <Profile selectProfile={this.selectProfile} />
+            <Profile userName={this.state.user.name} selectProfile={this.selectProfile} />
           </span>
         </div>
       );

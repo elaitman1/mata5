@@ -11,7 +11,7 @@ const Profile = props => {
     <div className="profile-container">
       <header className="profile-user">
         <img src="./assets/machine.png" alt="Profile"/>
-        <p>Awesome Machinist</p>
+        <p>{props.userName}</p>
       </header>
       <div className="profile-menus-container">
       {profileMenus.map((menu, idx) => {
@@ -29,7 +29,7 @@ const Profile = props => {
             onClick={props.selectProfile(menu)}
           >
             <span className={className} />
-            <p>{val}</p>
+            <p>{menu}</p>
           </div>
         );
       })}

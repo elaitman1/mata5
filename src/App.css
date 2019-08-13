@@ -551,8 +551,11 @@ h1, h4, h5 {
   margin: 0;
 }
 
-.logout-container {
+.profile-item-container {
   margin-top: 95px;
+}
+
+.logout-container {
   padding: 80px 10px;
   display: flex;
   flex-direction: column;
