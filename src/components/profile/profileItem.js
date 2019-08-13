@@ -3,7 +3,7 @@ import Logout from "../logout";
 
 const ProfileItem = props => {
   switch (props.displayProfile) {
-    case "Logout":
+    case "Log Out":
       return <Logout />
     default:
       return "";

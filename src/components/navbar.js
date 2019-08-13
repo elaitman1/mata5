@@ -21,8 +21,9 @@ const Navbar = props => {
     );
   } else if (props.displayProfile) {
     navbarLeft = (
-      <span className="back-icon" onClick={props.hideProfile}>
-        &lsaquo; Back
+      <span className="back-icon profile" onClick={props.hideProfile}>
+        <span>&lsaquo;</span>
+        <p>Back</p>
       </span>
     );
   } else {

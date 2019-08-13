@@ -26,7 +26,7 @@ const Profile = props => {
           <div
             key={idx}
             className="profile-menu-container"
-            onClick={props.selectProfile(val)}
+            onClick={props.selectProfile(menu)}
           >
             <span className={className} />
             <p>{val}</p>
