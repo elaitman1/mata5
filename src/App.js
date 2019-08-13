@@ -251,6 +251,18 @@ export default class App extends Component {
     this.setState({ chats: newChats });
   };
 
+  selectProfile = type => {
+    return () => {
+      this.setState({ displayProfile: type });
+      this.toggleNavbarMenu(null);
+    };
+  };
+
+  hideProfile = () => {
+    this.setState({ displayProfile: null });
+    this.toggleNavbarMenu("profile");
+  };
+
   render = () => {
     if (!this.state.loggedIn) {
       return <Splash logIn={this.logIn} />;
@@ -271,19 +283,22 @@ export default class App extends Component {
             <Navbar
               toggleNavbarMenu={this.toggleNavbarMenu}
               displayChat={this.state.displayChat}
+              displayProfile={this.state.displayProfile}
               hideChat={this.hideChat}
+              hideProfile={this.hideProfile}
             />
             <Main
               cells={this.state.cells}
               chats={this.state.chats}
               displayChat={this.state.displayChat}
+              displayProfile={this.state.displayProfile}
               sendNewMessage={this.sendNewMessage}
               machineSelected={this.state.machineSelected}
               toggleMachineSelection={this.toggleMachineSelection}
             />
           </div>
           <span id="profile" className="profile-wrapper">
-            <Profile />
+            <Profile selectProfile={this.selectProfile} />
           </span>
         </div>
       );

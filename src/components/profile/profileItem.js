@@ -1,11 +1,13 @@
 import React from "react";
+import Logout from "../logout";
 
 const ProfileItem = props => {
-  return (
-    <div>
-      Hello Profile Items
-    </div>
-  )
+  switch (props.displayProfile) {
+    case "Logout":
+      return <Logout />
+    default:
+      return "";
+  }
 }
 
 export default ProfileItem;

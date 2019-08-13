@@ -1,16 +1,32 @@
 import React from "react";
 
 const Navbar = props => {
-  const navbarText =
-    props.displayChat || props.displayCamera
-      ? props.displayCamera ? "Scanner" : props.displayChat[1]
-      : "";
-  const navbarLeft =
-    props.displayChat || props.displayCamera ? (
+  let navbarText;
+  if (props.displayChat || props.displayProfile || props.displayCamera) {
+    if (props.displayCamera) {
+      navbarText = "Scanner";
+    } else if (props.displayChat) {
+      navbarText = props.displayChat[1];
+    } else if (props.displayProfile) {
+      navbarText = props.displayProfile;
+    }
+  }
+
+  let navbarLeft;
+  if (props.displayChat || props.displayCamera) {
+    navbarLeft = (
       <span className="back-icon" onClick={props.hideChat}>
         &lsaquo;
       </span>
-    ) : (
+    );
+  } else if (props.displayProfile) {
+    navbarLeft = (
+      <span className="back-icon" onClick={props.hideProfile}>
+        &lsaquo; Back
+      </span>
+    );
+  } else {
+    navbarLeft = (
       <img
         className="logo"
         src="./assets/logo.png"
@@ -18,7 +34,9 @@ const Navbar = props => {
         onClick={() => props.toggleNavbarMenu("chat")}
       />
     );
-  const navbarRight = (
+  }
+
+  const navbarRight = !props.displayProfile ? (
     <div className="navbar-icons">
       <img
         src="./assets/menu.png"
@@ -26,10 +44,13 @@ const Navbar = props => {
         onClick={() => props.toggleNavbarMenu("profile")}
       />
     </div>
+  ) : (
+    ""
   );
 
+  const className = props.displayProfile ? "navbar profile" : "navbar";
   return (
-    <div id="nav" className="navbar">
+    <div id="nav" className={className}>
       {navbarLeft}
       <h4>{navbarText}</h4>
       {navbarRight}

@@ -5,28 +5,41 @@ import ChatItem from "./chat/chatItem";
 import ProfileItem from "./profile/profileItem";
 
 const Main = props => {
-  return (
-    <div id="main" className="main-container">
-      {props.displayChat ? (
+  const renderMain = () => {
+    if (props.displayChat) {
+      return (
         <ChatItem
           chats={props.chats}
           displayChat={props.displayChat}
           sendNewMessage={props.sendNewMessage}
         />
-      ) : props.displayProfile ? (
-        <ProfileItem />
-      ) :
-      !props.machineSelected ? (
-        <Feed
-          cells={props.cells}
-          toggleMachineSelection={props.toggleMachineSelection}
-        />
-      ) : (
-        <Machine
-          machine={props.machineSelected}
-          toggleMachineSelection={props.toggleMachineSelection}
-        />
-      )}
+      )
+    } else if (props.displayProfile) {
+      return (
+        <ProfileItem displayProfile={props.displayProfile} />
+      )
+    } else {
+      if (!props.machineSelected) {
+        return (
+          <Feed
+            cells={props.cells}
+            toggleMachineSelection={props.toggleMachineSelection}
+          />
+        )
+      } else {
+        return (
+          <Machine
+            machine={props.machineSelected}
+            toggleMachineSelection={props.toggleMachineSelection}
+          />
+        )
+      }
+    }
+  }
+
+  return (
+    <div id="main" className="main-container">
+      {renderMain()}
     </div>
   );
 };
