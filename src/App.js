@@ -223,13 +223,12 @@ export default class App extends Component {
       menu = this.state.toggledNavbarMenu;
       mainPos = "static";
       mainTransform = "none";
-      sideMenuTransform = this.state.toggledNavbarMenu === "chat" ? "translateX(-85vw)" : "translateX(85vw)"
+      sideMenuTransform = this.state.toggledNavbarMenu === "chat" ? "translateX(-85vw)" : "translateX(85vw)";
     }
     document.getElementById(menu).style.transform = sideMenuTransform;
     document.getElementById("nav").style.transform = mainTransform;
     document.getElementById("main").style.transform = mainTransform;
     document.getElementById("main").style.position = mainPos;
-
     this.setState({ toggledNavbarMenu: type });
   };
 
