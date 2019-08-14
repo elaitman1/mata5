@@ -23,7 +23,7 @@ const FeedItem = props => {
         <p
           style={{
             color:
-              utilization >= 66 ? "#7ed321" : utilization <= 39 ? "#bb0000" : "orange"
+              utilization >= 66 ? "#7ED321" : utilization <= 39 ? "#BB0000" : "orange"
           }}
         >
           {utilization}% Utilization
