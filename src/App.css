@@ -600,6 +600,66 @@ h1, h4, h5 {
   color: var(--active-blue);
 }
 
+.support-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(100vw - 40px);
+  padding: 30px 20px;
+}
+
+.support-container > h4 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.support-form-textarea {
+  font-size: 15px;
+  min-height: 102px;
+  width: calc(100% - 20px);
+  padding: 24px 10px;
+  margin-bottom: 20px;
+  vertical-align: top;
+  resize: none;
+  word-wrap: break-word;
+  border: 1px solid var(--border-grey1);
+}
+
+.support-form-textarea::placeholder {
+  color: var(--border-grey1);
+}
+
+.logout-container {
+  padding-top: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logout-container > p {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 25vw;
+  text-align: center;
+}
+
+.logout-container > img {
+  width: calc(100vw - 20px);
+  height: calc(100vw - 20px);
+}
+
+.logout-buttons-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 20px;
+  width: calc(100% - 40px);
+}
+
 .toggle-input-container {
   display: flex;
   flex-direction: column;
@@ -675,35 +735,6 @@ h1, h4, h5 {
 .collapse-input-arrow {
   font-size: 25px;
   color: var(--toggle-inactive-grey);
-}
-
-.logout-container {
-  padding-top: 50px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.logout-container > p {
-  font-size: 16px;
-  font-weight: 500;
-  padding: 10px 25vw;
-  text-align: center;
-}
-
-.logout-container > img {
-  width: calc(100vw - 20px);
-  height: calc(100vw - 20px);
-}
-
-.logout-buttons-container {
-  display: flex;
-  justify-content: space-around;
-  padding: 0 20px;
-  width: calc(100% - 40px);
 }
 
 .footer {
