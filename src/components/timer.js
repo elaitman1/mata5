@@ -66,14 +66,16 @@ export default class Timer extends Component {
         />
       );
     } else {
+      const containerClassName = this.props.notificationTimer ? "timer-container notification" : "timer-container";
+      const buttonClassName = this.props.notificationTimer ? "form-submit-button hide" : "form-submit-button";
       return (
-        <div className="timer-container">
+        <div className={containerClassName}>
           <div className="timer-specs-container">
             <span className="timer-selector-bar" id="selector" />
             {scrollables}
           </div>
           <button
-            className="form-submit-button"
+            className={buttonClassName}
             onClick={this.handleStartTimer}
           >
             Start
@@ -84,9 +86,10 @@ export default class Timer extends Component {
   };
 
   render = () => {
+    const className = this.props.notificationTimer ? "overlay notification" : "overlay";
     return (
       <div>
-        <div className="overlay" onClick={this.props.hideTask} />
+        <div className={className} onClick={this.props.hideTask} />
         {this.renderTask()}
       </div>
     );

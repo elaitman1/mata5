@@ -13,11 +13,15 @@ const Main = props => {
           displayChat={props.displayChat}
           sendNewMessage={props.sendNewMessage}
         />
-      )
+      );
     } else if (props.displayProfile) {
       return (
-        <ProfileItem displayProfile={props.displayProfile} user={props.user} />
-      )
+        <ProfileItem
+          displayProfile={props.displayProfile}
+          user={props.user}
+          toggleNotification={props.toggleNotification}
+        />
+      );
     } else {
       if (!props.machineSelected) {
         return (
@@ -25,17 +29,17 @@ const Main = props => {
             cells={props.cells}
             toggleMachineSelection={props.toggleMachineSelection}
           />
-        )
+        );
       } else {
         return (
           <Machine
             machine={props.machineSelected}
             toggleMachineSelection={props.toggleMachineSelection}
           />
-        )
+        );
       }
     }
-  }
+  };
 
   return (
     <div id="main" className="main-container">

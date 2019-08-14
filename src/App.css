@@ -4,6 +4,7 @@
   --active-green: #7ED321;
   --inactive-grey1: #9B9B9B;
   --inactive-grey2: #B0BAC9;
+  --toggle-inactive-grey: #d2d2d2;
   --timer-grey: #858585;
   --timer-check-green: #22c064;
   --error-red: #bb0000;
@@ -49,6 +50,10 @@ h1, h4, h5 {
   width: 100%;
   z-index: 8;
   background-color: rgba(0,0,0,.3);
+}
+
+.overlay.notification {
+  display: none;
 }
 
 .splash {
@@ -553,6 +558,51 @@ h1, h4, h5 {
 
 .profile-item-container {
   margin-top: 95px;
+  padding: 30px 0;
+}
+
+.notifications-container {
+}
+
+.toggle-input-slider {
+  width: 50px;
+  height: 30px;
+  border-radius: 25px;
+  background-color: var(--toggle-inactive-grey);
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.toggle-input-slider.toggled {
+  background-color: var(--border-blue);
+}
+
+.toggle-input-circle {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  border: 1px solid var(--toggle-inactive-grey);
+  background-color: var(--white);
+  position: absolute;
+  left: 21px;
+  top: 1px;
+  transition: transform 0.3s;
+  transform: translateX(-20px);
+}
+
+.toggle-input-circle.toggled {
+  transition: transform 0.3s;
+  transform: translateX(0px);
+  border: 1px solid var(--border-blue);
+}
+
+.collapse-input-clickable {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
 }
 
 .logout-container {
@@ -1136,6 +1186,12 @@ h1, h4, h5 {
   align-items: center;
 }
 
+.timer-container.notification {
+  position: static;
+  bottom: auto;
+  left: auto;
+}
+
 .timer-specs-container {
   display: flex;
   justify-content: center;
@@ -1266,6 +1322,10 @@ h1, h4, h5 {
 
 .form-submit-button.grey {
   border: 2px solid var(--border-grey2);
+}
+
+.form-submit-button.hide {
+  display: none;
 }
 
 .cell {

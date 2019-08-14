@@ -8,25 +8,26 @@ const ProfileItem = props => {
   let profileItem;
   switch (props.displayProfile) {
     case "Notifications":
-      profileItem = <Notifications user={props.user} />
+      profileItem = (
+        <Notifications
+          user={props.user}
+          toggleNotification={props.toggleNotification}
+        />
+      );
       break;
     case "Settings":
-      profileItem = <Settings user={props.user} />
+      profileItem = <Settings user={props.user} />;
       break;
     case "Help/Support":
-      profileItem = <Support user={props.user} />
+      profileItem = <Support user={props.user} />;
       break;
     case "Log Out":
-      profileItem = <Logout />
+      profileItem = <Logout />;
       break;
     default:
       return "";
   }
-  return (
-    <div className="profile-item-container">
-      {profileItem}
-    </div>
-  )
-}
+  return <div className="profile-item-container">{profileItem}</div>;
+};
 
 export default ProfileItem;

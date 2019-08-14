@@ -11,16 +11,16 @@ export default class App extends Component {
     user: {
       name: "Awesome Machinist",
       notifications: {
-        text: true,
-        email: false,
-        doNotDisturb: {
+        Text: true,
+        Email: false,
+        "Do Not Disturb": {
           on: true,
-          from: {
+          From: {
             hour: null,
             min: null,
             sec: null
           },
-          to: {
+          To: {
             hour: null,
             min: null,
             sec: null
@@ -282,6 +282,18 @@ export default class App extends Component {
     this.toggleNavbarMenu("profile");
   };
 
+  toggleNotification = type => {
+    return () => {
+      let newUser = this.state.user;
+      if (type === "Do Not Disturb") {
+        newUser.notifications[type].on = !newUser.notifications[type].on;
+      } else {
+        newUser.notifications[type] = !newUser.notifications[type];
+      }
+      this.setState({ user: newUser });
+    }
+  }
+
   render = () => {
     if (!this.state.loggedIn) {
       return <Splash logIn={this.logIn} />;
@@ -313,6 +325,7 @@ export default class App extends Component {
               displayChat={this.state.displayChat}
               displayProfile={this.state.displayProfile}
               sendNewMessage={this.sendNewMessage}
+              toggleNotification={this.toggleNotification}
               machineSelected={this.state.machineSelected}
               toggleMachineSelection={this.toggleMachineSelection}
             />
