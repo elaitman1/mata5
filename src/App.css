@@ -558,7 +558,13 @@ h1, h4, h5 {
 
 .profile-item-container {
   margin-top: 95px;
-  padding: 30px 0;
+  padding-top: 30px;
+}
+
+.profile-item-input-separator {
+  height: 1px;
+  width: 82%;
+  background-color: var(--toggle-inactive-grey);
 }
 
 .notifications-container {
@@ -572,10 +578,26 @@ h1, h4, h5 {
   border-bottom: 1px solid var(--toggle-inactive-grey);
 }
 
-.notifications-separator {
-  height: 1px;
-  width: 82%;
-  background-color: var(--toggle-inactive-grey);
+.settings-container {
+  border-top: 1px solid var(--toggle-inactive-grey);
+}
+
+.settings-link-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.settings-link {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-right: 20vw;
+  margin-bottom: 40px;
+  word-break: break-all;
+  text-decoration: none;
+  color: var(--active-blue);
 }
 
 .toggle-input-container {
@@ -656,7 +678,10 @@ h1, h4, h5 {
 }
 
 .logout-container {
-  padding: 80px 10px;
+  padding-top: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;

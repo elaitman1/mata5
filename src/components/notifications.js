@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Timer from "./timer";
+import CollapseInput from "./collapseInput";
 
 export default class Notifications extends Component {
   state = {
@@ -46,9 +46,10 @@ export default class Notifications extends Component {
                     return (
                       <CollapseInput
                         key={idx}
-                        dndField={dndField}
-                        showTimer={showTimer}
-                        toggleTimer={this.toggleTimer}
+                        inputName={dndField}
+                        collapseInput={showTimer}
+                        toggleInput={this.toggleTimer}
+                        hasTimer={true}
                       />
                     );
                   }
@@ -88,24 +89,7 @@ const ToggleInput = props => {
           <span className={circleClassName} />
         </div>
       </div>
-      <span className="notifications-separator" />
-    </div>
-  );
-};
-
-const CollapseInput = props => {
-  return (
-    <div className="collapse-input-container">
-      <div>
-        <div className="collapse-input-clickable" onClick={props.toggleTimer(props.dndField)}>
-          <p>{props.dndField}</p>
-          <span className="collapse-input-arrow" style={{transform: props.showTimer ? "rotate(90deg)" : ""}}>&rsaquo;</span>
-        </div>
-      </div>
-      <span className="notifications-separator" />
-      <div style={{display: props.showTimer ? "initial" : "none"}}>
-        <Timer notificationTimer={true} />
-      </div>
+      <span className="profile-item-input-separator" />
     </div>
   );
 };
