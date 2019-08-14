@@ -19,6 +19,7 @@ export default class Notifications extends Component {
       <div className="notifications-container">
         {Object.keys(this.props.user.notifications).map((notif, idx) => {
           const notifications = this.props.user.notifications;
+          // if it's for text/email notification, more straightforward ToggleInput functional component
           if (notif !== "Do Not Disturb") {
             return (
               <ToggleInput
@@ -29,6 +30,7 @@ export default class Notifications extends Component {
               />
             );
           } else {
+            // if it's for do not disturb, there's a more elaborate JSX layout on top of a ToggleInput functional component, including two CollapseInput functional components.
             return (
               <div key={idx} className="notifications-do-not-disturb-container">
                 <p>{notif}</p>
@@ -62,6 +64,7 @@ export default class Notifications extends Component {
 }
 
 const ToggleInput = props => {
+  // various class name and other values change based on App component's current state value for notification and other related pointers
   const inputName =
     props.notification === "Scheduled"
       ? "Scheduled"
@@ -76,27 +79,30 @@ const ToggleInput = props => {
     props.notification === "Scheduled" ? "Do Not Disturb" : props.notification;
   return (
     <div className="toggle-input-container">
-      <p>{inputName}</p>
-      <div
-        className={sliderClassName}
-        onClick={props.toggleNotification(toggleArg)}
-      >
-        <span className={circleClassName} />
+      <div>
+        <p>{inputName}</p>
+        <div
+          className={sliderClassName}
+          onClick={props.toggleNotification(toggleArg)}
+        >
+          <span className={circleClassName} />
+        </div>
       </div>
+      <span className="notifications-separator" />
     </div>
   );
 };
 
 const CollapseInput = props => {
-  const className = props.showTimer
-    ? "collapse-input-arrow"
-    : "collapse-input-arrow down";
   return (
     <div className="collapse-input-container">
-      <div className="collapse-input-clickable" onClick={props.toggleTimer(props.dndField)}>
-        <p>{props.dndField}</p>
-        <span className={className} style={{transform: props.showTimer ? "rotate(90deg)" : ""}}>&rsaquo;</span>
+      <div>
+        <div className="collapse-input-clickable" onClick={props.toggleTimer(props.dndField)}>
+          <p>{props.dndField}</p>
+          <span className="collapse-input-arrow" style={{transform: props.showTimer ? "rotate(90deg)" : ""}}>&rsaquo;</span>
+        </div>
       </div>
+      <span className="notifications-separator" />
       <div style={{display: props.showTimer ? "initial" : "none"}}>
         <Timer notificationTimer={true} />
       </div>

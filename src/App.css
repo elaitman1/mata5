@@ -562,6 +562,36 @@ h1, h4, h5 {
 }
 
 .notifications-container {
+  border-top: 1px solid var(--toggle-inactive-grey);
+}
+
+.notifications-do-not-disturb-container > p {
+  color: var(--border-grey2);
+  padding: 10px 15px;
+  margin: 0;
+  border-bottom: 1px solid var(--toggle-inactive-grey);
+}
+
+.notifications-separator {
+  height: 1px;
+  width: 82%;
+  background-color: var(--toggle-inactive-grey);
+}
+
+.toggle-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 10px 15px;
+  width: calc(100% - 30px);
+}
+
+.toggle-input-container > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .toggle-input-slider {
@@ -586,23 +616,43 @@ h1, h4, h5 {
   border: 1px solid var(--toggle-inactive-grey);
   background-color: var(--white);
   position: absolute;
-  left: 21px;
+  left: 1px;
   top: 1px;
   transition: transform 0.3s;
-  transform: translateX(-20px);
+  transform: translateX(0px);
 }
 
 .toggle-input-circle.toggled {
   transition: transform 0.3s;
-  transform: translateX(0px);
+  transform: translateX(20px);
   border: 1px solid var(--border-blue);
 }
 
+.collapse-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.collapse-input-container > div {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 30px);
+  padding: 5px 15px;
+}
+
 .collapse-input-clickable {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+}
+
+.collapse-input-arrow {
+  font-size: 25px;
+  color: var(--toggle-inactive-grey);
 }
 
 .logout-container {
