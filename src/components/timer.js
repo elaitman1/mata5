@@ -20,23 +20,26 @@ export default class Timer extends Component {
 
   updateTimerValue = field => {
     return () => {
+      const timerType = this.props.notificationTimer ? `.${this.props.dndTimerType}` : "";
+      const selectorClass = this.props.notificationTimer ? `.timer-selector-bar${timerType}` : ".timer-selector-bar"
       let selector = document
-        .getElementById("selector")
+        .querySelector(selectorClass)
         .getBoundingClientRect();
-      let fieldElements = document.querySelectorAll(`.timer-value.${field}`);
+      let fieldElements = document.querySelectorAll(`.timer-value.${field}${timerType}`);
       // for each timer element that isn't one of the empty spaces for placeholder/styling purposes, get the average of its top and bottom positions and check that against the selector bar's top and bottom bounding positions to determine if it should be selected and also update the state's value for that timer spec for handling submit
       fieldElements.forEach(elem => {
         if (elem.innerHTML !== " ") {
+          const timerTypeNoPeriod = timerType.slice(1, timerType.length);
           let scrollPos =
             (elem.getBoundingClientRect().top +
               elem.getBoundingClientRect().bottom) /
             2;
           if (scrollPos >= selector.top && scrollPos <= selector.bottom) {
-            elem.className = `timer-value ${field} selected`;
+            elem.className = `timer-value ${field} ${timerTypeNoPeriod} selected`;
             this.setState({ [field]: parseInt(elem.innerHTML) });
           } else {
-            if (elem.className !== `timer-value ${field}`) {
-              elem.className = `timer-value ${field}`;
+            if (elem.className !== `timer-value ${field} ${timerTypeNoPeriod}`) {
+              elem.className = `timer-value ${field} ${timerTypeNoPeriod}`;
             }
           }
         }
@@ -52,6 +55,8 @@ export default class Timer extends Component {
             key={idx}
             spec={timerSpec}
             updateTimerValue={this.updateTimerValue}
+            notificationTimer={this.props.notificationTimer}
+            dndTimerType={this.props.dndTimerType}
           />
         );
       }
@@ -68,10 +73,11 @@ export default class Timer extends Component {
     } else {
       const containerClassName = this.props.notificationTimer ? "timer-container notification" : "timer-container";
       const buttonClassName = this.props.notificationTimer ? "form-submit-button hide" : "form-submit-button";
+      const selectorClassName = this.props.notificationTimer ? `timer-selector-bar ${this.props.dndTimerType}` : "timer-selector-bar";
       return (
         <div className={containerClassName}>
           <div className="timer-specs-container">
-            <span className="timer-selector-bar" id="selector" />
+            <span className={selectorClassName} />
             {scrollables}
           </div>
           <button
@@ -111,10 +117,11 @@ const Scrollable = props => {
           .concat([...Array(arrayLength).keys()])
           .concat([" ", " ", " ", " ", " ", " ", " ", " ", " "])
           .map((val, idx) => {
+            const timerType = props.notificationTimer ? props.dndTimerType : "";
             const className =
               val === 0
-                ? `timer-value ${props.spec} selected`
-                : `timer-value ${props.spec}`;
+                ? `timer-value ${props.spec} ${timerType} selected`
+                : `timer-value ${props.spec} ${timerType}`;
             return (
               <p key={idx} className={className}>
                 {val}
