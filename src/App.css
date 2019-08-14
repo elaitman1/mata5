@@ -802,13 +802,14 @@ h1, h4, h5 {
   align-items: center;
   position: relative;
   margin: 10px;
-  padding: 20px 0;
+  padding-top: 5px;
+  padding-bottom: 15px;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .feed-item > img {
-  margin-right: 15px;
+  margin-right: 5px;
   padding: 25px;
   border-radius: 50%;
   background-color: var(--background-grey2);
@@ -831,6 +832,7 @@ h1, h4, h5 {
 
 .feed-item-text-wrapper > p {
   color: var(--text-grey);
+  margin: 10px;
 }
 
 .feed-item-text-wrapper > p:first-child {

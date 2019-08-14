@@ -1,7 +1,7 @@
 import React from "react";
 
 const FeedItem = props => {
-  const { id, type, timer, status, online } = props.machSpecs;
+  const { id, type, utilization, timer, status, online } = props.machSpecs;
 
   return (
     <div
@@ -19,6 +19,14 @@ const FeedItem = props => {
       <div className="feed-item-text-wrapper">
         <p>
           {type} {id}
+        </p>
+        <p
+          style={{
+            color:
+              utilization >= 66 ? "#7ed321" : utilization <= 39 ? "#bb0000" : "orange"
+          }}
+        >
+          {utilization}% Utilization
         </p>
         <p>
           {timer} Timer {status}
