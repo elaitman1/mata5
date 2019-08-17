@@ -78,25 +78,27 @@ h1, h4, h5 {
   justify-content: center;
   align-items: center;
   width: 100%;
-  position: relative;
   font-size: 13px;
 }
 
-.login-form > a {
-  position: absolute;
-  right: 20px;
-  top: 200px;
+.login-form-password-retrieve {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.login-form-password-retrieve > a {
   color: var(--white);
   cursor: pointer;
   text-decoration: none;
 }
 
-.login-form > a:hover {
+.login-form-password-retrieve > a:hover {
   text-decoration: underline;
 }
 
 .login-form > p {
-  margin-top: 20px;
   color: var(--error-red);
 }
 
@@ -312,9 +314,12 @@ h1, h4, h5 {
 
 .chat-item-messages-container {
   margin-top: 10px;
-  height: 70vh;
+  margin-bottom: 40px;
+  padding: 10px 0;
+  height: 500px;
   overflow-y: hidden;
   overflow: scroll;
+  z-index: 10;
 }
 
 .chat-item-message-container {
@@ -341,6 +346,7 @@ h1, h4, h5 {
   position: relative;
   margin-top: 10px;
   display: flex;
+  min-height: 50px;
 }
 
 .chat-item-bubble span {
@@ -357,7 +363,6 @@ h1, h4, h5 {
 
 .chat-item-bubble.machine {
   width: calc(70vw - 40px);
-  height: 7vh;
   padding: 10px 20px;
   border-radius: 15px;
   background-color: var(--background-grey1);
@@ -366,7 +371,6 @@ h1, h4, h5 {
 .chat-item-bubble.user {
   align-items: center;
   width: calc(70vw - 50px);
-  height: 8vh;
   padding: 0 25px;
   border-radius: 18px;
   color: var(--white);
@@ -398,6 +402,7 @@ h1, h4, h5 {
   position: fixed;
   bottom: 0;
   width: calc(100% - 40px);
+  padding-top: 10px;
   padding-bottom: 30px;
   padding-left: 20px;
   padding-right: 20px;

@@ -26,6 +26,7 @@ const Main = props => {
       if (!props.machineSelected) {
         return (
           <Feed
+            fetchData={props.fetchData}
             cells={props.cells}
             toggleMachineSelection={props.toggleMachineSelection}
           />

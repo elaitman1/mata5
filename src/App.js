@@ -174,28 +174,48 @@ export default class App extends Component {
         }
       }
     },
+    isLoading: true,
     machineSelected: null,
-    loggedIn: false,
     toggledNavbarMenu: null,
     displayChat: null,
     displayProfile: null
   };
 
   componentDidMount = () => {
-    this.fetchData("./data.json").then(data => {
-      this.setState({
-        cells: data
+    const userData = localStorage.getItem("Mata Inventive");
+    if (userData) {
+      this.loadData(JSON.parse(userData).ID).then(data => {
+        this.setState({ cells: data, isLoading: false })
       });
-    });
+    }
   };
 
   fetchData = async url => {
-    const res = await fetch(url);
-    return res.json();
+    const res = await fetch(url).then(res => res.json()).catch(err => console.log("err", err));
+    return res;
   };
 
-  logIn = () => {
-    this.setState({ loggedIn: true });
+  loadData = async id => {
+    const cellsUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatacell.php?id=${id}`;
+    const cells = await this.fetchData(cellsUrl).then(cellsData => cellsData);
+    const devicesUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatacelladd.php?id=${id}`;
+    const devices = await this.fetchData(devicesUrl).then(devicesData => devicesData);
+
+    const dataArr = await Promise.all([cells, devices]).then(data => {
+      return data[0].map(cell => {
+        let dataObj = {};
+        dataObj["cellName"] = cell.name;
+        const cellDevices = data[1].filter(device => device.cell_id === cell.cell_id);
+        dataObj["devices"] = cellDevices;
+        return dataObj;
+      })
+    })
+
+    return dataArr;
+  }
+
+  logIn = id => {
+    this.loadData(id).then(data => this.setState({ cells: data, isLoading: false }));
   };
 
   // toggles between Overview and Floorplan views within Feed component based on toggled value from Footer component (currently removed)
@@ -217,13 +237,17 @@ export default class App extends Component {
     if (type !== null) {
       menu = type;
       mainPos = "fixed";
-      mainTransform = type === "chat" ? "translateX(85vw)" : "translateX(-85vw)";
+      mainTransform =
+        type === "chat" ? "translateX(85vw)" : "translateX(-85vw)";
       sideMenuTransform = "none";
     } else {
       menu = this.state.toggledNavbarMenu;
       mainPos = "static";
       mainTransform = "none";
-      sideMenuTransform = this.state.toggledNavbarMenu === "chat" ? "translateX(-85vw)" : "translateX(85vw)";
+      sideMenuTransform =
+        this.state.toggledNavbarMenu === "chat"
+          ? "translateX(-85vw)"
+          : "translateX(85vw)";
     }
     document.getElementById(menu).style.transform = sideMenuTransform;
     document.getElementById("nav").style.transform = mainTransform;
@@ -291,14 +315,15 @@ export default class App extends Component {
         newUser.notifications[type] = !newUser.notifications[type];
       }
       this.setState({ user: newUser });
-    }
-  }
+    };
+  };
 
   render = () => {
-    if (!this.state.loggedIn) {
-      return <Splash logIn={this.logIn} />;
+    if (!localStorage.getItem("Mata Inventive")) {
+      return <Splash fetchData={this.fetchData} logIn={this.logIn} />;
     } else {
       return (
+        this.state.isLoading ? <div>Loading...</div> :
         <div className="app-container">
           <div
             className="overlay"
@@ -319,6 +344,7 @@ export default class App extends Component {
               hideProfile={this.hideProfile}
             />
             <Main
+              fetchData={this.fetchData}
               user={this.state.user}
               cells={this.state.cells}
               chats={this.state.chats}
@@ -331,7 +357,10 @@ export default class App extends Component {
             />
           </div>
           <span id="profile" className="profile-wrapper">
-            <Profile userName={this.state.user.name} selectProfile={this.selectProfile} />
+            <Profile
+              userName={this.state.user.name}
+              selectProfile={this.selectProfile}
+            />
           </span>
         </div>
       );

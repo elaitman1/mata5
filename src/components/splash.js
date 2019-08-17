@@ -26,13 +26,21 @@ export default class Splash extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    // some error handling to check for empty username/password (username including just whitespace)
+    // some error handling to check for empty username/password (username including just whitespace), and then logging in or displayng more errors depending on the outcome of the fetch ajax call
     if (this.state.Username.trim() === "") {
       this.setState({ loginErrors: "Username can't be blank." });
     } else if (this.state.Password === "") {
       this.setState({ loginErrors: "Password can't be blank." });
     } else {
-      this.props.logIn();
+      const url = `https://www.matainventive.com/wp-json/custom-plugin/login?username=${this.state.Username}&password=${this.state.Password}`;
+      this.props.fetchData(url).then(data => {
+        if (data) {
+          localStorage.setItem('Mata Inventive', JSON.stringify(data.data));
+          this.props.logIn(data.data.ID);
+        } else {
+          this.setState({ loginErrors: "Username or Password is incorrect." })
+        }
+      })
     }
   };
 
@@ -53,13 +61,15 @@ export default class Splash extends Component {
         {this.state.showLogin ? (
           <form className="login-form" onSubmit={this.handleSubmit}>
             <div className="login-form-inputs-container">{inputFields}</div>
-            <a
-              href="https://www.matainventive.com/password-recovery"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Forgot Password?
-            </a>
+            <div className="login-form-password-retrieve">
+              <a
+                href="https://www.matainventive.com/password-recovery"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Forgot Password?
+              </a>
+            </div>
             <p>{this.state.loginErrors}</p>
             <input className="login-form-button" type="submit" value="Log In" />
           </form>
