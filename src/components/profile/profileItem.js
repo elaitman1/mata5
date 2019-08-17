@@ -5,6 +5,7 @@ import Support from "../support";
 import Logout from "../logout";
 
 const ProfileItem = props => {
+  //see where the props.toggleNotification is//parent is main.js
   let profileItem;
   switch (props.displayProfile) {
     case "Notifications":

@@ -15,6 +15,7 @@ export default class Notifications extends Component {
   }
 
   render = () => {
+    // sends props to toggle input/////////////////////////////////////////////////////////////////toggle input sends in toggleNotification function from another component// see what the parent of notifications is//profileItem
     return (
       <div className="notifications-container">
         {Object.keys(this.props.user.notifications).map((notif, idx) => {
@@ -65,7 +66,7 @@ export default class Notifications extends Component {
 }
 
 const ToggleInput = props => {
-  // various class name and other values change based on App component's current state value for notification and other related pointers
+
   const inputName =
     props.notification === "Scheduled"
       ? "Scheduled"
@@ -73,6 +74,7 @@ const ToggleInput = props => {
   const sliderClassName = props.toggled
     ? "toggle-input-slider toggled"
     : "toggle-input-slider";
+
   const circleClassName = props.toggled
     ? "toggle-input-circle toggled"
     : "toggle-input-circle";

@@ -58,18 +58,13 @@ export default class ChatItem extends Component {
     return () => {
       this.setState({ focusedMessageInput: !this.state.focusedMessageInput });
       const timer = type === "focus" ? 0 : 150;
-      let displayStyle, marginBottom;
+      let displayStyle;
       if (type === "focus") {
         displayStyle = "flex";
-        marginBottom = "85px"
       } else if (type === "blur") {
         displayStyle = "none";
-        marginBottom = "40px"
       }
-      setTimeout(() => {
-        document.getElementById("recommendations").style.display = displayStyle
-        document.getElementById("messages").style.marginBottom = marginBottom
-      }, timer);
+      setTimeout(() => document.getElementById("recommendations").style.display = displayStyle, timer);
     }
   }
 
@@ -81,7 +76,7 @@ export default class ChatItem extends Component {
     return (
       <div className="chat-item-container">
         <h5>{chatItem.chatFirstBegan}</h5>
-        <section id="messages" className="chat-item-messages-container">
+        <section className="chat-item-messages-container">
           {chatItem.chatHistory.map((chat, idx) => {
             const machImg =
               chat[0] === "machine" ? (

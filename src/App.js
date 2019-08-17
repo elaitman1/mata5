@@ -10,6 +10,7 @@ export default class App extends Component {
   state = {
     user: {
       name: "Awesome Machinist",
+      id:'',
       notifications: {
         Text: true,
         Email: false,
@@ -174,48 +175,58 @@ export default class App extends Component {
         }
       }
     },
-    isLoading: true,
     machineSelected: null,
+    loggedIn: false,
     toggledNavbarMenu: null,
     displayChat: null,
     displayProfile: null
   };
 
   componentDidMount = () => {
-    const userData = localStorage.getItem("Mata Inventive");
-    if (userData) {
-      this.loadData(JSON.parse(userData).ID).then(data => {
-        this.setState({ cells: data, isLoading: false })
+    this.fetchData("./data.json").then(data => {
+      this.setState({
+        cells: data
       });
-    }
+    });
   };
 
   fetchData = async url => {
-    const res = await fetch(url).then(res => res.json()).catch(err => console.log("err", err));
-    return res;
+    const res = await fetch(url);
+    return res.json();
   };
 
-  loadData = async id => {
-    const cellsUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatacell.php?id=${id}`;
-    const cells = await this.fetchData(cellsUrl).then(cellsData => cellsData);
-    const devicesUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatacelladd.php?id=${id}`;
-    const devices = await this.fetchData(devicesUrl).then(devicesData => devicesData);
+  logIn = async(Username, Password) => {
 
-    const dataArr = await Promise.all([cells, devices]).then(data => {
-      return data[0].map(cell => {
-        let dataObj = {};
-        dataObj["cellName"] = cell.name;
-        const cellDevices = data[1].filter(device => device.cell_id === cell.cell_id);
-        dataObj["devices"] = cellDevices;
-        return dataObj;
-      })
+    await fetch(`https://www.matainventive.com/wp-json/custom-plugin/login?username=${Username}&password=${Password}`)
+    .then(r=> r.json())
+    .then(r=> {
+      let id = this.state.user.id
+      this.setState(prevState => ({
+        loggedIn: true,
+        id: r.ID
+      }))
     })
 
-    return dataArr;
-  }
+    await fetch(`https://www.matainventive.com/cordovaserver/database/jsonmatastatusconfig.php?id=${this.state.user.id}`)
+    .then(r=> r.json())
+    .then(r=> {
 
-  logIn = id => {
-    this.loadData(id).then(data => this.setState({ cells: data, isLoading: false }));
+      let emailNotif = this.state.user.notifications.Email
+
+      if(r.alertenableemail === "1"){
+        this.setState({ emailNotif: true })
+      }else{
+        this.setState({ emailNotif: false })
+      }
+
+    let textNotif = this.state.user.notifications.Text
+
+     if(r.alertenablephone === "1"){
+        this.setState({ textNotif: true })
+      }else{
+        this.setState({ textNotif: false })
+      }
+    })
   };
 
   // toggles between Overview and Floorplan views within Feed component based on toggled value from Footer component (currently removed)
@@ -237,17 +248,13 @@ export default class App extends Component {
     if (type !== null) {
       menu = type;
       mainPos = "fixed";
-      mainTransform =
-        type === "chat" ? "translateX(85vw)" : "translateX(-85vw)";
+      mainTransform = type === "chat" ? "translateX(85vw)" : "translateX(-85vw)";
       sideMenuTransform = "none";
     } else {
       menu = this.state.toggledNavbarMenu;
       mainPos = "static";
       mainTransform = "none";
-      sideMenuTransform =
-        this.state.toggledNavbarMenu === "chat"
-          ? "translateX(-85vw)"
-          : "translateX(85vw)";
+      sideMenuTransform = this.state.toggledNavbarMenu === "chat" ? "translateX(-85vw)" : "translateX(85vw)";
     }
     document.getElementById(menu).style.transform = sideMenuTransform;
     document.getElementById("nav").style.transform = mainTransform;
@@ -307,6 +314,59 @@ export default class App extends Component {
   };
 
   toggleNotification = type => {
+    let userid = this.state.user.id
+    let emailstate
+    let textstate
+    let alertemail = this.state.user.notifications.Email
+    let alerttext = this.state.user.notifications.Text
+
+    if (this.state.user.notifications.Email === true){
+     emailstate = 1
+    }else{
+      emailstate = 0
+    }
+
+    if (this.state.user.notifications.Text === true){
+       textstate = 1
+    }else{
+       textstate = 0
+    }
+    
+     fetch('https://www.matainventive.com/cordovaserver/database/togglealertconfig.php',
+    {
+      method: 'POST',
+      headers:
+        {
+          'Accept': 'application/json',
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "Sec-Fetch-Mode": "cors",
+        },
+      body: "userid="+userid+"&emailstate="+emailstate+"&textstate="+textstate+"&insert=",
+    })
+
+    //below we are toggling the users attribute of specific categories being in do not disturb mode or not.
+    	// var dataString="userid="+title+"&emailstate="+emailstate+"&textstate="+textstate+"&insert=";
+    	// // $("#alertwarning").text("");
+    	// if($.trim(title).length>0)
+    	// {
+    	// 	$.ajax({
+    	// 		type: "POST",
+    	// 		url:"https://www.matainventive.com/cordovaserver/database/togglealertconfig.php",
+    	// 		data: dataString,
+    	// 		crossDomain: true,
+    	// 		cache: false,
+    	// 		beforeSend: function(){ $("#insertalert").val('Connecting...');},
+    	// 		success: function(data){
+    	// 		if(data=="success")
+    	// 			{
+    	// 			}
+    	// 		else if(data=="error")
+    	// 			{
+    	// 			}
+    	// 		}
+    	// 	});
+    	// }
+
     return () => {
       let newUser = this.state.user;
       if (type === "Do Not Disturb") {
@@ -315,15 +375,14 @@ export default class App extends Component {
         newUser.notifications[type] = !newUser.notifications[type];
       }
       this.setState({ user: newUser });
-    };
-  };
+    }
+  }
 
   render = () => {
-    if (!localStorage.getItem("Mata Inventive")) {
-      return <Splash fetchData={this.fetchData} logIn={this.logIn} />;
+    if (!this.state.loggedIn) {
+      return <Splash logIn={this.logIn} />;
     } else {
       return (
-        this.state.isLoading ? <div>Loading...</div> :
         <div className="app-container">
           <div
             className="overlay"
@@ -344,7 +403,6 @@ export default class App extends Component {
               hideProfile={this.hideProfile}
             />
             <Main
-              fetchData={this.fetchData}
               user={this.state.user}
               cells={this.state.cells}
               chats={this.state.chats}
@@ -357,10 +415,7 @@ export default class App extends Component {
             />
           </div>
           <span id="profile" className="profile-wrapper">
-            <Profile
-              userName={this.state.user.name}
-              selectProfile={this.selectProfile}
-            />
+            <Profile userName={this.state.user.name} selectProfile={this.selectProfile} />
           </span>
         </div>
       );
