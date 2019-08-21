@@ -990,6 +990,21 @@ h1, h4, h5 {
   align-items: center;
 }
 
+.camera-container {
+  z-index: 10;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  background-color: var(--white);
+  box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.56);
+  width: calc(100vw - 42px);
+  padding: 21px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .start-job-container > h4 {
   margin-bottom: 30px;
 }
