@@ -54,7 +54,7 @@ class TakePhoto extends Component {
   render () {
     return (
 
-      <div className="camera-container">
+      <div className="start-job-container">
         <Camera
           onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
           idealFacingMode = {FACING_MODES.ENVIRONMENT}
