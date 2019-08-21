@@ -200,11 +200,8 @@ export default class App extends Component {
     await fetch(`https://www.matainventive.com/wp-json/custom-plugin/login?username=${Username}&password=${Password}`)
     .then(r=> r.json())
     .then(r=> {
-      let id = this.state.user.id
-      this.setState(prevState => ({
-        loggedIn: true,
-        id: r.ID
-      }))
+
+      this.setState(state => (state.loggedIn = true, state.user.id = r.ID, state))
     })
 
     await fetch(`https://www.matainventive.com/cordovaserver/database/jsonmatastatusconfig.php?id=${this.state.user.id}`)
@@ -229,7 +226,7 @@ export default class App extends Component {
     })
   };
 
-  // toggles between Overview and Floorplan views within Feed component based on toggled value from Footer component (currently removed)
+  // toggles between Overview and Floorplan views within Feed component based on toggled value from Footer compfonent (currently removed)
   selectView = view => {
     this.setState({ viewSelected: view });
   };
@@ -314,7 +311,8 @@ export default class App extends Component {
   };
 
   toggleNotification = type => {
-    let userid = this.state.user.id
+
+    let userid = this.state.user.id.toString()
     let emailstate
     let textstate
     let alertemail = this.state.user.notifications.Email
@@ -331,15 +329,13 @@ export default class App extends Component {
     }else{
        textstate = 0
     }
-    
+
      fetch('https://www.matainventive.com/cordovaserver/database/togglealertconfig.php',
     {
       method: 'POST',
       headers:
         {
-          'Accept': 'application/json',
-          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-          "Sec-Fetch-Mode": "cors",
+          'Content-Type':'application/x-www-form-urlencoded',
         },
       body: "userid="+userid+"&emailstate="+emailstate+"&textstate="+textstate+"&insert=",
     })

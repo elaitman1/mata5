@@ -3,10 +3,16 @@ import StartJob from "./startJob/startJob";
 import PreparationChecklist from "./preparationChecklist";
 import Inspection from "./inspection";
 import Timer from "./timer";
+import TakePhoto from './camera'
+
 
 export default class Machine extends Component {
   state = {
-    selectedTask: null
+    selectedTask: null,
+    cameraView: false,
+    jobNumber: "",
+    inputIndicator: "",
+    partNumber: ""
   };
 
   displayTask = task => {
@@ -15,14 +21,38 @@ export default class Machine extends Component {
     };
   };
 
+  toggleCamera = async(inputIndicator) => {
+    await this.setState({ cameraView: !this.state.cameraView, inputIndicator:inputIndicator })
+  }
+
+  cameraOffAndSetInput = async(input) => {
+    if (this.state.inputIndicator === 'Job'){
+      await this.setState({ cameraView: !this.state.cameraView, jobNumber: input})
+    }else if (this.state.inputIndicator === 'Part'){
+      await this.setState({ cameraView: !this.state.cameraView, partNumber: input})
+    }
+  }
+
   hideTask = () => {
     this.setState({ selectedTask: null });
   };
 
   renderTask = () => {
+    if (this.state.cameraView){
+      return <TakePhoto
+              inputIndicator={this.state.inputIndicator}
+              toggleCamera={this.toggleCamera}
+              cameraOffAndSetInput={this.cameraOffAndSetInput}
+            />
+    }
     switch (this.state.selectedTask) {
       case "Start Job":
-        return <StartJob hideTask={this.hideTask} />;
+        return <StartJob jobNumber={this.state.jobNumber}
+        toggleCamera={this.toggleCamera}
+        cameraView={this.state.cameraView}
+        hideTask={this.hideTask}
+        partNumber={this.state.partNumber}
+        />;
       case "Preparation Checklist":
         return <PreparationChecklist hideTask={this.hideTask} />;
       case "Inspection":
