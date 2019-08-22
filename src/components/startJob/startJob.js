@@ -22,6 +22,17 @@ export default class StartJob extends Component {
     showConfirmation: false
   };
 
+  componentDidMount = () => {
+    if (this.props.jobNumber !== "" && this.props.partNumber !== ""){
+      this.setState(state => (state.jobs[0].inputValues.jobNumber = this.props.jobNumber, state.jobs[0].inputValues.partNumber = this.props.jobNumber, state))
+    }else if(this.props.partNumber !== ""){
+      this.setState(state => (state.jobs[0].inputValues.partNumber = this.props.partNumber, state))
+    }else if(this.props.jobNumber !== ""){
+      this.setState(state => (state.jobs[0].inputValues.jobNumber = this.props.jobNumber, state))
+
+    }
+  }
+
   toggleConfirmation = () => {
     this.setState({ showConfirmation: !this.state.showConfirmation });
   };
@@ -120,8 +131,9 @@ export default class StartJob extends Component {
     }
   };
 
-  toggleCamera = () => {
-    this.setState({ showCamera: !this.state.showCamera });
+  toggleCamera = (e) => {
+    let inputIndicator = e.target.attributes[0].value
+    this.props.toggleCamera(inputIndicator);
   };
 
   toggleEmptyCardModal = () => {

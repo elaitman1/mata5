@@ -14,11 +14,9 @@ export default class Feed extends Component {
       if (this.state.firstCellSelection) {
         this.setState({ firstCellSelection: false });
       }
-      if (this.state.currentCell[0] !== cellArr[0]) {
-        document.getElementById(this.state.currentCell[0]).className = "cell";
-        document.getElementById(cellArr[0]).className = "cell selected";
-        this.setState({ currentCell: cellArr });
-      }
+      document.getElementById(this.state.currentCell[0]).className = "cell";
+      document.getElementById(cellArr[0]).className = "cell selected";
+      this.setState({ currentCell: cellArr });
     };
   };
 
@@ -27,7 +25,7 @@ export default class Feed extends Component {
       cell = this.props.cells[cell];
       // first cell when rendering component sets styling for blue border on the first cell
       const className =
-        (this.state.firstCellSelection && idx === 0) || this.state.currentCell[0] === idx ? "cell selected" : "cell";
+        this.state.firstCellSelection && idx === 0 ? "cell selected" : "cell";
       return (
         <span
           key={idx}
@@ -41,11 +39,22 @@ export default class Feed extends Component {
     });
   };
 
+  renderFeedItem = () => {
+    return this.state.currentCell[1].machineStuff.map((machSpecs, idx) => (
+      <FeedItem
+        key={idx}
+        machSpecs={machSpecs}
+        toggleMachineSelection={this.props.toggleMachineSelection}
+      />
+    ));
+  };
+
   render = () => {
     return (
       <div className="feed-container">
         <header className="feed-cells-container">{this.renderCells()}</header>
         <section className="feed-items-container">
+<<<<<<< HEAD
           {Object.keys(this.state.currentCell[1].devices).map((machSpecs, idx) => {
             machSpecs = this.state.currentCell[1].devices[machSpecs];
             return (
@@ -56,6 +65,9 @@ export default class Feed extends Component {
               />
             )
           })}
+=======
+          {this.renderFeedItem()}
+>>>>>>> hotfix
         </section>
       </div>
     );

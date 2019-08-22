@@ -6,6 +6,7 @@ import ProfileItem from "./profile/profileItem";
 
 const Main = props => {
   const renderMain = () => {
+    //see parent of profileItem to see where toggleNotification comes from
     if (props.displayChat) {
       return (
         <ChatItem
@@ -27,7 +28,6 @@ const Main = props => {
       if (!props.machineSelected) {
         return (
           <Feed
-            fetchData={props.fetchData}
             cells={props.cells}
             toggleMachineSelection={props.toggleMachineSelection}
           />

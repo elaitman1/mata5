@@ -9,10 +9,15 @@ import "./App.css";
 export default class App extends Component {
   state = {
     user: {
+<<<<<<< HEAD
       "ID": "",
       user_email: "",
       first_name: "",
       last_name:"",
+=======
+      name: "Awesome Machinist",
+      id:'',
+>>>>>>> hotfix
       notifications: {
         Text: true,
         Email: false,
@@ -37,8 +42,8 @@ export default class App extends Component {
       Parts: {},
       Jobs: {}
     },
-    isLoading: true,
     machineSelected: null,
+    loggedIn: false,
     toggledNavbarMenu: null,
     displayChat: null,
     displayProfile: null
@@ -47,12 +52,18 @@ export default class App extends Component {
   countDown = 0;
 
   componentDidMount = () => {
+<<<<<<< HEAD
     const userData = localStorage.getItem("Mata Inventive");
     if (userData) {
       this.logIn(JSON.parse(userData).ID).then(res => {
         this.countDownTimers();
+=======
+    this.fetchData("./data.json").then(data => {
+      this.setState({
+        cells: data
+>>>>>>> hotfix
       });
-    }
+    });
   };
 
   countDownTimers = () => {
@@ -112,10 +123,11 @@ export default class App extends Component {
   };
 
   fetchData = async url => {
-    const res = await fetch(url).then(res => res.json()).catch(err => console.log("err", err));
-    return res;
+    const res = await fetch(url);
+    return res.json();
   };
 
+<<<<<<< HEAD
   createDevicesDetailsUrl = id => {
     const localTime = this.formatTime(new Date());
     return `https://www.matainventive.com/cordovaserver/database/jsonmatafloorplan.php?id=${id}&today=${localTime}`;
@@ -275,11 +287,30 @@ export default class App extends Component {
       })
 
       return [userObj, cellObj, chatObj]
+=======
+  logIn = async(Username, Password) => {
+
+    await fetch(`https://www.matainventive.com/wp-json/custom-plugin/login?username=${Username}&password=${Password}`)
+    .then(r=> r.json())
+    .then(r=> {
+
+      this.setState(state => (state.loggedIn = true, state.user.id = r.ID, state))
+>>>>>>> hotfix
     })
 
-    return dataArr;
-  }
+    await fetch(`https://www.matainventive.com/cordovaserver/database/jsonmatastatusconfig.php?id=${this.state.user.id}`)
+    .then(r=> r.json())
+    .then(r=> {
 
+      let emailNotif = this.state.user.notifications.Email
+
+      if(r.alertenableemail === "1"){
+        this.setState({ emailNotif: true })
+      }else{
+        this.setState({ emailNotif: false })
+      }
+
+<<<<<<< HEAD
   createDeviceObject = devicesArr => {
     if (devicesArr[0].some(devDet => devDet["RecordDate"] !== "1970/01/01")) {
       devicesArr = devicesArr[0].filter(devDet => devDet["RecordDate"] !== "1970/01/01");
@@ -311,8 +342,19 @@ export default class App extends Component {
     })
     return outputObject;
   }
+=======
+    let textNotif = this.state.user.notifications.Text
 
-  // toggles between Overview and Floorplan views within Feed component based on toggled value from Footer component (currently removed)
+     if(r.alertenablephone === "1"){
+        this.setState({ textNotif: true })
+      }else{
+        this.setState({ textNotif: false })
+      }
+    })
+  };
+>>>>>>> hotfix
+
+  // toggles between Overview and Floorplan views within Feed component based on toggled value from Footer compfonent (currently removed)
   selectView = view => {
     this.setState({ viewSelected: view });
   };
@@ -367,17 +409,13 @@ export default class App extends Component {
     if (type !== null) {
       menu = type;
       mainPos = "fixed";
-      mainTransform =
-        type === "chat" ? "translateX(85vw)" : "translateX(-85vw)";
+      mainTransform = type === "chat" ? "translateX(85vw)" : "translateX(-85vw)";
       sideMenuTransform = "none";
     } else {
       menu = this.state.toggledNavbarMenu;
       mainPos = "static";
       mainTransform = "none";
-      sideMenuTransform =
-        this.state.toggledNavbarMenu === "chat"
-          ? "translateX(-85vw)"
-          : "translateX(85vw)";
+      sideMenuTransform = this.state.toggledNavbarMenu === "chat" ? "translateX(-85vw)" : "translateX(85vw)";
     }
     document.getElementById(menu).style.transform = sideMenuTransform;
     document.getElementById("nav").style.transform = mainTransform;
@@ -520,11 +558,15 @@ export default class App extends Component {
   }
 
   render = () => {
+<<<<<<< HEAD
     if (!localStorage.getItem("Mata Inventive")) {
       return <Splash fetchData={this.fetchData} logIn={this.logIn} chats={this.state.chats}/>;
+=======
+    if (!this.state.loggedIn) {
+      return <Splash logIn={this.logIn} />;
+>>>>>>> hotfix
     } else {
       return (
-        this.state.isLoading ? <div>Loading...</div> :
         <div className="app-container">
           <div
             className="overlay"
@@ -545,7 +587,6 @@ export default class App extends Component {
               hideProfile={this.hideProfile}
             />
             <Main
-              fetchData={this.fetchData}
               user={this.state.user}
               cells={this.state.cells}
               chats={this.state.chats}
@@ -561,10 +602,14 @@ export default class App extends Component {
             />
           </div>
           <span id="profile" className="profile-wrapper">
+<<<<<<< HEAD
             <Profile
               user={this.state.user}
               selectProfile={this.selectProfile}
             />
+=======
+            <Profile userName={this.state.user.name} selectProfile={this.selectProfile} />
+>>>>>>> hotfix
           </span>
         </div>
       );

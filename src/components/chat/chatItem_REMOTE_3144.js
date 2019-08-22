@@ -34,7 +34,6 @@ export default class ChatItem extends Component {
     e.preventDefault();
 
     if (this.state.message.trim() !== "") {
-      this.checkChatInitialTime();
       this.props.sendNewMessage(
         this.props.displayChat[0],
         this.props.displayChat[1],
@@ -46,7 +45,6 @@ export default class ChatItem extends Component {
 
   sendRecommendationAsMessage = recom => {
     return () => {
-      this.checkChatInitialTime();
       this.props.sendNewMessage(
         this.props.displayChat[0],
         this.props.displayChat[1],
@@ -54,20 +52,6 @@ export default class ChatItem extends Component {
       );
     };
   };
-
-  checkChatInitialTime = () => {
-    if (!this.props.chats[this.props.displayChat[0]][this.props.displayChat[1]].chatHistory.chatFirstBegan) {
-      let currentTime = new Date();
-      let hour = currentTime.getHours();
-      let mins = currentTime.getMinutes();
-      mins = mins < 10 ? `0${mins}` : mins;
-      let amPM = hour >= 12 ? "pm" : "am";
-      hour = hour === 0 ? 12 : hour;
-      hour = hour > 12 ? hour - 12 : hour;
-      currentTime = `${hour}:${mins} ${amPM}`;
-      this.props.setInitialTime(this.props.displayChat[0], this.props.displayChat[1], currentTime)
-    }
-  }
 
   // using setTimeout with 0.15 of a second to allow enough time for the on blur effect to kick in after user has a chance to actually click a recommendation
   toggleRecommendations = type => {
@@ -91,15 +75,9 @@ export default class ChatItem extends Component {
 
     return (
       <div className="chat-item-container">
-<<<<<<< HEAD
-        <h5>{chatItem.chatHistory.chatFirstBegan}</h5>
-        <section id="messages" className="chat-item-messages-container">
-          {chatItem.chatHistory.chatLog.map((chat, idx) => {
-=======
         <h5>{chatItem.chatFirstBegan}</h5>
         <section className="chat-item-messages-container">
           {chatItem.chatHistory.map((chat, idx) => {
->>>>>>> hotfix
             const machImg =
               chat[0] === "machine" ? (
                 <img src="./assets/machine.png" alt="MachIcon" />
