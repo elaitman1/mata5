@@ -11,6 +11,7 @@ const Main = props => {
         <ChatItem
           chats={props.chats}
           displayChat={props.displayChat}
+          setInitialTime={props.setInitialTime}
           sendNewMessage={props.sendNewMessage}
         />
       );
@@ -36,6 +37,8 @@ const Main = props => {
           <Machine
             machine={props.machineSelected}
             toggleMachineSelection={props.toggleMachineSelection}
+            savePrepChecklists={props.savePrepChecklists}
+            setDeviceTimer={props.setDeviceTimer}
           />
         );
       }
