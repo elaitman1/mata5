@@ -31,7 +31,6 @@ export default class Splash extends Component {
     } else if (this.state.Password === "") {
       this.setState({ loginErrors: "Password can't be blank." });
     } else {
-<<<<<<< HEAD
       const url = `https://www.matainventive.com/wp-json/custom-plugin/login?username=${this.state.Username}&password=${this.state.Password}`;
       this.props.fetchData(url).then(data => {
         if (data) {
@@ -42,10 +41,6 @@ export default class Splash extends Component {
           this.setState({ loginErrors: "Username or Password is incorrect." })
         }
       })
-=======
-      
-      this.props.logIn(this.state.Username, this.state.Password);
->>>>>>> hotfix
     }
   };
 
