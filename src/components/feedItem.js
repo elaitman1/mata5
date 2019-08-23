@@ -18,18 +18,7 @@ const FeedItem = props => {
       <img src="./assets/machList.png" alt="PNG" />
       <div className="feed-item-text-wrapper">
         <p>
-          {type} {id}
-        </p>
-        <p
-          style={{
-            color:
-              utilization >= 66 ? "#7ED321" : utilization <= 39 ? "#BB0000" : "orange"
-          }}
-        >
-          {utilization}% Utilization
-        </p>
-        <p>
-          {timer} Timer {status}
+          {name}
         </p>
         <p
           style={{
