@@ -212,58 +212,60 @@ export default class App extends Component {
         cellDevices.forEach(cellDev => {
           const id = cellDev.device_id;
           const devObj = devicesDetails[id];
-          let utilization = Math.round((parseInt(devObj.SumDayUpTime) / parseInt(devObj.SumONTimeSeconds)) * 100);
-          utilization = utilization.toString() === "NaN" ? 0 : utilization;
-          cellDev["utilization"] = utilization;
-          let timer = "";
-          const devTimer = timers[id];
-          if (devTimer) {
-            cellDev["timerEnd"] = devTimer.MaxEndTimeIdle;
-            cellDev["timerStart"] = devTimer.MaxStartTimeActive;
-            const timerEndTime = new Date(devTimer.MaxEndTimeIdle).getTime();
-            const remaining = timerEndTime - currentTime;
-            if (remaining > 0) {
-              const timerRemaining = this.timeConversion(remaining, true);
-              timer = `${timerRemaining} Remain On Timer`;
-            } else if (remaining < 0 && this.formatTime(new Date(currentTime)).slice(0, 10) === this.formatTime(new Date(timerEndTime)).slice(0, 10)) {
-              const timerDuration = this.timeConversion(timerEndTime - (new Date(devTimer.MaxStartTimeActive)).getTime(), false);
-              timer = `${timerDuration} Timer Finished`;
+          if (devObj) {
+            let utilization = Math.round((parseInt(devObj.SumDayUpTime) / parseInt(devObj.SumONTimeSeconds)) * 100);
+            utilization = utilization.toString() === "NaN" ? 0 : utilization;
+            cellDev["utilization"] = utilization;
+            let timer = "";
+            const devTimer = timers[id];
+            if (devTimer) {
+              cellDev["timerEnd"] = devTimer.MaxEndTimeIdle;
+              cellDev["timerStart"] = devTimer.MaxStartTimeActive;
+              const timerEndTime = new Date(devTimer.MaxEndTimeIdle).getTime();
+              const remaining = timerEndTime - currentTime;
+              if (remaining > 0) {
+                const timerRemaining = this.timeConversion(remaining, true);
+                timer = `${timerRemaining} Remain On Timer`;
+              } else if (remaining < 0 && this.formatTime(new Date(currentTime)).slice(0, 10) === this.formatTime(new Date(timerEndTime)).slice(0, 10)) {
+                const timerDuration = this.timeConversion(timerEndTime - (new Date(devTimer.MaxStartTimeActive)).getTime(), false);
+                timer = `${timerDuration} Timer Finished`;
+              }
             }
-          }
-          cellDev["timer"] = timer;
-          let status;
-          const maxOnTime = currentTime - new Date(devObj.MaxOnTime).getTime();
-          const maxEndTime = currentTime - new Date(devObj.MaxEndTime).getTime();
-          if (maxOnTime <= 600000) {
-            // if (devObj.MaxEndTime <= devObj.MaxStartTime || maxEndTime <= 600000) {
-              status = "Online";
-            // }
-          } else {
-            status = "Offline";
-          }
-          cellDev["status"] = status;
-          let prepChecklistObj = {
-            "speccheck":false,
-            "cadwork":false,
-            "toolpath":false,
-            "offset":false,
-            "clean":false,
-            "inspection":false
-          };
-          const prepChk = prepChecklists[id];
-          if (prepChk) {
-            prepChecklistObj = prepChk;
-          }
-          let notes = "";
-          const prepNote = prepNotes[id];
-          if (prepNote) {
-            notes = prepNote.note;
-          }
-          prepChecklistObj.notes = notes;
-          cellDev["prepChecklist"] = prepChecklistObj;
+            cellDev["timer"] = timer;
+            let status;
+            const maxOnTime = currentTime - new Date(devObj.MaxOnTime).getTime();
+            const maxEndTime = currentTime - new Date(devObj.MaxEndTime).getTime();
+            if (maxOnTime <= 600000) {
+              // if (devObj.MaxEndTime <= devObj.MaxStartTime || maxEndTime <= 600000) {
+                status = "Online";
+              // }
+            } else {
+              status = "Offline";
+            }
+            cellDev["status"] = status;
+            let prepChecklistObj = {
+              "speccheck":false,
+              "cadwork":false,
+              "toolpath":false,
+              "offset":false,
+              "clean":false,
+              "inspection":false
+            };
+            const prepChk = prepChecklists[id];
+            if (prepChk) {
+              prepChecklistObj = prepChk;
+            }
+            let notes = "";
+            const prepNote = prepNotes[id];
+            if (prepNote) {
+              notes = prepNote.note;
+            }
+            prepChecklistObj.notes = notes;
+            cellDev["prepChecklist"] = prepChecklistObj;
 
-          chatObj.Machines[devObj.name] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Machine Utilization": `${utilization}% of utilization.`, "Machine Status": status} }
-          cellDevsObj[id] = cellDev;
+            chatObj.Machines[devObj.name] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Machine Utilization": `${utilization}% of utilization.`, "Machine Status": status} }
+            cellDevsObj[id] = cellDev;
+          }
         })
         dataObj["devices"] = cellDevsObj;
         cellObj[cell.cell_id] = dataObj
@@ -287,15 +289,28 @@ export default class App extends Component {
   }
 
   createDeviceObject = devicesArr => {
-    if (devicesArr[0].some(devDet => devDet["RecordDate"] !== "1970/01/01")) {
-      devicesArr = devicesArr[0].filter(devDet => devDet["RecordDate"] !== "1970/01/01");
-    } else {
-      if (devicesArr[1].length > 0) {
-        devicesArr = devicesArr[1];
-      } else {
-        devicesArr = devicesArr[0];
+    const vibDataObj = this.createObjectWithIDKeys(devicesArr[0]);
+    const mtconDataObj = this.createObjectWithIDKeys(devicesArr[1]);
+    let deviceIds = Object.keys(vibDataObj);
+    Object.keys(mtconDataObj).forEach(mtDevId => {
+      if (!vibDataObj[mtDevId]) {
+        deviceIds.push(mtDevId);
       }
-    }
+    });
+    devicesArr = deviceIds.map(devId => {
+      let vibData = vibDataObj[devId];
+      if (vibData) vibData.device_id = devId;
+      let mtconData = mtconDataObj[devId];
+      if (mtconData) mtconData.device_id = devId;
+      if (vibData && mtconData) {
+        return vibData["MaxOnTime"] > mtconData["MaxOnTime"] ? vibData : mtconData;
+      } else if (vibData) {
+        return vibData
+      } else if (mtconData) {
+        return mtconData;
+      }
+    })
+
     return this.createObjectWithIDKeys(devicesArr);
   }
 
