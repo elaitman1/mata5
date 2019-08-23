@@ -89,7 +89,7 @@ const ToggleInput = props => {
         <p>{inputName}</p>
         <div
           className={sliderClassName}
-          onClick={props.toggleNotification(toggleArg)}
+          onClick={() => props.toggleNotification(toggleArg)}
         >
           <span className={circleClassName} />
         </div>

@@ -14,7 +14,7 @@ export default class App extends Component {
       first_name: "",
       last_name:"",
       notifications: {
-        Text: true,
+        Text: false,
         Email: false,
         "Do Not Disturb": {
           on: true,
@@ -167,6 +167,8 @@ export default class App extends Component {
   loadData = async id => {
     const userUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatausersprofile.php?id=${id}`;
     const user = await this.fetchData(userUrl).then(userData => userData);
+    const notificationsUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatastatusconfig.php?id=${id}`;
+    const notifications = await this.fetchData(notificationsUrl).then(notificationsData => notificationsData);
     const cellsUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatacell.php?id=${id}`;
     const cells = await this.fetchData(cellsUrl).then(cellsData => cellsData);
     const devicesUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatacelladd.php?id=${id}`;
@@ -185,17 +187,21 @@ export default class App extends Component {
     const chatHistory = await this.fetchData(chatHistoryUrl).then(chatHistoryData => chatHistoryData);
 
     const currentTime = Date.now();
-    const dataArr = await Promise.all([user, cells, devices, devicesDetails, jobsParts, timers, prepChecklists, prepNotes, chatHistory]).then(data => {
+    const dataArr = await Promise.all([user, notifications, cells, devices, devicesDetails, jobsParts, timers, prepChecklists, prepNotes, chatHistory]).then(data => {
       const user = data[0]
-      const cells = data[1];
-      const devices = data[2];
-      const devicesDetails = this.createDeviceObject(data[3]);
-      const jobsParts = data[4];
-      const timers = this.createObjectWithIDKeys(data[5]);
-      const prepChecklists = this.createObjectWithIDKeys(data[6]);
-      const prepNotes = this.createObjectWithIDKeys(data[7]);
+      const notifications = data[1]
+      const cells = data[2];
+      const devices = data[3];
+      const devicesDetails = this.createDeviceObject(data[4]);
+      const jobsParts = data[5];
+      const timers = this.createObjectWithIDKeys(data[6]);
+      const prepChecklists = this.createObjectWithIDKeys(data[7]);
+      const prepNotes = this.createObjectWithIDKeys(data[8]);
 
-      const userObj = user[0];
+      let userObj = user[0];
+      userObj.notifications = {};
+      userObj.notifications.Text = notifications[0].alertenablephone === "1" ? true : false;
+      userObj.notifications.Email = notifications[0].alertenableemail === "1" ? true : false;
       let cellObj = {};
       let chatObj = { Machines:{}, Parts:{}, Jobs:{} };
       cells.forEach(cell => {
@@ -273,6 +279,7 @@ export default class App extends Component {
           }
         }
       })
+      console.log("userObj", userObj);
 
       return [userObj, cellObj, chatObj]
     })
@@ -456,24 +463,14 @@ export default class App extends Component {
   };
 
   toggleNotification = type => {
-
-    let userid = this.state.user.id.toString()
-    let emailstate
-    let textstate
-    let alertemail = this.state.user.notifications.Email
-    let alerttext = this.state.user.notifications.Text
-
-    if (this.state.user.notifications.Email === true){
-     emailstate = 1
-    }else{
-      emailstate = 0
-    }
-
-    if (this.state.user.notifications.Text === true){
-       textstate = 1
-    }else{
-       textstate = 0
-    }
+    const userid = this.state.user.ID.toString()
+    let alertemail = this.state.user.notifications.Email;
+    alertemail = type === "Email" ? !alertemail : alertemail;
+    let alerttext = this.state.user.notifications.Text;
+    alerttext = type === "Text" ? !alerttext : alerttext;
+    let emailstate, textstate;
+    emailstate = alertemail ? "1" : "0";
+    textstate = alerttext ? "1" : "0";
 
      fetch('https://www.matainventive.com/cordovaserver/database/togglealertconfig.php',
     {
@@ -483,6 +480,10 @@ export default class App extends Component {
           'Content-Type':'application/x-www-form-urlencoded',
         },
       body: "userid="+userid+"&emailstate="+emailstate+"&textstate="+textstate+"&insert=",
+    }).then(res => {
+      let newUser = Object.assign({}, this.state.user);
+      newUser.notifications[type] = !newUser.notifications[type];
+      this.setState({ user: newUser });
     })
 
     //below we are toggling the users attribute of specific categories being in do not disturb mode or not.
@@ -507,16 +508,6 @@ export default class App extends Component {
     	// 		}
     	// 	});
     	// }
-
-    return () => {
-      let newUser = this.state.user;
-      if (type === "Do Not Disturb") {
-        newUser.notifications[type].on = !newUser.notifications[type].on;
-      } else {
-        newUser.notifications[type] = !newUser.notifications[type];
-      }
-      this.setState({ user: newUser });
-    }
   }
 
   render = () => {
