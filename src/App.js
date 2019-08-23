@@ -279,7 +279,6 @@ export default class App extends Component {
           }
         }
       })
-      console.log("userObj", userObj);
 
       return [userObj, cellObj, chatObj]
     })
