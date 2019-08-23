@@ -47,16 +47,14 @@ export default class Machine extends Component {
     }
     switch (this.state.selectedTask) {
       case "Start Job":
-<<<<<<< HEAD
-        return <StartJob machine={this.props.machine} hideTask={this.hideTask} />;
-=======
         return <StartJob jobNumber={this.state.jobNumber}
         toggleCamera={this.toggleCamera}
         cameraView={this.state.cameraView}
         hideTask={this.hideTask}
         partNumber={this.state.partNumber}
+        machine={this.props.machine}
         />;
->>>>>>> hotfix
+
       case "Preparation Checklist":
         return <PreparationChecklist machine={this.props.machine} savePrepChecklists={this.props.savePrepChecklists} hideTask={this.hideTask} />;
       case "Inspection":
