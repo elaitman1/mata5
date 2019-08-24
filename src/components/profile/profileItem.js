@@ -23,7 +23,7 @@ const ProfileItem = props => {
       profileItem = <Support user={props.user} />;
       break;
     case "Log Out":
-      profileItem = <Logout />;
+      profileItem = <Logout hideProfile={props.hideProfile} />;
       break;
     default:
       return "";

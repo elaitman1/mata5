@@ -12,6 +12,7 @@ const Main = props => {
         <ProfileItem
           displayProfile={props.displayProfile}
           user={props.user}
+          hideProfile={props.hideProfile}
           toggleNotification={props.toggleNotification}
         />
       );

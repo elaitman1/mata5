@@ -12,7 +12,7 @@ const Logout = props => {
       <p>Are You Sure You Want To Log Out?</p>
       <div className="logout-buttons-container">
         <button className="form-submit-button" onClick={logOut}>Leave</button>
-        <button className="form-submit-button grey">Cancel</button>
+        <button className="form-submit-button grey" onClick={props.hideProfile}>Cancel</button>
       </div>
     </div>
   )

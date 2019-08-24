@@ -275,7 +275,14 @@ export default class App extends Component {
         const { EditTime: editTime, jobnumber, partnumber, partcount } = jobPart;
         if (editTime.slice(0, 10) === latestJobPartDate) {
           chatObj.Jobs[jobnumber] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": editTime, "Part Number": partnumber, "Part Count": partcount} };
-          if (!chatObj.Parts[partnumber] || chatObj.Parts[partnumber].responses["Start Time"] < editTime) {
+          const currLatestJobForPart = chatObj.Parts[partnumber];
+          let currLatestPartEditTime;
+          if (currLatestJobForPart) {
+            currLatestPartEditTime = currLatestJobForPart.responses["Start Time"];
+            currLatestPartEditTime = currLatestPartEditTime.slice(currLatestPartEditTime.length - 19, currLatestPartEditTime.length);
+          }
+          console.log("curr", currLatestPartEditTime);
+          if (!currLatestJobForPart || currLatestPartEditTime < editTime) {
             chatObj.Parts[partnumber] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": `${jobnumber}: ${editTime}`, "Latest Job Number": jobnumber, "Part Count": `${jobnumber}: ${partcount}`} };
           }
         }
@@ -357,12 +364,20 @@ export default class App extends Component {
       const jobNumber = jobObj.inputValues.jobNumber;
       const partNumber = jobObj.inputValues.partNumber;
       const partCount = jobObj.inputValues.partCount;
-      const editTime = this.formatTime(new Date());
+      const now = new Date();
+      const editTime = this.formatTime(new Date( now.getTime() + (now.getTimezoneOffset() * 60000)));
       newChats.Jobs[jobNumber] = {
         chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": editTime, "Part Number": partNumber, "Part Count": partCount}
       };
       const currLatestJobForPart = newChats.Parts[partNumber];
-      if (!currLatestJobForPart || currLatestJobForPart.responses["Start Time"] < editTime) {
+      let currLatestPartEditTime;
+      if (currLatestJobForPart) {
+        currLatestPartEditTime = currLatestJobForPart.responses["Start Time"];
+        currLatestPartEditTime = currLatestPartEditTime.slice(currLatestPartEditTime.length - 19, currLatestPartEditTime.length);
+      }
+      console.log("curr", currLatestPartEditTime);
+      if (!currLatestJobForPart || currLatestPartEditTime < editTime) {
+        console.log("getttt")
         newChats.Parts[partNumber] = {
           chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": `${jobNumber}: ${editTime}`, "Latest Job Number": jobNumber, "Part Count": `${jobNumber}: ${partCount}`}
         }
@@ -581,6 +596,7 @@ export default class App extends Component {
               cells={this.state.cells}
               chats={this.state.chats}
               displayChat={this.state.displayChat}
+              hideProfile={this.hideProfile}
               displayProfile={this.state.displayProfile}
               setInitialTime={this.setInitialTime}
               sendNewMessage={this.sendNewMessage}
