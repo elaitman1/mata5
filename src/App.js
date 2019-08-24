@@ -197,8 +197,9 @@ export default class App extends Component {
       const timers = this.createObjectWithIDKeys(data[6]);
       const prepChecklists = this.createObjectWithIDKeys(data[7]);
       const prepNotes = this.createObjectWithIDKeys(data[8]);
+      const chatHistory = data[9];
 
-      let userObj = user[0];
+      const userObj = user[0];
       userObj.notifications = {};
       userObj.notifications.Text = notifications[0].alertenablephone === "1" ? true : false;
       userObj.notifications.Email = notifications[0].alertenableemail === "1" ? true : false;
@@ -212,60 +213,58 @@ export default class App extends Component {
         cellDevices.forEach(cellDev => {
           const id = cellDev.device_id;
           const devObj = devicesDetails[id];
-          if (devObj) {
-            let utilization = Math.round((parseInt(devObj.SumDayUpTime) / parseInt(devObj.SumONTimeSeconds)) * 100);
-            utilization = utilization.toString() === "NaN" ? 0 : utilization;
-            cellDev["utilization"] = utilization;
-            let timer = "";
-            const devTimer = timers[id];
-            if (devTimer) {
-              cellDev["timerEnd"] = devTimer.MaxEndTimeIdle;
-              cellDev["timerStart"] = devTimer.MaxStartTimeActive;
-              const timerEndTime = new Date(devTimer.MaxEndTimeIdle).getTime();
-              const remaining = timerEndTime - currentTime;
-              if (remaining > 0) {
-                const timerRemaining = this.timeConversion(remaining, true);
-                timer = `${timerRemaining} Remain On Timer`;
-              } else if (remaining < 0 && this.formatTime(new Date(currentTime)).slice(0, 10) === this.formatTime(new Date(timerEndTime)).slice(0, 10)) {
-                const timerDuration = this.timeConversion(timerEndTime - (new Date(devTimer.MaxStartTimeActive)).getTime(), false);
-                timer = `${timerDuration} Timer Finished`;
-              }
+          let utilization = Math.round((parseInt(devObj.SumDayUpTime) / parseInt(devObj.SumONTimeSeconds)) * 100);
+          utilization = utilization.toString() === "NaN" ? 0 : utilization;
+          cellDev["utilization"] = utilization;
+          let timer = "";
+          const devTimer = timers[id];
+          if (devTimer) {
+            cellDev["timerEnd"] = devTimer.MaxEndTimeIdle;
+            cellDev["timerStart"] = devTimer.MaxStartTimeActive;
+            const timerEndTime = new Date(devTimer.MaxEndTimeIdle).getTime();
+            const remaining = timerEndTime - currentTime;
+            if (remaining > 0) {
+              const timerRemaining = this.timeConversion(remaining, true);
+              timer = `${timerRemaining} Remain On Timer`;
+            } else if (remaining < 0 && this.formatTime(new Date(currentTime)).slice(0, 10) === this.formatTime(new Date(timerEndTime)).slice(0, 10)) {
+              const timerDuration = this.timeConversion(timerEndTime - (new Date(devTimer.MaxStartTimeActive)).getTime(), false);
+              timer = `${timerDuration} Timer Finished`;
             }
-            cellDev["timer"] = timer;
-            let status;
-            const maxOnTime = currentTime - new Date(devObj.MaxOnTime).getTime();
-            const maxEndTime = currentTime - new Date(devObj.MaxEndTime).getTime();
-            if (maxOnTime <= 600000) {
-              // if (devObj.MaxEndTime <= devObj.MaxStartTime || maxEndTime <= 600000) {
-                status = "Online";
-              // }
-            } else {
-              status = "Offline";
-            }
-            cellDev["status"] = status;
-            let prepChecklistObj = {
-              "speccheck":false,
-              "cadwork":false,
-              "toolpath":false,
-              "offset":false,
-              "clean":false,
-              "inspection":false
-            };
-            const prepChk = prepChecklists[id];
-            if (prepChk) {
-              prepChecklistObj = prepChk;
-            }
-            let notes = "";
-            const prepNote = prepNotes[id];
-            if (prepNote) {
-              notes = prepNote.note;
-            }
-            prepChecklistObj.notes = notes;
-            cellDev["prepChecklist"] = prepChecklistObj;
-
-            chatObj.Machines[devObj.name] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Machine Utilization": `${utilization}% of utilization.`, "Machine Status": status} }
-            cellDevsObj[id] = cellDev;
           }
+          cellDev["timer"] = timer;
+          let status;
+          const maxOnTime = currentTime - new Date(devObj.MaxOnTime).getTime();
+          const maxEndTime = currentTime - new Date(devObj.MaxEndTime).getTime();
+          if (maxOnTime <= 600000) {
+            // if (devObj.MaxEndTime <= devObj.MaxStartTime || maxEndTime <= 600000) {
+              status = "Online";
+            // }
+          } else {
+            status = "Offline";
+          }
+          cellDev["status"] = status;
+          let prepChecklistObj = {
+            "speccheck":false,
+            "cadwork":false,
+            "toolpath":false,
+            "offset":false,
+            "clean":false,
+            "inspection":false
+          };
+          const prepChk = prepChecklists[id];
+          if (prepChk) {
+            prepChecklistObj = prepChk;
+          }
+          let notes = "";
+          const prepNote = prepNotes[id];
+          if (prepNote) {
+            notes = prepNote.note;
+          }
+          prepChecklistObj.notes = notes;
+          cellDev["prepChecklist"] = prepChecklistObj;
+
+          chatObj.Machines[devObj.name] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Machine Utilization": `${utilization}% of utilization.`, "Machine Status": status} }
+          cellDevsObj[id] = cellDev;
         })
         dataObj["devices"] = cellDevsObj;
         cellObj[cell.cell_id] = dataObj
@@ -276,9 +275,16 @@ export default class App extends Component {
         const { EditTime: editTime, jobnumber, partnumber, partcount } = jobPart;
         if (editTime.slice(0, 10) === latestJobPartDate) {
           chatObj.Jobs[jobnumber] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": editTime, "Part Number": partnumber, "Part Count": partcount} };
-          if (!chatObj.Parts[partnumber]) {
-            chatObj.Parts[partnumber] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": editTime, "Job Number": jobnumber, "Part Count": partcount} };
+          if (!chatObj.Parts[partnumber] || chatObj.Parts[partnumber].responses["Start Time"] < editTime) {
+            chatObj.Parts[partnumber] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": `${jobnumber}: ${editTime}`, "Latest Job Number": jobnumber, "Part Count": `${jobnumber}: ${partcount}`} };
           }
+        }
+      })
+
+      chatHistory.forEach(chat => {
+        const chatItem = chatObj[chat.type][chat.properties];
+        if (chatItem) {
+          chatObj[chat.type][chat.properties].chatHistory = JSON.parse(chat.chat_history);
         }
       })
 
@@ -344,6 +350,27 @@ export default class App extends Component {
       this.setState({ machineSelected: machInfo });
     };
   };
+
+  saveNewJob = jobsArr => {
+    let newChats = Object.assign(this.state.chats, {});
+    jobsArr.forEach(jobObj => {
+      const jobNumber = jobObj.inputValues.jobNumber;
+      const partNumber = jobObj.inputValues.partNumber;
+      const partCount = jobObj.inputValues.partCount;
+      const editTime = this.formatTime(new Date());
+      newChats.Jobs[jobNumber] = {
+        chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": editTime, "Part Number": partNumber, "Part Count": partCount}
+      };
+      const currLatestJobForPart = newChats.Parts[partNumber];
+      if (!currLatestJobForPart || currLatestJobForPart.responses["Start Time"] < editTime) {
+        newChats.Parts[partNumber] = {
+          chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": `${jobNumber}: ${editTime}`, "Latest Job Number": jobNumber, "Part Count": `${jobNumber}: ${partCount}`}
+        }
+      }
+    })
+
+    this.setState({ chats: newChats });
+  }
 
   savePrepChecklists = (cellId, deviceId, prepChecklists) => {
     const prepChkDict = {
@@ -428,7 +455,6 @@ export default class App extends Component {
 
   postNewMessages = async (type, chat) => {
     const url = "https://www.matainventive.com/cordovaserver/database/insertchat.php";
-    console.log("history", JSON.stringify(this.state.chats[type][chat].chatHistory));
     const data = {
       userid: JSON.parse(localStorage.getItem("Mata Inventive")).ID,
       type: type,
@@ -561,6 +587,7 @@ export default class App extends Component {
               toggleNotification={this.toggleNotification}
               machineSelected={this.state.machineSelected}
               toggleMachineSelection={this.toggleMachineSelection}
+              saveNewJob={this.saveNewJob}
               savePrepChecklists={this.savePrepChecklists}
               setDeviceTimer={this.setDeviceTimer}
             />

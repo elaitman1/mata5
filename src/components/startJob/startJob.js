@@ -124,6 +124,7 @@ export default class StartJob extends Component {
     if (this.hasNoEmptyCards()) {
       this.postAllJobs().then(res => {
         console.log("res", res);
+        this.props.saveNewJob(this.state.jobs)
         this.toggleConfirmation();
       })
     } else {

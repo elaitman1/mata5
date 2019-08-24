@@ -39,6 +39,7 @@ const Main = props => {
             toggleMachineSelection={props.toggleMachineSelection}
             savePrepChecklists={props.savePrepChecklists}
             setDeviceTimer={props.setDeviceTimer}
+            saveNewJob={props.saveNewJob}
           />
         );
       }

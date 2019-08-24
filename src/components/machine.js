@@ -49,6 +49,7 @@ export default class Machine extends Component {
       case "Start Job":
         return <StartJob jobNumber={this.state.jobNumber}
         toggleCamera={this.toggleCamera}
+        saveNewJob={this.props.saveNewJob}
         cameraView={this.state.cameraView}
         hideTask={this.hideTask}
         partNumber={this.state.partNumber}
