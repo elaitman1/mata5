@@ -477,6 +477,7 @@ export default class App extends Component {
   };
 
   toggleNotification = type => {
+    
     const userid = this.state.user.ID.toString()
     let alertemail = this.state.user.notifications.Email;
     alertemail = type === "Email" ? !alertemail : alertemail;

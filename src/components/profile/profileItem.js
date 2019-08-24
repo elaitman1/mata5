@@ -20,6 +20,7 @@ const ProfileItem = props => {
       profileItem = <Settings user={props.user} />;
       break;
     case "Help/Support":
+    
       profileItem = <Support user={props.user} />;
       break;
     case "Log Out":
