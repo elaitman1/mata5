@@ -477,7 +477,7 @@ export default class App extends Component {
   };
 
   toggleNotification = type => {
-    
+
     const userid = this.state.user.ID.toString()
     let alertemail = this.state.user.notifications.Email;
     alertemail = type === "Email" ? !alertemail : alertemail;
@@ -557,6 +557,7 @@ export default class App extends Component {
               chats={this.state.chats}
               displayChat={this.state.displayChat}
               displayProfile={this.state.displayProfile}
+              hideProfile={this.hideProfile}
               setInitialTime={this.setInitialTime}
               sendNewMessage={this.sendNewMessage}
               toggleNotification={this.toggleNotification}

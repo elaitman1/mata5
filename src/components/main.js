@@ -4,6 +4,7 @@ import Machine from "./machine";
 import ChatItem from "./chat/chatItem";
 import ProfileItem from "./profile/profileItem";
 
+//so profileitem must not be machine selected and must not be display profile
 const Main = props => {
   const renderMain = () => {
     //see parent of profileItem to see where toggleNotification comes from
@@ -13,6 +14,7 @@ const Main = props => {
           displayProfile={props.displayProfile}
           user={props.user}
           toggleNotification={props.toggleNotification}
+          hideProfile={props.hideProfile}
         />
       );
     } else if (props.displayChat) {

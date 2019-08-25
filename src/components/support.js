@@ -11,15 +11,6 @@ export default class Support extends Component {
   };
 
   sendHelpMessage = () => {
-//     {ID: "17", user_email: "themomentdaily@gmail.com", first_name: "", last_name: "", notifications: {…}}
-// ID: "17"
-// first_name: ""
-// last_name: ""
-// notifications: {Text: true, Email: true}
-// user_email: "themomentdaily@gmail.com"
-// __proto__: Object
-    // console.log(this.props.user)
-  //   let supportMessage = this.state.supportMessage.toString()
 
     fetch('https://api.sendgrid.com/v3/mail/send',{
       method: 'POST',
@@ -46,28 +37,8 @@ export default class Support extends Component {
           }
       })
     })
+    .then(this.props.hideProfile)
   }
-
-// '{"personalizations":
-//     [{"to":[{
-//         "email":"john.doe@example.com",
-//         "name":"John Doe"
-//       }],
-//       "subject":"Hello, World!"
-//     }],
-//       "content": [{
-//         "type": "text/plain",
-//         "value": "Heya!"
-//       }],
-//       "from":{
-//         "email":"sam.smith@example.com",
-//           "name":"Sam Smith"
-//       },
-//       "reply_to":{
-//         "email":"sam.smith@example.com",
-//           "name":"Sam Smith"
-//       }
-//   }'
 
 
   render = () => {

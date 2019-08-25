@@ -4,7 +4,23 @@ import 'react-html5-camera-photo/build/css/index.css';
 import axios from 'axios';
 
 class TakePhoto extends Component {
+  state = {
+    facingMode:'ENVIRONMENT'
+  }
 
+  handleCameraMode = () => {
+    if(this.state.facingMode === 'ENVIRONMENT'){
+      this.setState({
+        facingMode:'USER'
+      })
+    }else{
+      this.setState({
+        facingMode:'ENVIRONMENT'
+      })
+    }
+
+  }
+  
   onTakePhoto = async(dataUri) => {
 
     const config = {
@@ -52,12 +68,12 @@ class TakePhoto extends Component {
   }
 
   render () {
+    let facingMode = this.state.facingMode
     return (
-
       <div className="start-job-container">
         <Camera
           onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
-          idealFacingMode = {FACING_MODES.ENVIRONMENT}
+          idealFacingMode = {FACING_MODES.facingMode}
           idealResolution = {{width: 640, height: 480}}
           imageType = {IMAGE_TYPES.JPG}
           imageCompression = {0.97}
@@ -68,6 +84,7 @@ class TakePhoto extends Component {
           isFullscreen = {false}
           sizeFactor = {1}
         />
+        <button onClick={this.handleCameraMode}className='switchView'>Switch Camera View</button >
       </div>
     );
   }
