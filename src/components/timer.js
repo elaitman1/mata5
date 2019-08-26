@@ -12,7 +12,11 @@ export default class Timer extends Component {
   };
 
   toggleConfirmation = () => {
-    this.setState({ showConfirmation: !this.state.showConfirmation });
+    if (!this.state.showConfirmation) {
+      this.setState({ showConfirmation: !this.state.showErrorModal });
+    } else {
+      window.location.reload();
+    }
   };
 
   toggleErrorModal = () => {

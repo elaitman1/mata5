@@ -92,8 +92,10 @@ export default class App extends Component {
           const timerDuration = this.timeConversion(timerEndTime - (new Date(device.timerStart)).getTime(), false);
           timer = `${timerDuration} Timer Finished`;
         }
-        newCells[cells[i]].devices[devices[j]].timer = timer;
-        timers.push(timer);
+        if (timer) {
+          newCells[cells[i]].devices[devices[j]].timer = timer;
+          timers.push(timer);
+        }
       }
     }
     this.setState(prevState => ({

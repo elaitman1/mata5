@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 
 export default class Chat extends Component {
   state = {
@@ -24,7 +25,10 @@ export default class Chat extends Component {
           Object.keys(chats[chatType]).forEach(chatName => {
             const chatObj = chats[chatType][chatName];
             const startTime = chatObj.responses["Start Time"];
-            const editTime = chatType === "Parts" ? startTime.slice(startTime.length - 19, startTime.length) : startTime;
+            const editTime =
+              chatType === "Parts"
+                ? startTime.slice(startTime.length - 19, startTime.length)
+                : startTime;
             if (!latestJobPartDate || editTime > latestJobPartDate) {
               latestJobPartDate = editTime;
               filteredChatResult = {
@@ -36,9 +40,9 @@ export default class Chat extends Component {
             if (editTime === latestJobPartDate) {
               filteredChatResult[chatType][chatName] = chatObj;
             }
-          })
+          });
         }
-      })
+      });
     } else {
       filteredChatResult = {
         Machines: {},
@@ -48,11 +52,11 @@ export default class Chat extends Component {
       Object.keys(chats).forEach(chatType => {
         Object.keys(chats[chatType]).forEach(chatName => {
           if (chatName.includes(this.state.search)) {
-            const chatObj = chats[chatType][chatName]
+            const chatObj = chats[chatType][chatName];
             filteredChatResult[chatType][chatName] = chatObj;
           }
-        })
-      })
+        });
+      });
     }
 
     return (
@@ -85,10 +89,11 @@ export default class Chat extends Component {
 }
 
 const ChatGroup = props => {
-  return (
-    <div className="chat-group-container">
-      <h5>{props.type}</h5>
-      {Object.keys(props.chats).map((chat, idx) => {
+  const chatGroupItems =
+    Object.keys(props.chats).length === 0 ? (
+      <p>No {_.lowerFirst(props.type)} for your searched value.</p>
+    ) : (
+      Object.keys(props.chats).map((chat, idx) => {
         const className = `chat-group-item-icon ${props.type}`;
         return (
           <div
@@ -100,7 +105,13 @@ const ChatGroup = props => {
             <p>{chat}</p>
           </div>
         );
-      })}
+      })
+    );
+
+  return (
+    <div className="chat-group-container">
+      <h5>{props.type}</h5>
+      {chatGroupItems}
     </div>
   );
 };
