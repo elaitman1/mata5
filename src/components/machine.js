@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import StartJob from "./startJob/startJob";
-import PreparationChecklist from "./preparationChecklist";
+import Reporting from "./reporting";
 import Inspection from "./inspection";
 import Timer from "./timer";
 import TakePhoto from './camera'
@@ -56,8 +56,8 @@ export default class Machine extends Component {
         machine={this.props.machine}
         />;
 
-      case "Preparation Checklist":
-        return <PreparationChecklist machine={this.props.machine} savePrepChecklists={this.props.savePrepChecklists} hideTask={this.hideTask} />;
+      case "Reporting":
+        return <Reporting machine={this.props.machine} saveReporting={this.props.saveReporting} hideTask={this.hideTask} />;
       case "Inspection":
         return <Inspection machine={this.props.machine} hideTask={this.hideTask} />;
       case "Timer":
@@ -70,7 +70,7 @@ export default class Machine extends Component {
   render = () => {
     const buttonTypes = [
       "Start Job",
-      "Preparation Checklist",
+      "Reporting",
       "Inspection",
       "Timer"
     ];

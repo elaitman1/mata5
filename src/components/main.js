@@ -38,7 +38,7 @@ const Main = props => {
           <Machine
             machine={props.machineSelected}
             toggleMachineSelection={props.toggleMachineSelection}
-            savePrepChecklists={props.savePrepChecklists}
+            saveReporting={props.saveReporting}
             setDeviceTimer={props.setDeviceTimer}
             saveNewJob={props.saveNewJob}
           />

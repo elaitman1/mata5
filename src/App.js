@@ -177,8 +177,8 @@ export default class App extends Component {
     const devicesDetails = await this.fetchData(devicesDetailsUrl).then(devsDetsData => devsDetsData);
     const jobsPartsUrl = `https://www.matainventive.com/cordovaserver/database/jsonmataparts.php?id=${id}`;
     const jobsParts = await this.fetchData(jobsPartsUrl).then(jobsPartsData => jobsPartsData);
-    const prepChecklistsUrl = `https://www.matainventive.com/cordovaserver/database/jsonmataPrepAll.php?id=${id}`;
-    const prepChecklists = await this.fetchData(prepChecklistsUrl).then(prepChecklistData => prepChecklistData);
+    const reportingUrl = `https://www.matainventive.com/cordovaserver/database/jsonmataPrepAll.php?id=${id}`;
+    const reporting = await this.fetchData(reportingUrl).then(reportingData => reportingData);
     const prepNotesUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatanotes.php?id=${id}`;
     const prepNotes = await this.fetchData(prepNotesUrl).then(prepNotesData => prepNotesData);
     const timersUrl = `https://www.matainventive.com/cordovaserver/database/jsonmataSensor.php?id=${id}`;
@@ -187,7 +187,7 @@ export default class App extends Component {
     const chatHistory = await this.fetchData(chatHistoryUrl).then(chatHistoryData => chatHistoryData);
 
     const currentTime = Date.now();
-    const dataArr = await Promise.all([user, notifications, cells, devices, devicesDetails, jobsParts, timers, prepChecklists, prepNotes, chatHistory]).then(data => {
+    const dataArr = await Promise.all([user, notifications, cells, devices, devicesDetails, jobsParts, timers, reporting, prepNotes, chatHistory]).then(data => {
       const user = data[0]
       const notifications = data[1]
       const cells = data[2];
@@ -195,7 +195,7 @@ export default class App extends Component {
       const devicesDetails = this.createDeviceObject(data[4]);
       const jobsParts = data[5];
       const timers = this.createObjectWithIDKeys(data[6]);
-      const prepChecklists = this.createObjectWithIDKeys(data[7]);
+      const reporting = this.createObjectWithIDKeys(data[7]);
       const prepNotes = this.createObjectWithIDKeys(data[8]);
       const chatHistory = data[9];
 
@@ -243,7 +243,7 @@ export default class App extends Component {
             status = "Offline";
           }
           cellDev["status"] = status;
-          let prepChecklistObj = {
+          let reportingObj = {
             "speccheck":false,
             "cadwork":false,
             "toolpath":false,
@@ -251,17 +251,17 @@ export default class App extends Component {
             "clean":false,
             "inspection":false
           };
-          const prepChk = prepChecklists[id];
+          const prepChk = reporting[id];
           if (prepChk) {
-            prepChecklistObj = prepChk;
+            reportingObj = prepChk;
           }
           let notes = "";
           const prepNote = prepNotes[id];
           if (prepNote) {
             notes = prepNote.note;
           }
-          prepChecklistObj.notes = notes;
-          cellDev["prepChecklist"] = prepChecklistObj;
+          reportingObj.notes = notes;
+          cellDev["reporting"] = reportingObj;
 
           chatObj.Machines[devObj.name] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Machine Utilization": `${utilization}% of utilization.`, "Machine Status": status} }
           cellDevsObj[id] = cellDev;
@@ -387,25 +387,25 @@ export default class App extends Component {
     this.setState({ chats: newChats });
   }
 
-  savePrepChecklists = (cellId, deviceId, prepChecklists) => {
+  saveReporting = (cellId, deviceId, reportingObj) => {
     const prepChkDict = {
       "Clean Chamber": "clean",
-      "Tool Offset": "offset",
+      "Clear Alarm": "offset",
       "Inspection Room": "inspection",
       "Job Spec Confirmation": "speccheck",
       "Revise CAD Modeling": "cadwork",
       "Edit Toolpath": "toolpath"
     }
     let newCells = Object.assign(this.state.cells, {});
-    Object.keys(prepChecklists).forEach(type => {
+    Object.keys(reportingObj).forEach(type => {
       if (type === "Note") {
-        newCells[cellId].devices[deviceId].prepChecklist.notes = prepChecklists[type];
+        newCells[cellId].devices[deviceId].reporting.notes = reportingObj[type];
       } else {
-        const typeObj = prepChecklists[type];
+        const typeObj = reportingObj[type];
         Object.keys(typeObj).forEach(prepChk => {
-          const prckBool = prepChecklists[type][prepChk];
+          const prckBool = reportingObj[type][prepChk];
           const converted = prepChkDict[prepChk];
-          newCells[cellId].devices[deviceId].prepChecklist[converted] = prckBool;
+          newCells[cellId].devices[deviceId].reporting[converted] = prckBool;
         })
       }
     })
@@ -604,7 +604,7 @@ export default class App extends Component {
               machineSelected={this.state.machineSelected}
               toggleMachineSelection={this.toggleMachineSelection}
               saveNewJob={this.saveNewJob}
-              savePrepChecklists={this.savePrepChecklists}
+              saveReporting={this.saveReporting}
               setDeviceTimer={this.setDeviceTimer}
             />
           </div>
