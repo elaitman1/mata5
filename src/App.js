@@ -270,10 +270,10 @@ export default class App extends Component {
         cellObj[cell.cell_id] = dataObj
       });
 
-      const latestJobPartDate = jobsParts[0].EditTime.slice(0, 10);
+      // const latestJobPartDate = jobsParts[0].EditTime.slice(0, 10);
       jobsParts.forEach(jobPart => {
         const { EditTime: editTime, jobnumber, partnumber, partcount } = jobPart;
-        if (editTime.slice(0, 10) === latestJobPartDate) {
+        // if (editTime.slice(0, 10) === latestJobPartDate) {
           chatObj.Jobs[jobnumber] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": editTime, "Part Number": partnumber, "Part Count": partcount} };
           const currLatestJobForPart = chatObj.Parts[partnumber];
           let currLatestPartEditTime;
@@ -281,11 +281,10 @@ export default class App extends Component {
             currLatestPartEditTime = currLatestJobForPart.responses["Start Time"];
             currLatestPartEditTime = currLatestPartEditTime.slice(currLatestPartEditTime.length - 19, currLatestPartEditTime.length);
           }
-          console.log("curr", currLatestPartEditTime);
           if (!currLatestJobForPart || currLatestPartEditTime < editTime) {
             chatObj.Parts[partnumber] = { chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": `${jobnumber}: ${editTime}`, "Latest Job Number": jobnumber, "Part Count": `${jobnumber}: ${partcount}`} };
           }
-        }
+        // }
       })
 
       chatHistory.forEach(chat => {
@@ -375,9 +374,7 @@ export default class App extends Component {
         currLatestPartEditTime = currLatestJobForPart.responses["Start Time"];
         currLatestPartEditTime = currLatestPartEditTime.slice(currLatestPartEditTime.length - 19, currLatestPartEditTime.length);
       }
-      console.log("curr", currLatestPartEditTime);
       if (!currLatestJobForPart || currLatestPartEditTime < editTime) {
-        console.log("getttt")
         newChats.Parts[partNumber] = {
           chatHistory: { chatFirstBegan: "", chatLog: [] }, responses: {"Start Time": `${jobNumber}: ${editTime}`, "Latest Job Number": jobNumber, "Part Count": `${jobNumber}: ${partCount}`}
         }
