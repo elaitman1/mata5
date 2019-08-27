@@ -22,6 +22,7 @@ export default class Machine extends Component {
   };
 
   toggleCamera = async(inputIndicator) => {
+    debugger
     await this.setState({ cameraView: !this.state.cameraView, inputIndicator:inputIndicator })
   }
 
@@ -45,6 +46,7 @@ export default class Machine extends Component {
               cameraOffAndSetInput={this.cameraOffAndSetInput}
             />
     }
+
     switch (this.state.selectedTask) {
       case "Start Job":
         return <StartJob jobNumber={this.state.jobNumber}

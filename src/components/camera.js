@@ -5,28 +5,24 @@ import axios from 'axios';
 
 class TakePhoto extends Component {
   state = {
-    facingMode:'ENVIRONMENT'
+    idealFacingMode: FACING_MODES.ENVIRONMENT
   }
 
-  handleCameraMode = () => {
-    if(this.state.facingMode === 'ENVIRONMENT'){
-      this.setState({
-        facingMode:'USER'
-      })
-    }else{
-      this.setState({
-        facingMode:'ENVIRONMENT'
-      })
-    }
+  renderButtons = () => {
+    return (
+      <div>
+        <button onClick={ (e) => {
+          this.setState({idealFacingMode: FACING_MODES.USER});
+        }}> FACING_MODES.USER </button>
 
+        <button onClick={ (e) => {
+          this.setState({idealFacingMode: FACING_MODES.ENVIRONMENT});
+        }}> FACING_MODES.ENVIRONMENT </button>
+      </div>
+    );
   }
-  
+
   onTakePhoto = async(dataUri) => {
-
-    const config = {
-      sizeFactor: 1,
-      imgCompression: .5
-    };
 
     var data={
       requests: [
@@ -47,7 +43,6 @@ class TakePhoto extends Component {
         url: 'https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDbXhEc-ohKbIv4J8J8drPfAnNZ1Q8cEOk',
         data
       })
-
       .then(r => {
         let array = r.data.responses[0].textAnnotations
         for (let x = 1; x< array.length; x++){
@@ -68,12 +63,12 @@ class TakePhoto extends Component {
   }
 
   render () {
-    let facingMode = this.state.facingMode
     return (
       <div className="start-job-container">
+      { this.renderButtons() }
         <Camera
           onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
-          idealFacingMode = {FACING_MODES.facingMode}
+          idealFacingMode = {this.state.idealFacingMode}
           idealResolution = {{width: 640, height: 480}}
           imageType = {IMAGE_TYPES.JPG}
           imageCompression = {0.97}
@@ -84,7 +79,6 @@ class TakePhoto extends Component {
           isFullscreen = {false}
           sizeFactor = {1}
         />
-        <button onClick={this.handleCameraMode}className='switchView'>Switch Camera View</button >
       </div>
     );
   }

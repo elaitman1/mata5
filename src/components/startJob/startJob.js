@@ -23,13 +23,13 @@ export default class StartJob extends Component {
   };
 
   componentDidMount = () => {
+
     if (this.props.jobNumber !== "" && this.props.partNumber !== ""){
       this.setState(state => (state.jobs[0].inputValues.jobNumber = this.props.jobNumber, state.jobs[0].inputValues.partNumber = this.props.jobNumber, state))
     }else if(this.props.partNumber !== ""){
       this.setState(state => (state.jobs[0].inputValues.partNumber = this.props.partNumber, state))
     }else if(this.props.jobNumber !== ""){
       this.setState(state => (state.jobs[0].inputValues.jobNumber = this.props.jobNumber, state))
-
     }
   }
 
@@ -132,6 +132,7 @@ export default class StartJob extends Component {
   };
 
   toggleCamera = (e) => {
+    debugger
     let inputIndicator = e.target.attributes[0].value
     this.props.toggleCamera(inputIndicator);
   };
@@ -150,6 +151,7 @@ export default class StartJob extends Component {
   };
 
   render = () => {
+    debugger
     const leftArrow =
       this.state.totalJobs > 1 ? (
         <span className="start-job-arrow left" onClick={this.swipeJob("left")}>
@@ -159,6 +161,7 @@ export default class StartJob extends Component {
         ""
       );
     const rightArrow =
+
       this.state.totalJobs > 1 ? (
         <span
           className="start-job-arrow right"
