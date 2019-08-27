@@ -19,7 +19,7 @@ export default class Chat extends Component {
   render = () => {
     const chats = this.props.chats;
     let latestJobPartDate, filteredChatResult;
-    if (this.state.search === "") {
+    if (this.state.search.trim() === "") {
       Object.keys(chats).forEach(chatType => {
         if (chatType !== "Machines") {
           Object.keys(chats[chatType]).forEach(chatName => {
@@ -51,7 +51,8 @@ export default class Chat extends Component {
       };
       Object.keys(chats).forEach(chatType => {
         Object.keys(chats[chatType]).forEach(chatName => {
-          if (chatName.includes(this.state.search)) {
+          const searchString = _.lowerCase(this.state.search);
+          if (_.lowerCase(chatName).includes(searchString)) {
             const chatObj = chats[chatType][chatName];
             filteredChatResult[chatType][chatName] = chatObj;
           }
