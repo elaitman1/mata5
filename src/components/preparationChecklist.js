@@ -236,7 +236,9 @@ export default class PreparationChecklist extends Component {
       return (
         <div>
           <div className="preparation-checklist-container">
-            <h4>Start Prep</h4>
+            <h4>Reporting</h4>
+            <br />
+            <h4>For Job# </h4>
             <header className="preparation-checklist-cells-container">
               {this.renderCells()}
             </header>

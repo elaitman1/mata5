@@ -132,7 +132,7 @@ export default class StartJob extends Component {
   };
 
   toggleCamera = (e) => {
-    debugger
+
     let inputIndicator = e.target.attributes[0].value
     this.props.toggleCamera(inputIndicator);
   };
@@ -151,7 +151,7 @@ export default class StartJob extends Component {
   };
 
   render = () => {
-    debugger
+
     const leftArrow =
       this.state.totalJobs > 1 ? (
         <span className="start-job-arrow left" onClick={this.swipeJob("left")}>
