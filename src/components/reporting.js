@@ -26,17 +26,17 @@ export default class Reporting extends Component {
 
   componentDidMount = () => {
     const reportingDict = {
-      "clean": ["Machining", "Clean Chamber"],
-      "offset": ["Machining", "Clear Alarm"],
-      "inspection": ["Machining", "Inspection Room"],
-      "speccheck": ["Preparation", "Job Spec Confirmation"],
-      "cadwork": ["Preparation", "Revise CAD Modeling"],
-      "toolpath": ["Preparation", "Edit Toolpath"]
-    }
+      clean: ["Machining", "Clean Chamber"],
+      offset: ["Machining", "Clear Alarm"],
+      inspection: ["Machining", "Inspection Room"],
+      speccheck: ["Preparation", "Job Spec Confirmation"],
+      cadwork: ["Preparation", "Revise CAD Modeling"],
+      toolpath: ["Preparation", "Edit Toolpath"]
+    };
 
-    let reportingObj = { Machining: {}, Preparation:{} };
+    let reportingObj = { Machining: {}, Preparation: {} };
     Object.keys(this.props.machine.reporting).forEach(prepType => {
-      let prepVal = this.props.machine.reporting[prepType]
+      let prepVal = this.props.machine.reporting[prepType];
       if (prepType === "notes") {
         reportingObj.Note = prepVal;
       } else {
@@ -44,9 +44,9 @@ export default class Reporting extends Component {
         const stateKeys = reportingDict[prepType];
         reportingObj[stateKeys[0]][stateKeys[1]] = prepVal;
       }
-    })
+    });
     this.setState({ cells: reportingObj, prevNote: reportingObj.Note });
-  }
+  };
 
   handleEmptyString = str => {
     if (typeof str === "string") {
@@ -58,7 +58,7 @@ export default class Reporting extends Component {
     } else {
       return str;
     }
-  }
+  };
 
   selectCell = cell => {
     return () => {
@@ -87,7 +87,8 @@ export default class Reporting extends Component {
   };
 
   saveChecklistValues = async () => {
-    const url = "https://www.matainventive.com/cordovaserver/database/insertprepall.php";
+    const url =
+      "https://www.matainventive.com/cordovaserver/database/insertprepall.php";
     const data = {
       userid: JSON.parse(localStorage.getItem("Mata Inventive")).ID,
       deviceid: this.props.machine.device_id,
@@ -99,23 +100,49 @@ export default class Reporting extends Component {
       partnumber: "",
       jobnumber: "",
       inspection: this.state.cells.Machining["Inspection Room"]
-    }
+    };
 
     fetch(url, {
-      method: 'POST',
-      body: "userid="+data.userid+"&deviceid="+data.deviceid+"&prepspec="+data.prepspec+"&prepcad="+data.prepcad+"&preppath="+data.preppath+"&prepoffset="+data.prepreporting+"&prepclean="+data.prepclean+"&partnumber="+data.partnumber+"&jobnumber="+data.jobnumber+"&inspection="+data.inspection+"&insert=",
-      headers:{ 'Content-Type':'application/x-www-form-urlencoded' }
-    }).then(res => console.log(res))
-    .then(response => console.log('Success:', JSON.stringify(response)))
-    .catch(error => console.error('Error:', error));
-  }
+      method: "POST",
+      body:
+        "userid=" +
+        data.userid +
+        "&deviceid=" +
+        data.deviceid +
+        "&prepspec=" +
+        data.prepspec +
+        "&prepcad=" +
+        data.prepcad +
+        "&preppath=" +
+        data.preppath +
+        "&prepoffset=" +
+        data.prepreporting +
+        "&prepclean=" +
+        data.prepclean +
+        "&partnumber=" +
+        data.partnumber +
+        "&jobnumber=" +
+        data.jobnumber +
+        "&inspection=" +
+        data.inspection +
+        "&insert=",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    })
+      .then(res => console.log(res))
+      .then(response => console.log("Success:", JSON.stringify(response)))
+      .catch(error => console.error("Error:", error));
+  };
 
   handleSaveChecklist = () => {
     this.saveChecklistValues().then(res => {
       console.log(res);
-      this.props.saveReporting(this.props.machine.cell_id, this.props.machine.device_id, this.state)
+      this.props.saveReporting(
+        this.props.machine.cell_id,
+        this.props.machine.device_id,
+        this.state.cells
+      );
       this.toggleConfirmation();
-    })
+    });
   };
 
   toggleChecklist = checkList => {
@@ -128,23 +155,36 @@ export default class Reporting extends Component {
   };
 
   postNote = async () => {
-    const url = "https://www.matainventive.com/cordovaserver/database/insertnote.php";
+    const url =
+      "https://www.matainventive.com/cordovaserver/database/insertnote.php";
     const data = {
       userid: JSON.parse(localStorage.getItem("Mata Inventive")).ID,
       deviceid: this.props.machine.device_id,
       note: this.state.cells.Note,
       partnumber: "",
-      jobnumber: "",
-    }
+      jobnumber: ""
+    };
 
     fetch(url, {
-      method: 'POST',
-      body: "userid="+data.userid+"&deviceid="+data.deviceid+"&note="+data.note+"&partnumber="+data.partnumber+"&jobnumber="+data.jobnumbernote+"&insert=",
-      headers:{ 'Content-Type':'application/x-www-form-urlencoded' }
-    }).then(res => console.log(res))
-    .then(response => console.log('Success:', JSON.stringify(response)))
-    .catch(error => console.error('Error:', error));
-  }
+      method: "POST",
+      body:
+        "userid=" +
+        data.userid +
+        "&deviceid=" +
+        data.deviceid +
+        "&note=" +
+        data.note +
+        "&partnumber=" +
+        data.partnumber +
+        "&jobnumber=" +
+        data.jobnumbernote +
+        "&insert=",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    })
+      .then(res => console.log(res))
+      .then(response => console.log("Success:", JSON.stringify(response)))
+      .catch(error => console.error("Error:", error));
+  };
 
   // after saving Note, switch back to the previous cell view that the user was at before displaying Note
   saveNote = () => {
@@ -158,7 +198,7 @@ export default class Reporting extends Component {
         prevNote: this.state.cells.Note
       });
       this.toggleNote();
-    })
+    });
   };
 
   // similar logic to save note, but uses a previously saved value to switch the value back to it so as not to save any updates the user may have
