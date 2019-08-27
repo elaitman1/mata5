@@ -526,7 +526,6 @@ export default class App extends Component {
   }
 
   render = () => {
-    debugger
     if (!localStorage.getItem("Mata Inventive")) {
       return <Splash fetchData={this.fetchData} logIn={this.logIn} chats={this.state.chats}/>;
     } else {
