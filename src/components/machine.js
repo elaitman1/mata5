@@ -6,13 +6,13 @@ import Timer from "./timer";
 import TakePhoto from './camera'
 
 
-export default class Machine extends Component {
+class Machine extends Component {
   state = {
     selectedTask: null,
     cameraView: false,
     jobNumber: "",
     inputIndicator: "",
-    partNumber: ""
+    partNumber: "",
   };
 
   displayTask = task => {
@@ -22,7 +22,6 @@ export default class Machine extends Component {
   };
 
   toggleCamera = async(inputIndicator) => {
-    debugger
     await this.setState({ cameraView: !this.state.cameraView, inputIndicator:inputIndicator })
   }
 
@@ -49,7 +48,8 @@ export default class Machine extends Component {
 
     switch (this.state.selectedTask) {
       case "Start Job":
-        return <StartJob jobNumber={this.state.jobNumber}
+        return <StartJob
+        jobNumber={this.state.jobNumber}
         toggleCamera={this.toggleCamera}
         cameraView={this.state.cameraView}
         hideTask={this.hideTask}
@@ -58,7 +58,11 @@ export default class Machine extends Component {
         />;
 
       case "Preparation Checklist":
-        return <PreparationChecklist machine={this.props.machine} savePrepChecklists={this.props.savePrepChecklists} hideTask={this.hideTask} />;
+        return <PreparationChecklist
+        machine={this.props.machine} savePrepChecklists={this.props.savePrepChecklists} hideTask={this.hideTask}
+        jobNumber={this.state.jobNumber}
+        chats={this.props.chats}
+        />;
       case "Inspection":
         return <Inspection machine={this.props.machine} hideTask={this.hideTask} />;
       case "Timer":
@@ -111,3 +115,5 @@ const Button = props => {
     </div>
   );
 };
+
+export default Machine

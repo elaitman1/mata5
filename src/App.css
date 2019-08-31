@@ -1472,3 +1472,11 @@ h1, h4, h5 {
   margin: 4px 4px;
   border-radius:2px;
 }
+
+.arrowRight{
+  width: 35px;
+  height: 35px;
+  background-color: var(--deep-sky-blue-two);
+  align-items: flex-end;
+
+}

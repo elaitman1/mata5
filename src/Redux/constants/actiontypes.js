@@ -1,0 +1,1 @@
+export const TOTAL_JOBS_COUNT = 'TOTAL_JOBS_COUNT'
