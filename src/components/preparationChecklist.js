@@ -266,21 +266,12 @@ export default class PreparationChecklist extends Component {
           <div className="preparation-checklist-container">
             <h4>Reporting</h4>
             <h4>For Job# {Object.keys(this.props.chats.Jobs)[this.state.prepCheckJobNum]}
-            {this.state.downArrow?
-              <img
-                onClick={this.showDownArrow}
-                className="arrowRight"
-                src="./assets/arrowRight.png"
-                alt="arrowDown"
-              />
-            :
               <img
                 onClick={this.showDownArrow}
                 className="arrowRight"
                 src="./assets/arrowRight.png"
                 alt="arrowRight"
               />
-            }
             </h4>
                   <header className="preparation-checklist-cells-container">
                     {this.renderCells()}

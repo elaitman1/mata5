@@ -64,6 +64,7 @@ class Machine extends Component {
       case "Job List":
         return <JobList
         hideTask={this.hideTask}
+        chats={this.props.chats}
         //must import all job numbers after fetch in app
         />
       case "Preparation Checklist":
