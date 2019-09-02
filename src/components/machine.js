@@ -3,6 +3,7 @@ import StartJob from "./startJob/startJob";
 import PreparationChecklist from "./preparationChecklist";
 import Inspection from "./inspection";
 import Timer from "./timer";
+import JobList from "./jobList"
 import TakePhoto from './camera'
 
 
@@ -20,6 +21,10 @@ class Machine extends Component {
       this.setState({ selectedTask: task });
     };
   };
+
+  displayAllJobNumbers = () => {
+    this.setState({selectedTask:"Job List"})
+  }
 
   toggleCamera = async(inputIndicator) => {
     await this.setState({ cameraView: !this.state.cameraView, inputIndicator:inputIndicator })
@@ -40,10 +45,10 @@ class Machine extends Component {
   renderTask = () => {
     if (this.state.cameraView){
       return <TakePhoto
-              inputIndicator={this.state.inputIndicator}
-              toggleCamera={this.toggleCamera}
-              cameraOffAndSetInput={this.cameraOffAndSetInput}
-            />
+        inputIndicator={this.state.inputIndicator}
+        toggleCamera={this.toggleCamera}
+        cameraOffAndSetInput={this.cameraOffAndSetInput}
+        />
     }
 
     switch (this.state.selectedTask) {
@@ -56,12 +61,15 @@ class Machine extends Component {
         partNumber={this.state.partNumber}
         machine={this.props.machine}
         />;
-
+      case "Job List":
+        return <JobList
+        hideTask={this.hideTask}
+        //must import all job numbers after fetch in app
+        />
       case "Preparation Checklist":
         return <PreparationChecklist
-        machine={this.props.machine} savePrepChecklists={this.props.savePrepChecklists} hideTask={this.hideTask}
-        jobNumber={this.state.jobNumber}
-        chats={this.props.chats}
+        machine={this.props.machine} savePrepChecklists={this.props.savePrepChecklists} hideTask={this.hideTask}jobNumber={this.state.jobNumber} chats={this.props.chats}
+        displayAllJobNumbers={this.displayAllJobNumbers}
         />;
       case "Inspection":
         return <Inspection machine={this.props.machine} hideTask={this.hideTask} />;
