@@ -24,8 +24,6 @@ export default class PreparationChecklist extends Component {
     firstCellSelection: true,
     showConfirmation: false,
     prepCheckJobNum:0,
-    listJobNumbers: false,
-    downArrow: false,
   };
 
   componentDidMount = () => {
@@ -199,27 +197,12 @@ export default class PreparationChecklist extends Component {
     });
   };
 
-  showDownArrow = () => {
-    this.setState({downArrow: !this.state.downArrow},() => {
-      this.props.displayAllJobNumbers()
-    })
-  }
-
    handleNextJobNumber = async() => {
-     //  {Object.keys(this.props.chats.Jobs).map((jobNumber, idx)=>{
-     //   return<ul className="listJobNumber">
-     //  <li key={idx}>{jobNumber}</li>
-     //   </ul>
-     // })}
-    // if (this.state.prepCheckJobNum >= Object.keys(this.props.chats.Jobs).length - 1){
-    //   await this.setState({prepCheckJobNum:0})
-    // }else{
-    //   await this.setState({prepCheckJobNum:this.state.prepCheckJobNum + 1})
-    // }
-  }
-
-  showAllJobNumbers = () => {
-    this.setState({listJobNumbers: !this.state.listJobNumbers})
+    if (this.state.prepCheckJobNum >= Object.keys(this.props.chats.Jobs).length - 1){
+      await this.setState({prepCheckJobNum:0})
+    }else{
+      await this.setState({prepCheckJobNum:this.state.prepCheckJobNum + 1})
+    }
   }
 
   renderTask = () => {
@@ -265,9 +248,10 @@ export default class PreparationChecklist extends Component {
         <div>
           <div className="preparation-checklist-container">
             <h4>Reporting</h4>
-            <h4>For Job# {Object.keys(this.props.chats.Jobs)[this.state.prepCheckJobNum]}
+            <h4>For Job# {" "}
+             {Object.keys(this.props.chats.Jobs)[this.state.prepCheckJobNum]}
               <img
-                onClick={this.showDownArrow}
+                onClick={this.handleNextJobNumber}
                 className="arrowRight"
                 src="./assets/arrowRight.png"
                 alt="arrowRight"

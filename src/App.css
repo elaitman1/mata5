@@ -19,6 +19,8 @@
   --background-grey3: #58546b;
   --boxshadow-green: #d6ead7;
   --login-text-grey: #b0bac9;
+  --pale-grey: #FFFFFF;
+  --deep-sky-blue-two:#007aff;
   --login-button-gradient: linear-gradient(281deg, #009ffd, #2a2a72);
   --login-button-shadow: rgba(0, 159, 253, 0.3);
   --gradient-grey: linear-gradient(90deg, rgba(51, 51, 51, 0.2), rgba(255,255,255,0.2));
@@ -1476,27 +1478,13 @@ h1, h4, h5 {
 .arrowRight{
   width: 35px;
   height: 35px;
-  background-color: var(--deep-sky-blue-two);
+  color: var(--deep-sky-blue-two);
   align-items: flex-end;
 }
 
 .listJobNumbers{
   border:solid;
   width: 100px;
-  height: 100px;
   z-index:3;
-}
-
-.backgroundJobList {
-  z-index:11;
-  left: 40px;
-  bottom: 20px;
-  width: 280px;
-  height: 454px;
-  background-color: #E6E5EE;
-  box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.56);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 100px;
 }

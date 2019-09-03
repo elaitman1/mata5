@@ -3,7 +3,6 @@ import StartJob from "./startJob/startJob";
 import PreparationChecklist from "./preparationChecklist";
 import Inspection from "./inspection";
 import Timer from "./timer";
-import JobList from "./jobList"
 import TakePhoto from './camera'
 
 
@@ -21,10 +20,6 @@ class Machine extends Component {
       this.setState({ selectedTask: task });
     };
   };
-
-  displayAllJobNumbers = () => {
-    this.setState({selectedTask:"Job List"})
-  }
 
   toggleCamera = async(inputIndicator) => {
     await this.setState({ cameraView: !this.state.cameraView, inputIndicator:inputIndicator })
@@ -50,7 +45,6 @@ class Machine extends Component {
         cameraOffAndSetInput={this.cameraOffAndSetInput}
         />
     }
-
     switch (this.state.selectedTask) {
       case "Start Job":
         return <StartJob
@@ -61,15 +55,12 @@ class Machine extends Component {
         partNumber={this.state.partNumber}
         machine={this.props.machine}
         />;
-      case "Job List":
-        return <JobList
-        hideTask={this.hideTask}
-        chats={this.props.chats}
-        //must import all job numbers after fetch in app
-        />
       case "Preparation Checklist":
         return <PreparationChecklist
-        machine={this.props.machine} savePrepChecklists={this.props.savePrepChecklists} hideTask={this.hideTask}jobNumber={this.state.jobNumber} chats={this.props.chats}
+        jobNumberSelected={this.state.jobNumberSelected}
+        machine={this.props.machine} savePrepChecklists={this.props.savePrepChecklists} hideTask={this.hideTask}
+        jobNumber={this.state.jobNumber}
+        chats={this.props.chats}
         displayAllJobNumbers={this.displayAllJobNumbers}
         />;
       case "Inspection":
