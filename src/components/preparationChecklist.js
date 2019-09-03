@@ -198,6 +198,11 @@ export default class PreparationChecklist extends Component {
   };
 
    handleNextJobNumber = async() => {
+     //  {Object.keys(this.props.chats.Jobs).map((jobNumber, idx)=>{
+     //   return<ul className="listJobNumber">
+     //  <li key={idx}>{jobNumber}</li>
+     //   </ul>
+     // })}
     if (this.state.prepCheckJobNum >= Object.keys(this.props.chats.Jobs).length - 1){
       await this.setState({prepCheckJobNum:0})
     }else{
@@ -214,7 +219,7 @@ export default class PreparationChecklist extends Component {
           toggleConfirmation={this.toggleConfirmation}
         />
       );
-    } else 
+    } else {
       const note = this.state.displayNote ? (
         <div>
           <div
@@ -251,7 +256,7 @@ export default class PreparationChecklist extends Component {
             <h4>For Job# {" "}
              {Object.keys(this.props.chats.Jobs)[this.state.prepCheckJobNum]}
               <img
-                onClick={this.handleNextJobNumber}
+                onClick={this.handleNextJob}
                 className="arrowRight"
                 src="./assets/arrowRight.png"
                 alt="arrowRight"
