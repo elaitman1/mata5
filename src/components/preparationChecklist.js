@@ -214,7 +214,7 @@ export default class PreparationChecklist extends Component {
           toggleConfirmation={this.toggleConfirmation}
         />
       );
-    } else {
+    } else 
       const note = this.state.displayNote ? (
         <div>
           <div
