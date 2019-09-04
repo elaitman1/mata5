@@ -6,13 +6,13 @@ import Timer from "./timer";
 import TakePhoto from './camera'
 
 
-export default class Machine extends Component {
+class Machine extends Component {
   state = {
     selectedTask: null,
     cameraView: false,
     jobNumber: "",
     inputIndicator: "",
-    partNumber: ""
+    partNumber: "",
   };
 
   displayTask = task => {
@@ -53,7 +53,8 @@ export default class Machine extends Component {
     }
     switch (this.state.selectedTask) {
       case "Start Job":
-        return <StartJob jobNumber={this.state.jobNumber}
+        return <StartJob
+        jobNumber={this.state.jobNumber}
         toggleCamera={this.toggleCamera}
         saveNewJob={this.props.saveNewJob}
         cameraView={this.state.cameraView}
@@ -61,9 +62,20 @@ export default class Machine extends Component {
         partNumber={this.state.partNumber}
         machine={this.props.machine}
         />;
+<<<<<<< HEAD
 
       case "Reporting":
         return <Reporting machine={this.props.machine} saveReporting={this.props.saveReporting} hideTask={this.hideTask} />;
+=======
+      case "Preparation Checklist":
+        return <PreparationChecklist
+        jobNumberSelected={this.state.jobNumberSelected}
+        machine={this.props.machine} savePrepChecklists={this.props.savePrepChecklists} hideTask={this.hideTask}
+        jobNumber={this.state.jobNumber}
+        chats={this.props.chats}
+        displayAllJobNumbers={this.displayAllJobNumbers}
+        />;
+>>>>>>> mergetwo
       case "Inspection":
         return <Inspection machine={this.props.machine} hideTask={this.hideTask} />;
       case "Timer":
@@ -116,3 +128,5 @@ const Button = props => {
     </div>
   );
 };
+
+export default Machine

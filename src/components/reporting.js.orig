@@ -27,6 +27,7 @@ export default class Reporting extends Component {
   };
 
   componentDidMount = () => {
+<<<<<<< HEAD:src/components/reporting.js
     const reportingDict = {
       clean: ["Machining", "Clean Chamber"],
       offset: ["Machining", "Clear Alarm"],
@@ -46,6 +47,27 @@ export default class Reporting extends Component {
           prepVal = this.handleEmptyString(prepVal);
           const stateKeys = reportingDict[prepType];
           reportingObj[stateKeys[0]][stateKeys[1]] = prepVal;
+=======
+    const prepChkDict = {
+      "clean": ["Machining", "Clean Chamber"],
+      "offset": ["Machining", "Tool Offset"],
+      "inspection": ["Machining", "Inspection Room"],
+      "speccheck": ["Preparation", "Job Spec Confirmation"],
+      "cadwork": ["Preparation", "Revise CAD Modeling"],
+      "toolpath": ["Preparation", "Edit Toolpath"],
+    }
+
+    let prepChecklistObj = { Machining: {}, Preparation:{} };
+    Object.keys(this.props.machine.prepChecklist).forEach(prepType => {
+      if (prepType !== "jobnumber" && prepType !== "partnumber"){
+        let prepVal = this.props.machine.prepChecklist[prepType]
+        if (prepType === "notes") {
+          prepChecklistObj.Note = prepVal;
+        } else {
+          prepVal = this.handleEmptyString(prepVal);
+          const stateKeys = prepChkDict[prepType];
+          prepChecklistObj[stateKeys[0]][stateKeys[1]] = prepVal;
+>>>>>>> mergetwo:src/components/preparationChecklist.js
         }
       }
     });
@@ -102,11 +124,12 @@ export default class Reporting extends Component {
       prepreporting: this.state.cells.Machining["Clear Alarm"],
       prepclean: this.state.cells.Machining["Clean Chamber"],
       partnumber: "",
-      jobnumber: "",
+      jobnumber: Object.keys(this.props.chats.Jobs)[this.state.prepCheckJobNum],
       inspection: this.state.cells.Machining["Inspection Room"]
     };
 
     fetch(url, {
+<<<<<<< HEAD:src/components/reporting.js
       method: "POST",
       body:
         "userid=" +
@@ -136,6 +159,15 @@ export default class Reporting extends Component {
       .then(response => console.log("Success:", JSON.stringify(response)))
       .catch(error => console.error("Error:", error));
   };
+=======
+      method: 'POST',
+      body: "userid="+data.userid+"&deviceid="+data.deviceid+"&prepspec="+data.prepspec+"&prepcad="+data.prepcad+"&preppath="+data.preppath+"&prepoffset="+data.prepoffset+"&prepclean="+data.prepclean+"&partnumber="+data.partnumber+"&jobnumber="+data.jobnumber+"&inspection="+data.inspection+"&insert=",
+      headers:{ 'Content-Type':'application/x-www-form-urlencoded' }
+    }).then(res =>console.log(res))
+    .then(response => console.log('Success:', JSON.stringify(response)))
+    .catch(error => console.error('Error:', error));
+  }
+>>>>>>> mergetwo:src/components/preparationChecklist.js
 
   handleSaveChecklist = () => {
     this.saveChecklistValues().then(res => {

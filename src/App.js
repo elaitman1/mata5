@@ -41,7 +41,8 @@ export default class App extends Component {
     machineSelected: null,
     toggledNavbarMenu: null,
     displayChat: null,
-    displayProfile: null
+    displayProfile: null,
+    jobs:[]
   };
 
   countDown = 0;
@@ -107,15 +108,13 @@ export default class App extends Component {
   }
 
   logIn = async id => {
-    const configState = await this.loadData(id).then(data => {
+    const configState = await this.loadData(id).
+    then(data => {
+      //this is where all the fetch data is so that you do not need to fetch multiple times
+      debugger
       this.setState({ user: data[0], cells: data[1], chats: data[2], isLoading: false })
     });
     return configState;
-  };
-
-  fetchData = async url => {
-    const res = await fetch(url).then(res => res.json()).catch(err => console.log("err", err));
-    return res;
   };
 
   createDevicesDetailsUrl = id => {
@@ -164,6 +163,11 @@ export default class App extends Component {
         return hours + hrs;
       }
     }
+  };
+
+  fetchData = async url => {
+    const res = await fetch(url).then(res => res.json()).catch(err => console.log("err", err));
+    return res;
   };
 
   loadData = async id => {
@@ -517,6 +521,7 @@ export default class App extends Component {
   };
 
   toggleNotification = type => {
+
     const userid = this.state.user.ID.toString()
     let alertemail = this.state.user.notifications.Email;
     alertemail = type === "Email" ? !alertemail : alertemail;
@@ -597,6 +602,7 @@ export default class App extends Component {
               displayChat={this.state.displayChat}
               hideProfile={this.hideProfile}
               displayProfile={this.state.displayProfile}
+              hideProfile={this.hideProfile}
               setInitialTime={this.setInitialTime}
               sendNewMessage={this.sendNewMessage}
               toggleNotification={this.toggleNotification}
