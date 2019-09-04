@@ -9,7 +9,7 @@ class TakePhoto extends Component {
 
     const config = {
       sizeFactor: 1,
-      imgCompression: .5
+      imgCompression: .5,
     };
 
     var data={
@@ -45,9 +45,9 @@ class TakePhoto extends Component {
           }
         }
       })
-
     .catch((error) => {
-        window.confirm(error);
+      let errorMessage = 'Please retake photo.'
+        return this.props.cameraOffAndSetInput(errorMessage)
     })
   }
 

@@ -26,16 +26,22 @@ export default class Machine extends Component {
   }
 
   cameraOffAndSetInput = async(input) => {
-    if (this.state.inputIndicator === 'Job'){
-      await this.setState({ cameraView: !this.state.cameraView, jobNumber: input})
-    }else if (this.state.inputIndicator === 'Part'){
-      await this.setState({ cameraView: !this.state.cameraView, partNumber: input})
+    let { inputIndicator } = this.state
+    let { cameraView } = this.state
+    if(inputIndicator === 'Job' && input === "Please retake photo."){
+      await this.setState({ cameraView: !cameraView, jobNumber: input})
+    }else if(inputIndicator === 'Part' && input === "Please retake photo."){
+      await this.setState({ cameraView: !cameraView, partNumber: input})
+    }else if(inputIndicator === 'Job'){
+      await this.setState({ cameraView: !cameraView, jobNumber: input})
+    }else if(inputIndicator === 'Part'){
+      await this.setState({ cameraView: !cameraView, partNumber: input})
     }
   }
 
   hideTask = () => {
     this.setState({ selectedTask: null });
-  };
+  }
 
   renderTask = () => {
     if (this.state.cameraView){
