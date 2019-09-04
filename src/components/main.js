@@ -37,6 +37,7 @@ const Main = props => {
         return (
           <Machine
             machine={props.machineSelected}
+            chats={props.chats}
             toggleMachineSelection={props.toggleMachineSelection}
             saveReporting={props.saveReporting}
             setDeviceTimer={props.setDeviceTimer}
