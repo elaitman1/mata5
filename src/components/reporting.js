@@ -37,12 +37,14 @@ export default class Reporting extends Component {
     let reportingObj = { Machining: {}, Preparation: {} };
     Object.keys(this.props.machine.reporting).forEach(prepType => {
       let prepVal = this.props.machine.reporting[prepType];
-      if (prepType === "notes") {
-        reportingObj.Note = prepVal;
-      } else {
-        prepVal = this.handleEmptyString(prepVal);
-        const stateKeys = reportingDict[prepType];
-        reportingObj[stateKeys[0]][stateKeys[1]] = prepVal;
+      if (prepType !== "jobnumber" && prepType !== "partnumber"){
+        if (prepType === "notes") {
+          reportingObj.Note = prepVal;
+        } else {
+          prepVal = this.handleEmptyString(prepVal);
+          const stateKeys = reportingDict[prepType];
+          reportingObj[stateKeys[0]][stateKeys[1]] = prepVal;
+        }
       }
     });
     this.setState({ cells: reportingObj, prevNote: reportingObj.Note });
