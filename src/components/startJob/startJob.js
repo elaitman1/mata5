@@ -28,7 +28,7 @@ export default class StartJob extends Component {
   componentDidMount = () => {
 
     if (this.props.jobNumber !== "" && this.props.partNumber !== ""){
-      this.setState(state => (state.jobs[0].inputValues.jobNumber = this.props.jobNumber, state.jobs[0].inputValues.partNumber = this.props.jobNumber, state))
+      this.setState(state => (state.jobs[0].inputValues.jobNumber = this.props.jobNumber, state.jobs[0].inputValues.partNumber = this.props.partNumber, state))
     }else if(this.props.partNumber !== ""){
       this.setState(state => (state.jobs[0].inputValues.partNumber = this.props.partNumber, state))
     }else if(this.props.jobNumber !== ""){
