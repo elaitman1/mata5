@@ -581,7 +581,8 @@ export default class App extends Component {
         this.state.isLoading ?
         <div className="splash">
         <img src="./assets/splash.png" alt="Splash Logo" />
-        <h2 style={{color:"white"}}>Loading...</h2>
+        <h2 className='loading' style={{color:"white"}}>Loading</h2>
+
         </div>
         :
         <div className="app-container">
