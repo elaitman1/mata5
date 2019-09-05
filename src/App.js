@@ -116,12 +116,13 @@ export default class App extends Component {
     });
     return configState;
   };
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////z
   createDevicesDetailsUrl = id => {
     const localTime = this.formatTime(new Date());
+
     return `https://www.matainventive.com/cordovaserver/database/jsonmatafloorplan.php?id=${id}&today=${localTime}`;
   }
-
+/////////////////////////////////////////////////////////////////////////////
   formatTime = date => {
     const year = date.getFullYear();
     const month = this.formatSingleDigit(date.getMonth() + 1);
@@ -189,7 +190,7 @@ export default class App extends Component {
     const reporting = await this.fetchData(reportingUrl).then(reportingData => reportingData);
     const prepNotesUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatanotes.php?id=${id}`;
     const prepNotes = await this.fetchData(prepNotesUrl).then(prepNotesData => prepNotesData);
-    const timersUrl = `https://www.matainventive.com/cordovaserver/database/jsonmataSensor.php?id=${id}`;
+    const timersUrl = `https://www.matainventive.com/cordovaserver/database/jsonmataSensorBasic.php?id=${id}`;
     ///timers takes a long time///////////////////////////////
     const timers = await this.fetchData(timersUrl).then(timerData => timerData);
     const chatHistoryUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatachat.php?id=${id}`;
@@ -197,6 +198,7 @@ export default class App extends Component {
 
     const currentTime = Date.now();
     const dataArr = await Promise.all([user, notifications, cells, devices, devicesDetails, jobsParts, timers, reporting, prepNotes, chatHistory]).then(data => {
+      debugger
       const user = data[0]
       const notifications = data[1]
       const cells = data[2];
