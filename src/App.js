@@ -48,6 +48,7 @@ export default class App extends Component {
   countDown = 0;
 
   componentDidMount = () => {
+
     const userData = localStorage.getItem("Mata Inventive");
     if (userData) {
       this.logIn(JSON.parse(userData).ID).then(res => {
@@ -111,7 +112,6 @@ export default class App extends Component {
     const configState = await this.loadData(id).
     then(data => {
       //this is where all the fetch data is so that you do not need to fetch multiple times
-      debugger
       this.setState({ user: data[0], cells: data[1], chats: data[2], isLoading: false })
     });
     return configState;
@@ -129,7 +129,6 @@ export default class App extends Component {
     const hour = this.formatSingleDigit(date.getHours());
     const min = this.formatSingleDigit(date.getMinutes());
     const sec = this.formatSingleDigit(date.getSeconds());
-
     return `${year}-${month}-${day}T${hour}:${min}:${sec}`;
   }
 
@@ -180,7 +179,10 @@ export default class App extends Component {
     const devicesUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatacelladd.php?id=${id}`;
     const devices = await this.fetchData(devicesUrl).then(devicesData => devicesData);
     const devicesDetailsUrl = this.createDevicesDetailsUrl(id);
+    //devices details takes a while/////////////////////ask yen what this is
+
     const devicesDetails = await this.fetchData(devicesDetailsUrl).then(devsDetsData => devsDetsData);
+
     const jobsPartsUrl = `https://www.matainventive.com/cordovaserver/database/jsonmataparts.php?id=${id}`;
     const jobsParts = await this.fetchData(jobsPartsUrl).then(jobsPartsData => jobsPartsData);
     const reportingUrl = `https://www.matainventive.com/cordovaserver/database/jsonmataPrepAll.php?id=${id}`;
@@ -188,6 +190,7 @@ export default class App extends Component {
     const prepNotesUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatanotes.php?id=${id}`;
     const prepNotes = await this.fetchData(prepNotesUrl).then(prepNotesData => prepNotesData);
     const timersUrl = `https://www.matainventive.com/cordovaserver/database/jsonmataSensor.php?id=${id}`;
+    ///timers takes a long time///////////////////////////////
     const timers = await this.fetchData(timersUrl).then(timerData => timerData);
     const chatHistoryUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatachat.php?id=${id}`;
     const chatHistory = await this.fetchData(chatHistoryUrl).then(chatHistoryData => chatHistoryData);
@@ -204,7 +207,6 @@ export default class App extends Component {
       const reporting = this.createObjectWithIDKeys(data[7]);
       const prepNotes = this.createObjectWithIDKeys(data[8]);
       const chatHistory = data[9];
-
       const userObj = user[0];
       userObj.notifications = {};
       userObj.notifications.Text = notifications[0].alertenablephone === "1" ? true : false;
@@ -570,11 +572,17 @@ export default class App extends Component {
   }
 
   render = () => {
+
     if (!localStorage.getItem("Mata Inventive")) {
       return <Splash fetchData={this.fetchData} logIn={this.logIn} chats={this.state.chats}/>;
     } else {
       return (
-        this.state.isLoading ? <div>Loading...</div> :
+        this.state.isLoading ?
+        <div className="splash">
+        <img src="./assets/splash.png" alt="Splash Logo" />
+        <h2 style={{color:"white"}}>Loading...</h2>
+        </div>
+        :
         <div className="app-container">
           <div
             className="overlay"
