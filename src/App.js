@@ -198,7 +198,6 @@ export default class App extends Component {
 
     const currentTime = Date.now();
     const dataArr = await Promise.all([user, notifications, cells, devices, devicesDetails, jobsParts, timers, reporting, prepNotes, chatHistory]).then(data => {
-      debugger
       const user = data[0]
       const notifications = data[1]
       const cells = data[2];
