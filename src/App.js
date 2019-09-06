@@ -58,6 +58,7 @@ export default class App extends Component {
   };
 
   countDownTimers = () => {
+    
     let timers = [];
     const cells = Object.keys(this.state.cells);
     for (let i=0; i<cells.length; i++) {
@@ -70,10 +71,11 @@ export default class App extends Component {
       }
     }
     if (this.countDown === 0 && timers.some(timer => timer.includes("Remain"))) {
+      
       this.countDown = setInterval(this.countDownTimer, 1000);
     }
   }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////
   countDownTimer = () => {
     let newCells = Object.assign(this.state.cells, {});
     const cells = Object.keys(newCells);
@@ -107,6 +109,7 @@ export default class App extends Component {
       clearInterval(this.countDown);
     }
   }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   logIn = async id => {
     const configState = await this.loadData(id).
@@ -116,13 +119,13 @@ export default class App extends Component {
     });
     return configState;
   };
-/////////////////////////////////////////////////////////////////////////////////////////////////////////z
+
   createDevicesDetailsUrl = id => {
     const localTime = this.formatTime(new Date());
 
     return `https://www.matainventive.com/cordovaserver/database/jsonmatafloorplan.php?id=${id}&today=${localTime}`;
   }
-/////////////////////////////////////////////////////////////////////////////
+
   formatTime = date => {
     const year = date.getFullYear();
     const month = this.formatSingleDigit(date.getMonth() + 1);
@@ -524,7 +527,6 @@ export default class App extends Component {
   };
 
   toggleNotification = type => {
-
     const userid = this.state.user.ID.toString()
     let alertemail = this.state.user.notifications.Email;
     alertemail = type === "Email" ? !alertemail : alertemail;
@@ -572,6 +574,13 @@ export default class App extends Component {
     	// }
   }
 
+  toggleMachineSelectedOff = async() => {
+    // 
+    await this.setState({machineSelected: null}, () => {
+      // debugger
+    })
+  }
+
   render = () => {
 
     if (!localStorage.getItem("Mata Inventive")) {
@@ -616,8 +625,9 @@ export default class App extends Component {
               setInitialTime={this.setInitialTime}
               sendNewMessage={this.sendNewMessage}
               toggleNotification={this.toggleNotification}
-              machineSelected={this.state.machineSelected}
               toggleMachineSelection={this.toggleMachineSelection}
+              machineSelected={this.state.machineSelected}
+              toggleMachineSelectedOff={this.toggleMachineSelectedOff}
               saveNewJob={this.saveNewJob}
               saveReporting={this.saveReporting}
               setDeviceTimer={this.setDeviceTimer}

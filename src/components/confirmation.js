@@ -9,8 +9,9 @@ const Confirmation = props => {
   };
 
   const closeConfirmation = () => {
-    props.toggleConfirmation();
-    props.hideTask();
+    debugger
+     props.toggleConfirmation();
+     props.hideTask();
   };
 
   return (

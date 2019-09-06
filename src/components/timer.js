@@ -15,7 +15,8 @@ export default class Timer extends Component {
     if (!this.state.showConfirmation) {
       this.setState({ showConfirmation: !this.state.showErrorModal });
     } else {
-      window.location.reload();
+      // window.location.reload();
+      this.props.toggleMachineSelectedOff()
     }
   };
 

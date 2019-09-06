@@ -2,7 +2,6 @@ import React from "react";
 
 const FeedItem = props => {
   const { name, utilization, timer, status } = props.machSpecs;
-
   return (
     <div
       className="feed-item"
