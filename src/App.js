@@ -58,7 +58,6 @@ export default class App extends Component {
   };
 
   countDownTimers = () => {
-    
     let timers = [];
     const cells = Object.keys(this.state.cells);
     for (let i=0; i<cells.length; i++) {
@@ -71,11 +70,10 @@ export default class App extends Component {
       }
     }
     if (this.countDown === 0 && timers.some(timer => timer.includes("Remain"))) {
-      
       this.countDown = setInterval(this.countDownTimer, 1000);
     }
   }
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
   countDownTimer = () => {
     let newCells = Object.assign(this.state.cells, {});
     const cells = Object.keys(newCells);
@@ -109,7 +107,6 @@ export default class App extends Component {
       clearInterval(this.countDown);
     }
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   logIn = async id => {
     const configState = await this.loadData(id).
@@ -174,6 +171,7 @@ export default class App extends Component {
   };
 
   loadData = async id => {
+    debugger
     const userUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatausersprofile.php?id=${id}`;
     const user = await this.fetchData(userUrl).then(userData => userData);
     const notificationsUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatastatusconfig.php?id=${id}`;
@@ -575,9 +573,10 @@ export default class App extends Component {
   }
 
   toggleMachineSelectedOff = async() => {
-    // 
+    debugger
     await this.setState({machineSelected: null}, () => {
-      // debugger
+      debugger
+      this.logIn(this.state.user.ID)
     })
   }
 
