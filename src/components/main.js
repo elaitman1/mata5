@@ -36,6 +36,8 @@ const Main = props => {
       } else {
         return (
           <Machine
+            logIn={props.logIn}
+            user={props.user}
             toggleMachineSelection={props.toggleMachineSelection}
             machine={props.machineSelected}
             chats={props.chats}

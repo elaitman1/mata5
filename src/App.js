@@ -147,6 +147,7 @@ export default class App extends Component {
   };
 
   logIn = async id => {
+
     const configState = await this.loadData(id).
     then(data => {
       //this is where all the fetch data is so that you do not need to fetch multiple times
@@ -181,6 +182,7 @@ export default class App extends Component {
   };
 
   loadData = async id => {
+
     const userUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatausersprofile.php?id=${id}`;
     const user = await this.fetchData(userUrl).then(userData => userData);
     const notificationsUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatastatusconfig.php?id=${id}`;
@@ -691,9 +693,9 @@ export default class App extends Component {
   };
 
   toggleMachineSelectedOff = async() => {
-    debugger
+
     await this.setState({machineSelected: null}, () => {
-      debugger
+
       this.logIn(this.state.user.ID)
     })
   }
@@ -731,6 +733,7 @@ export default class App extends Component {
               hideProfile={this.hideProfile}
             />
             <Main
+              logIn={this.logIn}
               fetchData={this.fetchData}
               user={this.state.user}
               cells={this.state.cells}
