@@ -154,12 +154,12 @@ export default class App extends Component {
     });
     return configState;
   };
-/////////////////////////////////////////////////////////////////////////////////////////////////////////z
+
   createDevicesDetailsUrl = id => {
     const localTime = this.formatTime(new Date());
 
     return `https://www.matainventive.com/cordovaserver/database/jsonmatafloorplan.php?id=${id}&today=${localTime}`;
-  };
+  }
 
   formatTime = date => {
     const year = date.getFullYear();
@@ -635,7 +635,7 @@ export default class App extends Component {
   };
 
   toggleNotification = type => {
-    const userid = this.state.user.ID.toString();
+    const userid = this.state.user.ID.toString()
     let alertemail = this.state.user.notifications.Email;
     alertemail = type === "Email" ? !alertemail : alertemail;
     let alerttext = this.state.user.notifications.Text;
@@ -690,6 +690,14 @@ export default class App extends Component {
     // }
   };
 
+  toggleMachineSelectedOff = async() => {
+    debugger
+    await this.setState({machineSelected: null}, () => {
+      debugger
+      this.logIn(this.state.user.ID)
+    })
+  }
+
   render = () => {
 
     if (!localStorage.getItem("Mata Inventive")) {
@@ -734,8 +742,9 @@ export default class App extends Component {
               setInitialTime={this.setInitialTime}
               sendNewMessage={this.sendNewMessage}
               toggleNotification={this.toggleNotification}
-              machineSelected={this.state.machineSelected}
               toggleMachineSelection={this.toggleMachineSelection}
+              machineSelected={this.state.machineSelected}
+              toggleMachineSelectedOff={this.toggleMachineSelectedOff}
               saveNewJob={this.saveNewJob}
               saveReporting={this.saveReporting}
               setDeviceTimer={this.setDeviceTimer}

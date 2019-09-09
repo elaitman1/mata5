@@ -16,6 +16,7 @@ export default class Timer extends Component {
       this.setState({ showConfirmation: !this.state.showErrorModal });
     } else {
       window.location.reload();
+      // this.props.toggleMachineSelectedOff()
     }
   };
 
@@ -63,7 +64,7 @@ export default class Timer extends Component {
     .catch(error => console.error('Error:', error));
   }
 
-  handleStartTimer = () => {
+  handleStartTimer = async() => {
     if (this.state.hour === 0 && this.state.minute === 0 && this.state.second === 0) {
       this.toggleErrorModal();
     } else {
