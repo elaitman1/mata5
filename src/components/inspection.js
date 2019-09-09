@@ -41,27 +41,38 @@ export default class Inspection extends Component {
   };
 
   saveInspection = async (type, count) => {
-    const url = "https://www.matainventive.com/cordovaserver/database/insertreport.php";
+    const url =
+      "https://www.matainventive.com/cordovaserver/database/insertreport.php";
     const data = {
       userid: JSON.parse(localStorage.getItem("Mata Inventive")).ID,
       deviceid: this.props.machine.device_id,
       comment: type,
       number: count
-    }
+    };
 
     fetch(url, {
-      method: 'POST',
-      body: "userid="+data.userid+"&deviceid="+data.deviceid+"&comment="+data.comment+"&number="+data.number+"&insert=",
-      headers:{ 'Content-Type':'application/x-www-form-urlencoded' }
-    }).then(res => console.log(res))
-    .then(response => console.log('Success:', JSON.stringify(response)))
-    .catch(error => console.error('Error:', error));
-  }
+      method: "POST",
+      body:
+        "userid=" +
+        data.userid +
+        "&deviceid=" +
+        data.deviceid +
+        "&comment=" +
+        data.comment +
+        "&number=" +
+        data.number +
+        "&insert=",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    })
+      .then(res => console.log(res))
+      .then(response => console.log("Success:", JSON.stringify(response)))
+      .catch(error => console.error("Error:", error));
+  };
 
   postAllInspections = async () => {
     const types = Object.keys(this.state);
     let insps = [];
-    for (let i=0; i<types.length; i++) {
+    for (let i = 0; i < types.length; i++) {
       const type = types[i];
       if (type !== "showConfirmation") {
         const count = this.state[type];
@@ -72,17 +83,15 @@ export default class Inspection extends Component {
 
     const allInspsRes = await Promise.all(insps).then(res => {
       console.log("pAll", res);
-    })
+    });
     return allInspsRes;
-  }
+  };
 
-  handleSubmit = e => {
-    e.preventDefault();
-
+  handleSubmit = () => {
     this.postAllInspections().then(res => {
       console.log("res", res);
       this.toggleConfirmation();
-    })
+    });
   };
 
   renderTask = () => {
@@ -116,7 +125,7 @@ export default class Inspection extends Component {
       );
     } else {
       return (
-        <form className="inspection-container" onSubmit={this.handleSubmit}>
+        <div className="inspection-container">
           <h4>Inspection</h4>
           <section className="inspection-body">
             {partsInputs}
@@ -124,9 +133,11 @@ export default class Inspection extends Component {
               <p>Total Parts</p>
               <span className="inspection-parts-input">{totalParts}</span>
             </div>
-            <input className="form-submit-button" type="submit" value="Save" />
+            <button className="form-submit-button" onClick={this.handleSubmit}>
+              Save
+            </button>
           </section>
-        </form>
+        </div>
       );
     }
   };
