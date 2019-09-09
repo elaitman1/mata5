@@ -814,20 +814,13 @@ h1, h4, h5 {
 
 .feed-item {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   position: relative;
   margin: 10px;
-  padding: 15px 0;
+  padding: 15px 23px;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.feed-item > img {
-  margin-right: 5px;
-  padding: 25px;
-  border-radius: 50%;
-  background-color: var(--background-grey2);
 }
 
 .feed-item > p {
@@ -845,14 +838,53 @@ h1, h4, h5 {
   right: -8px;
 }
 
-.feed-item-text-wrapper > p {
-  color: var(--text-grey);
-  margin: 10px;
+.feed-item-img-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 24px;
 }
 
-.feed-item-text-wrapper > p:first-child {
+.feed-item-img {
+  margin-bottom: 2.5px;
+}
+
+.feed-item-img.machlist {
+  padding: 25px;
+  border-radius: 50%;
+  background-color: var(--background-grey2);
+}
+
+.feed-item-img.timer {
+  width: 35px;
+  height: 39px;
+}
+
+.feed-item-timer-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feed-item-timer-text > p {
+  margin: 2.5px;
+}
+
+.feed-item-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.feed-item-text-wrapper p {
+  margin: 0;
+}
+
+.feed-item-text-wrapper > p {
   font-weight: 500;
-  color: black;
+  color: var(--black);
+  margin-bottom: 10px;
 }
 
 .machine-container {
