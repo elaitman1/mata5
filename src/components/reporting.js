@@ -295,12 +295,6 @@ export default class Reporting extends Component {
             <h4>Reporting</h4>
             <h4>For Job# {" "}
              {Object.keys(this.props.chats.Jobs)[this.state.prepCheckJobNum]}
-              <img
-                onClick={this.handleNextJob}
-                className="arrowRight"
-                src="./assets/arrowRight.png"
-                alt="arrowRight"
-              />
             </h4>
                   <header className="preparation-checklist-cells-container">
                     {this.renderCells()}
