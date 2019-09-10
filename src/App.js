@@ -344,14 +344,19 @@ export default class App extends Component {
           partcount
         } = jobPart;
 
-        let editTimeZ = editTime + "Z";
+        //let editTimeZ = editTime + "Z";
         let now = new Date();
-        let date = new Date(editTimeZ);
-        let d = new Date(date + (now.getTimezoneOffset() * 60000));
+        //let date = new Date(editTimeZ);
+        //let date = Date.parse(editTime);
+        //let d = new Date(date + (now.getTimezoneOffset() * 60000));
         // const editTime = this.formatTime(
         //   new Date(now.getTime() + now.getTimezoneOffset() * 60000)
         // );
-        let editTimeZDisplay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+ " " +
+
+        let date = Date.parse(editTime);
+        let d = new Date(date);
+
+        let editTimeZDisplay = d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate()+ " " +
         d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 
         // if (editTime.slice(0, 10) === latestJobPartDate) {
