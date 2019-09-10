@@ -55,7 +55,7 @@ export default class Chat extends Component {
                 ? startTime.slice(startTime.length - 19, startTime.length)
                 : startTime;
         let d = new Date(editTime);
-        let editTimeOutput = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate$
+        let editTimeOutput = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 
             if (editTimeOutput === latestJobPartDateOutput) {
               filteredChatResult[chatType][chatName] = chatObj;
