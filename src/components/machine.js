@@ -67,7 +67,10 @@ export default class Machine extends Component {
       case "Inspection":
         return <Inspection machine={this.props.machine} hideTask={this.hideTask} />;
       case "Timer":
-        return <Timer machine={this.props.machine} setDeviceTimer={this.props.setDeviceTimer} hideTask={this.hideTask} />;
+        return <Timer
+        user={this.props.user}
+        logIn={this.props.logIn}
+        machine={this.props.machine} setDeviceTimer={this.props.setDeviceTimer} hideTask={this.hideTask} toggleMachineSelectedOff={this.props.toggleMachineSelectedOff}/>;
       default:
         return "";
     }
@@ -81,6 +84,7 @@ export default class Machine extends Component {
       "Timer"
     ];
 
+
     return (
       <div className="machine-container">
         <div className="machine-header">
@@ -88,7 +92,6 @@ export default class Machine extends Component {
             className="back-icon machine"
             onClick={this.props.toggleMachineSelection(null)}
           >
-            &lsaquo;
           </span>
           <h1 className="machine-name">
             {this.props.machine.name}
