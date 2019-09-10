@@ -35,29 +35,35 @@ export default class Chat extends Component {
           });
         }
       });
+
+      filteredChatResult = {
+        Machines: this.props.chats.Machines,
+        Parts: {},
+        Jobs: {}
+      };
+
+      let d = new Date(latestJobPartDate);
+      let latestJobPartDateOutput = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+
       Object.keys(chats).forEach(chatType => {
         if (chatType !== "Machines") {
           Object.keys(chats[chatType]).forEach(chatName => {
-            // const chatObj = chats[chatType][chatName];
-            // const startTime = chatObj.responses["Start Time"];
-            // const editTime =
-            //   chatType === "Parts"
-            //     ? startTime.slice(startTime.length - 19, startTime.length)
-            //     : startTime;
-            // if (!latestJobPartDate || new Date(editTime) > new Date(latestJobPartDate)) {
-            //   latestJobPartDate = editTime;
-            //   filteredChatResult = {
-            //     Machines: this.props.chats.Machines,
-            //     Parts: {},
-            //     Jobs: {}
-            //   };
-            // }
-            //if (editTime === latestJobPartDate) {
+            const chatObj = chats[chatType][chatName];
+            const startTime = chatObj.responses["Start Time"];
+            const editTime =
+              chatType === "Parts"
+                ? startTime.slice(startTime.length - 19, startTime.length)
+                : startTime;
+        let d = new Date(editTime);
+        let editTimeOutput = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate$
+
+            if (editTimeOutput === latestJobPartDateOutput) {
               filteredChatResult[chatType][chatName] = chatObj;
-            // }
+            }
           });
         }
       });
+
     } else {
       filteredChatResult = {
         Machines: {},
