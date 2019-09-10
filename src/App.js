@@ -257,7 +257,7 @@ export default class App extends Component {
           const id = cellDev.device_id;
           const devObj = devicesDetails[id];
           cellDev["timeOn"] = this.timeConversion(
-            parseInt(devObj.SumONTimeSeconds),
+            1000*parseInt(devObj.SumONTimeSeconds),
             "timeOn"
           );
           let utilization = Math.round(
