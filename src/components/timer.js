@@ -16,7 +16,6 @@ export default class Timer extends Component {
       this.setState({ showConfirmation: !this.state.showErrorModal });
     } else {
       window.location.reload();
-      // this.props.toggleMachineSelectedOff()
     }
   };
 
@@ -40,7 +39,6 @@ export default class Timer extends Component {
   }
 
   postTimerValues = async () => {
-
     const url = "https://www.matainventive.com/cordovaserver/database/inserttimestart.php";
     const currentDate = new Date();
     const today = this.formatTime(currentDate);
@@ -55,34 +53,20 @@ export default class Timer extends Component {
       today: today,
       todayserver: todayserver
     }
-    console.log(data)
 
-    const config = {
+    fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type':'application/x-www-form-urlencoded'
-      },
-
       body: "userid="+data.userid+"&deviceid="+data.deviceid+"&hour="+data.hour+"&minute="+data.minute+"&second="+data.second+"&today="+data.today+"&todayserver="+data.todayserver+"&insert=",
-
-    }
-
-    fetch(url, config)
-    .then(res=> JSON.stringify(res))
-    .catch(error => console.error('Error:', error))
-    .then(res=> this.handleResponse(res))
+      headers:{ 'Content-Type':'application/x-www-form-urlencoded' }
+    }).then(res => console.log(res))
+    .then(response => console.log('Success:', JSON.stringify(response)))
+    .catch(error => console.error('Error:', error));
   }
 
-  handleResponse = () => {
-    this.props.logIn(this.props.user.ID)
-    this.props.toggleMachineSelectedOff()
-  }
-
-  handleStartTimer = async() => {
+  handleStartTimer = () => {
     if (this.state.hour === 0 && this.state.minute === 0 && this.state.second === 0) {
       this.toggleErrorModal();
     } else {
-
       this.postTimerValues().then(res => {
         console.log(res);
         const currState = this.state;

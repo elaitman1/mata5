@@ -147,7 +147,6 @@ export default class App extends Component {
   };
 
   logIn = async id => {
-
     const configState = await this.loadData(id).
     then(data => {
       //this is where all the fetch data is so that you do not need to fetch multiple times
@@ -155,12 +154,12 @@ export default class App extends Component {
     });
     return configState;
   };
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////z
   createDevicesDetailsUrl = id => {
     const localTime = this.formatTime(new Date());
 
     return `https://www.matainventive.com/cordovaserver/database/jsonmatafloorplan.php?id=${id}&today=${localTime}`;
-  }
+  };
 
   formatTime = date => {
     const year = date.getFullYear();
@@ -182,7 +181,6 @@ export default class App extends Component {
   };
 
   loadData = async id => {
-
     const userUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatausersprofile.php?id=${id}`;
     const user = await this.fetchData(userUrl).then(userData => userData);
     const notificationsUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatastatusconfig.php?id=${id}`;
@@ -637,7 +635,7 @@ export default class App extends Component {
   };
 
   toggleNotification = type => {
-    const userid = this.state.user.ID.toString()
+    const userid = this.state.user.ID.toString();
     let alertemail = this.state.user.notifications.Email;
     alertemail = type === "Email" ? !alertemail : alertemail;
     let alerttext = this.state.user.notifications.Text;
@@ -692,14 +690,6 @@ export default class App extends Component {
     // }
   };
 
-  toggleMachineSelectedOff = async() => {
-
-    await this.setState({machineSelected: null}, () => {
-
-      this.logIn(this.state.user.ID)
-    })
-  }
-
   render = () => {
 
     if (!localStorage.getItem("Mata Inventive")) {
@@ -733,7 +723,6 @@ export default class App extends Component {
               hideProfile={this.hideProfile}
             />
             <Main
-              logIn={this.logIn}
               fetchData={this.fetchData}
               user={this.state.user}
               cells={this.state.cells}
@@ -745,9 +734,8 @@ export default class App extends Component {
               setInitialTime={this.setInitialTime}
               sendNewMessage={this.sendNewMessage}
               toggleNotification={this.toggleNotification}
-              toggleMachineSelection={this.toggleMachineSelection}
               machineSelected={this.state.machineSelected}
-              toggleMachineSelectedOff={this.toggleMachineSelectedOff}
+              toggleMachineSelection={this.toggleMachineSelection}
               saveNewJob={this.saveNewJob}
               saveReporting={this.saveReporting}
               setDeviceTimer={this.setDeviceTimer}

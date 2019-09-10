@@ -36,12 +36,9 @@ const Main = props => {
       } else {
         return (
           <Machine
-            logIn={props.logIn}
-            user={props.user}
-            toggleMachineSelection={props.toggleMachineSelection}
             machine={props.machineSelected}
             chats={props.chats}
-            toggleMachineSelectedOff={props.toggleMachineSelectedOff}
+            toggleMachineSelection={props.toggleMachineSelection}
             saveReporting={props.saveReporting}
             setDeviceTimer={props.setDeviceTimer}
             saveNewJob={props.saveNewJob}
