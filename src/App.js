@@ -343,15 +343,27 @@ export default class App extends Component {
           partnumber,
           partcount
         } = jobPart;
+
+        let editTimeZ = editTime + "Z";
+        let now = new Date();
+        let date = new Date(editTimeZ);
+        let d = new Date(date + (now.getTimezoneOffset() * 60000));
+        // const editTime = this.formatTime(
+        //   new Date(now.getTime() + now.getTimezoneOffset() * 60000)
+        // );
+        let editTimeZDisplay = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+ " " +
+        d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+
         // if (editTime.slice(0, 10) === latestJobPartDate) {
         chatObj.Jobs[jobnumber] = {
           chatHistory: { chatFirstBegan: "", chatLog: [] },
           responses: {
-            "Start Time": editTime,
+            "Start Time": editTimeZDisplay,
             "Part Number": partnumber,
             "Part Count": partcount
           }
         };
+
         const currLatestJobForPart = chatObj.Parts[partnumber];
         let currLatestPartEditTime;
         if (currLatestJobForPart) {
@@ -365,7 +377,7 @@ export default class App extends Component {
           chatObj.Parts[partnumber] = {
             chatHistory: { chatFirstBegan: "", chatLog: [] },
             responses: {
-              "Start Time": `${jobnumber}: ${editTime}`,
+              "Start Time": `${jobnumber}: ${editTimeZDisplay}`,
               "Latest Job Number": jobnumber,
               "Part Count": `${jobnumber}: ${partcount}`
             }
