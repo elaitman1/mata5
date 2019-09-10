@@ -29,17 +29,32 @@ export default class Chat extends Component {
               chatType === "Parts"
                 ? startTime.slice(startTime.length - 19, startTime.length)
                 : startTime;
-            if (!latestJobPartDate || editTime > latestJobPartDate) {
+            if (!latestJobPartDate || new Date(editTime) > new Date(latestJobPartDate)) {
               latestJobPartDate = editTime;
-              filteredChatResult = {
-                Machines: this.props.chats.Machines,
-                Parts: {},
-                Jobs: {}
-              };
             }
-            if (editTime === latestJobPartDate) {
+          });
+        }
+      });
+      Object.keys(chats).forEach(chatType => {
+        if (chatType !== "Machines") {
+          Object.keys(chats[chatType]).forEach(chatName => {
+            // const chatObj = chats[chatType][chatName];
+            // const startTime = chatObj.responses["Start Time"];
+            // const editTime =
+            //   chatType === "Parts"
+            //     ? startTime.slice(startTime.length - 19, startTime.length)
+            //     : startTime;
+            // if (!latestJobPartDate || new Date(editTime) > new Date(latestJobPartDate)) {
+            //   latestJobPartDate = editTime;
+            //   filteredChatResult = {
+            //     Machines: this.props.chats.Machines,
+            //     Parts: {},
+            //     Jobs: {}
+            //   };
+            // }
+            //if (editTime === latestJobPartDate) {
               filteredChatResult[chatType][chatName] = chatObj;
-            }
+            // }
           });
         }
       });
