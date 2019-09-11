@@ -166,7 +166,7 @@ export default class Reporting extends Component {
       deviceid: this.props.machine.device_id,
       note: this.state.cells.Note,
       partnumber: "",
-      jobnumber: ""
+      jobnumber: Object.keys(this.props.chats.Jobs)[this.state.prepCheckJobNum]
     };
 
     fetch(url, {
@@ -181,7 +181,7 @@ export default class Reporting extends Component {
         "&partnumber=" +
         data.partnumber +
         "&jobnumber=" +
-        data.jobnumbernote +
+        data.jobnumber +
         "&insert=",
       headers: { "Content-Type": "application/x-www-form-urlencoded" }
     })
