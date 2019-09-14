@@ -256,17 +256,25 @@ export default class App extends Component {
         cellDevices.forEach(cellDev => {
           const id = cellDev.device_id;
           const devObj = devicesDetails[id];
-          cellDev["timeOn"] = this.timeConversion(
+
+console.log(typeof devObj)
+          if (typeof devObj === "undefined") {
+            cellDev["timeOn"] = 0
+            cellDev["utilization"] = 0;
+          } else {
+            cellDev["timeOn"] = this.timeConversion(
             1000*parseInt(devObj.SumONTimeSeconds),
-            "timeOn"
-          );
-          let utilization = Math.round(
-            parseInt(devObj.SumDayUpTime) /
-              parseInt(devObj.SumONTimeSeconds) *
-              100
-          );
-          utilization = utilization.toString() === "NaN" ? 0 : utilization;
-          cellDev["utilization"] = utilization;
+            "timeOn")
+
+            let utilization = Math.round(
+              parseInt(devObj.SumDayUpTime) /
+                parseInt(devObj.SumONTimeSeconds) *
+                100
+            );
+            utilization = utilization.toString() === "NaN" ? 0 : utilization;
+            cellDev["utilization"] = utilization;
+
+          };
           let timer = "";
           const devTimer = timers[id];
           if (devTimer) {
@@ -291,9 +299,12 @@ export default class App extends Component {
           }
           cellDev["timer"] = timer;
           let status;
-          const maxOnTime = currentTime - new Date(devObj.MaxOnTime).getTime();
-          const maxEndTime =
-            currentTime - new Date(devObj.MaxEndTime).getTime();
+          var maxOnTime = '1970/01/01';
+          var maxEndTime = '1970/01/01';
+          if (typeof devObj !== "undefined") {
+            maxOnTime = currentTime - new Date(devObj.MaxOnTime).getTime();
+            maxEndTime =currentTime - new Date(devObj.MaxEndTime).getTime();
+          } 
           if (maxOnTime <= 600000) {
             // if (devObj.MaxEndTime <= devObj.MaxStartTime || maxEndTime <= 600000) {
             status = "Online";
@@ -325,7 +336,7 @@ export default class App extends Component {
           chatObj.Machines[devObj.name] = {
             chatHistory: { chatFirstBegan: "", chatLog: [] },
             responses: {
-              "Machine Utilization": `${utilization}% of utilization.`,
+              "Machine Utilization": `${cellDev["utilization"]}% of utilization.`,
               "Machine Status": status
             }
           };
