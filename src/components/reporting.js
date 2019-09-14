@@ -47,6 +47,7 @@ export default class Reporting extends Component {
           latestJob = chatName
        }
     });
+    this.latestJob = latestJob
 
     let reportingObj = { Machining: {}, Preparation: {} };
     Object.keys(this.props.machine.reporting).forEach(prepType => {
