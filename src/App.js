@@ -521,7 +521,7 @@ console.log(typeof devObj)
   saveReporting = (cellId, deviceId, reportingObj) => {
     const prepChkDict = {
       "Clean Chamber": "clean",
-      "Clear Alarm": "offset",
+      "Setup Job": "offset",
       "Inspection Room": "inspection",
       "Job Spec Confirmation": "speccheck",
       "Revise CAD Modeling": "cadwork",

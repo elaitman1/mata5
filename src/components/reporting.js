@@ -7,7 +7,7 @@ export default class Reporting extends Component {
     cells: {
       Machining: {
         "Clean Chamber": false,
-        "Clear Alarm": false,
+        "Setup Job": false,
         "Inspection Room": false
       },
       Preparation: {
@@ -29,7 +29,7 @@ export default class Reporting extends Component {
   componentDidMount = () => {
     const reportingDict = {
       clean: ["Machining", "Clean Chamber"],
-      offset: ["Machining", "Clear Alarm"],
+      offset: ["Machining", "Setup Job"],
       inspection: ["Machining", "Inspection Room"],
       speccheck: ["Preparation", "Job Spec Confirmation"],
       cadwork: ["Preparation", "Revise CAD Modeling"],
@@ -99,7 +99,7 @@ export default class Reporting extends Component {
       prepspec: this.state.cells.Preparation["Job Spec Confirmation"],
       prepcad: this.state.cells.Preparation["Revise CAD Modeling"],
       preppath: this.state.cells.Preparation["Edit Toolpath"],
-      prepreporting: this.state.cells.Machining["Clear Alarm"],
+      prepreporting: this.state.cells.Machining["Setup Job"],
       prepclean: this.state.cells.Machining["Clean Chamber"],
       partnumber: "",
       jobnumber: "",
