@@ -215,6 +215,10 @@ export default class App extends Component {
     const chatHistory = await this.fetchData(chatHistoryUrl).then(
       chatHistoryData => chatHistoryData
     );
+    const inspectHistoryUrl = `https://www.matainventive.com/cordovaserver/database/jsonmatainspect.php?id=${id}`;
+    const inspectHistory = await this.fetchData(inspectHistoryUrl).then(
+      inspectHistoryData => inspectHistoryData
+    );
 
     const currentTime = Date.now();
     const dataArr = await Promise.all([
@@ -370,6 +374,7 @@ export default class App extends Component {
         let editTimeZDisplay = d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate()+ " " +
         d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 
+console.log(inspectHistory)
         // if (editTime.slice(0, 10) === latestJobPartDate) {
         chatObj.Jobs[jobnumber] = {
           chatHistory: { chatFirstBegan: "", chatLog: [] },
