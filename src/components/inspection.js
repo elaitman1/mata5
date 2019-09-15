@@ -47,11 +47,10 @@ export default class Inspection extends Component {
       userid: JSON.parse(localStorage.getItem("Mata Inventive")).ID,
       deviceid: this.props.machine.device_id,
       comment: type,
-      number: count
+      number: count,
+      jobnumber: this.props.latestJob["job"],
+      partnumber: this.props.latestJob["part"]
     };
-
-console.log(this.props.latestJob[0]["part"])
-console.log(this.props.latestJob[0]["job"])
 
     fetch(url, {
       method: "POST",
@@ -64,6 +63,10 @@ console.log(this.props.latestJob[0]["job"])
         data.comment +
         "&number=" +
         data.number +
+        "&jobnumber=" +
+        data.jobnumber +
+        "&partnumber=" +
+        data.partnumber +
         "&insert=",
       headers: { "Content-Type": "application/x-www-form-urlencoded" }
     })
