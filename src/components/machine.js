@@ -43,6 +43,22 @@ export default class Machine extends Component {
     this.setState({ selectedTask: null });
   }
 
+  loadLatestJob = function() {
+      let chats = this.props.chats;
+      let latestJobPartDate = '1970/01/01';
+      let latestJob = {"job":"","part":""};
+      Object.keys(chats["Jobs"]).forEach(chatName => {
+        let chatObj = chats["Jobs"][chatName];
+        let startTime = chatObj.responses["Start Time"];
+         if (new Date(startTime) > new Date(latestJobPartDate)) {
+            latestJobPartDate = startTime;
+            latestJob["job"] = chatName;
+            latestJob["part"] = chatObj.responses["Part Number"];
+         }
+      });
+      return latestJob
+  }
+
   renderTask = () => {
     if (this.state.cameraView){
       return <TakePhoto
@@ -64,21 +80,7 @@ export default class Machine extends Component {
         />;
 
       case "Reporting":
-
-        let chats = this.props.chats;
-        let latestJobPartDate = '1970/01/01';
-        let latestJob = {"job":"","part":""};
-        Object.keys(chats["Jobs"]).forEach(chatName => {
-          let chatObj = chats["Jobs"][chatName];
-          let startTime = chatObj.responses["Start Time"];
-           if (new Date(startTime) > new Date(latestJobPartDate)) {
-              latestJobPartDate = startTime;
-              latestJob["job"] = chatName;
-              latestJob["part"] = chatObj.responses["Part Number"];
-           }
-        });
-        this.props.latestJob = latestJob
-
+        this.props.latestJob = this.loadLatestJob
         return <Reporting chats={this.props.chats} 
         machine={this.props.machine} 
         saveReporting={this.props.saveReporting} 
@@ -86,6 +88,7 @@ export default class Machine extends Component {
         latestJob={this.props.latestJob}
         />;
       case "Inspection":
+        this.props.latestJob = this.loadLatestJob
         return <Inspection machine={this.props.machine} 
         hideTask={this.hideTask} 
         latestJob={this.props.latestJob}
