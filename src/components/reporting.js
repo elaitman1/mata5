@@ -48,6 +48,8 @@ export default class Reporting extends Component {
        }
     });
     this.latestJob = latestJob
+    console.log("test")
+    console.log(this.props.latestJob)
 
     let reportingObj = { Machining: {}, Preparation: {} };
     Object.keys(this.props.machine.reporting).forEach(prepType => {
