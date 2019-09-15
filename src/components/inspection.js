@@ -50,7 +50,8 @@ export default class Inspection extends Component {
       number: count
     };
 
-console.log(this.props.latestJob)
+console.log(this.props.latestJob[0]["part"])
+console.log(this.props.latestJob[0]["job"])
 
     fetch(url, {
       method: "POST",

@@ -53,8 +53,7 @@ export default class Machine extends Component {
       let startTime = chatObj.responses["Start Time"];
        if (new Date(startTime) > new Date(latestJobPartDate)) {
           latestJobPartDate = startTime;
-          latestJob["job"] = chatName;
-          latestJob["part"] = chatObj.responses["Part Number"];
+          latestJob = {"job":chatName,"part":chatObj.responses["Part Number"]};
        }
     });
     this.props.latestJob = latestJob
