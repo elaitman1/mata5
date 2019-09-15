@@ -244,7 +244,7 @@ export default class App extends Component {
       const reporting = this.createObjectWithIDKeys(data[7]);
       const prepNotes = this.createObjectWithIDKeys(data[8]);
       const chatHistory = data[9];
-      const inspectHistory = this.createObjectWithIDKeys(data[10]);
+      const inspectHistory = data[10];
 
       const userObj = user[0];
       userObj.notifications = {};
@@ -377,14 +377,28 @@ export default class App extends Component {
         let editTimeZDisplay = d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate()+ " " +
         d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 
-console.log(inspectHistory)
+        const inspectItem = inspectHistory.filter(
+          device => device.jobnumber === jobnumber
+        );
+        let inspectgood = 0;
+        let inspectbad = 0;
+        inspectItem.forEach(inspectItemi => {
+          if (inspectItemi.comment=="goodParts"){
+            inspectgood += parseInt(inspectItemi.number)
+          }
+          if (inspectItemi.comment=="badParts"){
+            inspectgood += parseInt(inspectItemi.number)
+          }
+        })
+
         // if (editTime.slice(0, 10) === latestJobPartDate) {
         chatObj.Jobs[jobnumber] = {
           chatHistory: { chatFirstBegan: "", chatLog: [] },
           responses: {
             "Start Time": editTimeZDisplay,
             "Part Number": partnumber,
-            "Part Count": partcount
+            "Part Count": partcount,
+            "Inspection": "Good:" + inspectgood.toString() + ",Bad:" + inspectbad.toString()
           }
         };
 
