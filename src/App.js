@@ -231,7 +231,8 @@ export default class App extends Component {
       timers,
       reporting,
       prepNotes,
-      chatHistory
+      chatHistory,
+      inspectHistory
     ]).then(data => {
       const user = data[0];
       const notifications = data[1];
@@ -243,6 +244,8 @@ export default class App extends Component {
       const reporting = this.createObjectWithIDKeys(data[7]);
       const prepNotes = this.createObjectWithIDKeys(data[8]);
       const chatHistory = data[9];
+      const inspectHistory = this.createObjectWithIDKeys(data[10]);
+
       const userObj = user[0];
       userObj.notifications = {};
       userObj.notifications.Text =
