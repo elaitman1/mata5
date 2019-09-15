@@ -166,7 +166,7 @@ export default class Reporting extends Component {
       deviceid: this.props.machine.device_id,
       note: this.state.cells.Note,
       partnumber: "",
-      jobnumber: this.props.latestJob
+      jobnumber: this.props.latestJob["job"]
     };
 
     fetch(url, {
@@ -294,7 +294,7 @@ export default class Reporting extends Component {
           <div className="preparation-checklist-container">
             <h4>Reporting</h4>
             <h4>For Job# {" "}
-             {this.props.latestJob}
+             {this.props.latestJob["job"]}
             </h4>
                   <header className="preparation-checklist-cells-container">
                     {this.renderCells()}

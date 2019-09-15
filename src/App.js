@@ -43,7 +43,7 @@ export default class App extends Component {
     displayChat: null,
     displayProfile: null,
     jobs:[],
-    latestJob: "",
+    latestJob: {"job":"","part":""},
   };
 
   countDown = 0;
