@@ -36,21 +36,6 @@ export default class Reporting extends Component {
       toolpath: ["Preparation", "Edit Toolpath"]
     };
 
-    let chats = this.props.chats;
-    let latestJobPartDate = '1970/01/01';
-    let latestJob = "";
-    Object.keys(chats["Jobs"]).forEach(chatName => {
-      let chatObj = chats["Jobs"][chatName];
-      let startTime = chatObj.responses["Start Time"];
-       if (new Date(startTime) > new Date(latestJobPartDate)) {
-          latestJobPartDate = startTime;
-          latestJob = chatName
-       }
-    });
-    this.latestJob = latestJob
-    console.log("test")
-    console.log(this.props.latestJob)
-
     let reportingObj = { Machining: {}, Preparation: {} };
     Object.keys(this.props.machine.reporting).forEach(prepType => {
       let prepVal = this.props.machine.reporting[prepType];
@@ -181,7 +166,7 @@ export default class Reporting extends Component {
       deviceid: this.props.machine.device_id,
       note: this.state.cells.Note,
       partnumber: "",
-      jobnumber: this.latestJob
+      jobnumber: this.props.latestJob
     };
 
     fetch(url, {
@@ -309,7 +294,7 @@ export default class Reporting extends Component {
           <div className="preparation-checklist-container">
             <h4>Reporting</h4>
             <h4>For Job# {" "}
-             {this.latestJob}
+             {this.props.latestJob}
             </h4>
                   <header className="preparation-checklist-cells-container">
                     {this.renderCells()}

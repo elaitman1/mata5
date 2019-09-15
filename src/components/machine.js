@@ -64,6 +64,20 @@ export default class Machine extends Component {
         />;
 
       case "Reporting":
+
+        let chats = this.props.chats;
+        let latestJobPartDate = '1970/01/01';
+        let latestJob = "";
+        Object.keys(chats["Jobs"]).forEach(chatName => {
+          let chatObj = chats["Jobs"][chatName];
+          let startTime = chatObj.responses["Start Time"];
+           if (new Date(startTime) > new Date(latestJobPartDate)) {
+              latestJobPartDate = startTime;
+              latestJob = chatName
+           }
+        });
+        this.props.latestJob = latestJob
+      
         return <Reporting chats={this.props.chats} 
         machine={this.props.machine} 
         saveReporting={this.props.saveReporting} 
