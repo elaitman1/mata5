@@ -42,6 +42,7 @@ const Main = props => {
             saveReporting={props.saveReporting}
             setDeviceTimer={props.setDeviceTimer}
             saveNewJob={props.saveNewJob}
+            latestJob={props.latestJob}
           />
         );
       }

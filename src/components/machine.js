@@ -60,6 +60,7 @@ export default class Machine extends Component {
         hideTask={this.hideTask}
         partNumber={this.state.partNumber}
         machine={this.props.machine}
+        latestJob={this.props.latestJob}
         />;
 
       case "Reporting":

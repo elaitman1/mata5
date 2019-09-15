@@ -42,7 +42,8 @@ export default class App extends Component {
     toggledNavbarMenu: null,
     displayChat: null,
     displayProfile: null,
-    jobs:[]
+    jobs:[],
+    latestJob: "",
   };
 
   countDown = 0;
@@ -257,7 +258,6 @@ export default class App extends Component {
           const id = cellDev.device_id;
           const devObj = devicesDetails[id];
 
-console.log(typeof devObj)
           if (typeof devObj === "undefined") {
             cellDev["timeOn"] = 0
             cellDev["utilization"] = 0;
@@ -767,6 +767,7 @@ console.log(typeof devObj)
               saveNewJob={this.saveNewJob}
               saveReporting={this.saveReporting}
               setDeviceTimer={this.setDeviceTimer}
+              latestJob = {this.latestJob}
             />
           </div>
           <span id="profile" className="profile-wrapper">
