@@ -340,7 +340,12 @@ export default class App extends Component {
           reportingObj.notes = notes;
           cellDev["reporting"] = reportingObj;
 
-          chatObj.Machines[devObj.name] = {
+          let machinename = "N/A"
+          if (typeof devObj !== "undefined") {
+            machinename = devObj.name
+          }
+
+          chatObj.Machines[machinename] = {
             chatHistory: { chatFirstBegan: "", chatLog: [] },
             responses: {
               "Machine Utilization": `${cellDev["utilization"]}% of utilization.`,
