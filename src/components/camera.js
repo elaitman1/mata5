@@ -9,7 +9,7 @@ import axios from 'axios';
 
     // const config = {
       // sizeFactor: 1,
-      imgCompression: .5,
+      // imgCompression: .5,
     };
 
     var data={
