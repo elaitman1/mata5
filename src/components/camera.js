@@ -3,14 +3,14 @@ import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import axios from 'axios';
 
-// class TakePhoto extends Component {
+class TakePhoto extends Component {
 
-  // onTakePhoto = async(dataUri) => {
+  onTakePhoto = async(dataUri) => {
 
-    // const config = {
-      // sizeFactor: 1,
-      // imgCompression: .5,
-    // };
+    const config = {
+      sizeFactor: 1,
+      imgCompression: .5,
+    };
 
     var data={
       requests: [
