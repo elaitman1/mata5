@@ -8,7 +8,7 @@ import axios from 'axios';
   // onTakePhoto = async(dataUri) => {
 
     // const config = {
-      sizeFactor: 1,
+      // sizeFactor: 1,
       imgCompression: .5,
     };
 
