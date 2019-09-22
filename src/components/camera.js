@@ -5,7 +5,7 @@ import axios from 'axios';
 
 // class TakePhoto extends Component {
 
-  onTakePhoto = async(dataUri) => {
+  // onTakePhoto = async(dataUri) => {
 
     const config = {
       sizeFactor: 1,
